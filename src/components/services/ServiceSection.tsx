@@ -1,0 +1,122 @@
+"use client";
+
+import { useState, type ReactNode } from "react";
+
+export type ServiceTab = {
+  label: string;
+  content: ReactNode;
+  image?: string;
+  imageAlt?: string;
+};
+
+export default function ServiceSection({
+  id,
+  eyebrow = "Services and Products",
+  title,
+  description,
+  tabs,
+  image,
+  imageAlt,
+  imageFit = "cover",
+  pdfLabel = "PDF Technical Doc",
+  extra,
+}: {
+  id: string;
+  eyebrow?: string;
+  title: string;
+  description: string;
+  tabs: ServiceTab[];
+  image: string;
+  imageAlt: string;
+  imageFit?: "cover" | "contain";
+  pdfLabel?: string;
+  extra?: ReactNode;
+}) {
+  const [activeTab, setActiveTab] = useState(0);
+  const activeImage = tabs[activeTab]?.image ?? image;
+  const activeImageAlt = tabs[activeTab]?.imageAlt ?? imageAlt;
+
+  return (
+    <section
+      id={id}
+      className="scroll-mt-24 bg-neutral-950 px-5 pt-16 pb-4 text-white sm:px-10"
+    >
+      <div className="mx-auto w-full max-w-[1800px]">
+        <div className="flex max-w-3xl flex-col gap-[30px]">
+          <span className="inline-flex items-center gap-2 text-xl font-light tracking-wide text-accent">
+            <span className="h-2 w-2 rounded-full bg-accent" />
+            {eyebrow}
+          </span>
+          <h2
+            className="font-light leading-none text-[#eaefef]"
+            style={{ fontSize: "clamp(2.5rem, 5vw, 72px)" }}
+          >
+            {title}
+          </h2>
+          <p className="max-w-2xl text-xl font-light leading-snug text-[#c1c7c7]">
+            {description}
+          </p>
+        </div>
+
+        <div className="mt-10 grid grid-cols-1 items-stretch gap-3 lg:grid-cols-2">
+          {/* Tab card */}
+          <div className="flex flex-col rounded-xl bg-[#171919] p-8 lg:min-h-[820px] lg:p-10">
+            <div className="flex w-full gap-3" role="tablist">
+              {tabs.map((tab, i) => (
+                <button
+                  key={tab.label}
+                  role="tab"
+                  aria-selected={activeTab === i}
+                  onClick={() => setActiveTab(i)}
+                  className={`flex-1 rounded-md px-4 py-3 text-center text-xl font-medium tracking-wide transition ${
+                    activeTab === i
+                      ? "border border-accent bg-accent text-[#eaefef]"
+                      : "border border-[#9ba0a0] text-[#9ba0a0] hover:border-[#c1c7c7] hover:text-[#c1c7c7]"
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+
+            <div className="mt-8 flex flex-1 flex-col" role="tabpanel">
+              {tabs[activeTab]?.content}
+            </div>
+
+            <div className="pt-8">
+              <div className="inline-flex h-[58px] w-fit items-stretch gap-2">
+                <a
+                  href="#"
+                  className="inline-flex h-full min-w-[280px] items-center justify-center rounded-md border border-[#e6e6e6]/45 px-6 text-sm text-[#e6e6e6] transition hover:border-accent hover:text-accent"
+                >
+                  {pdfLabel}
+                </a>
+                <a
+                  href="#"
+                  aria-label={pdfLabel}
+                  className="flex h-full w-[58px] shrink-0 items-center justify-center"
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src="/icons/download.png" alt="" className="h-full w-full object-contain" />
+                </a>
+              </div>
+            </div>
+          </div>
+
+          {/* Image */}
+          <div className="relative min-h-[360px] overflow-hidden rounded-xl bg-neutral-800 lg:h-full">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={activeImage}
+              alt={activeImageAlt}
+              className={`absolute inset-0 h-full w-full ${imageFit === "contain" ? "object-contain" : "object-cover"}`}
+            />
+            <div className="pointer-events-none absolute inset-0 bg-black/20" />
+          </div>
+        </div>
+
+        {extra}
+      </div>
+    </section>
+  );
+}

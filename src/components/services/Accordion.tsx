@@ -1,0 +1,73 @@
+"use client";
+
+import { useState, type ReactNode } from "react";
+
+export function AccordionGroup({
+  title,
+  defaultOpen = false,
+  open: openProp,
+  onToggle,
+  children,
+}: {
+  title: string;
+  defaultOpen?: boolean;
+  /** Controlled open state. When provided (with onToggle), internal state is ignored. */
+  open?: boolean;
+  onToggle?: () => void;
+  children?: ReactNode;
+}) {
+  const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen);
+  const isControlled = openProp !== undefined;
+  const open = isControlled ? openProp : uncontrolledOpen;
+
+  const handleClick = () => {
+    if (isControlled) {
+      onToggle?.();
+    } else {
+      setUncontrolledOpen((o) => !o);
+    }
+  };
+
+  return (
+    <div className="pb-6">
+      <button
+        onClick={handleClick}
+        aria-expanded={open}
+        className="flex w-full items-center justify-between gap-4 pb-4 text-left"
+      >
+        <p className="text-xl font-normal text-[#eaefef]">{title}</p>
+        <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[#c1c7c7] text-lg font-medium text-[#171919]">
+          {open ? "−" : "+"}
+        </span>
+      </button>
+      <div className="border-t border-[#e6e6e6]/25" />
+      {open && <div className="pt-6">{children}</div>}
+    </div>
+  );
+}
+
+/** Wraps a set of AccordionGroups so that opening one closes the others. */
+export function ExclusiveAccordionGroup({
+  items,
+  defaultOpenIndex = 0,
+}: {
+  items: { title: string; content: ReactNode }[];
+  defaultOpenIndex?: number | null;
+}) {
+  const [openIndex, setOpenIndex] = useState<number | null>(defaultOpenIndex);
+
+  return (
+    <div className="flex flex-col">
+      {items.map((item, i) => (
+        <AccordionGroup
+          key={item.title}
+          title={item.title}
+          open={openIndex === i}
+          onToggle={() => setOpenIndex((current) => (current === i ? null : i))}
+        >
+          {item.content}
+        </AccordionGroup>
+      ))}
+    </div>
+  );
+}

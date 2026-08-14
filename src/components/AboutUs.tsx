@@ -1,0 +1,38 @@
+import Eyebrow from "./Eyebrow";
+
+export type AboutUsData = {
+  eyebrow?: string;
+  text: string;
+  image: string;
+  imageAlt?: string;
+};
+
+export default function AboutUs({ data }: { data: AboutUsData }) {
+  return (
+    <section
+      id="about"
+      className="bg-neutral-950 px-5 py-16 text-white sm:px-10"
+    >
+      <div className="mx-auto grid w-full max-w-[1800px] gap-8 lg:grid-cols-[5fr_2fr] lg:items-center">
+        <div className="flex flex-col gap-6">
+          <Eyebrow>{data.eyebrow ?? "About Us"}</Eyebrow>
+          <p
+            className="max-w-none font-medium leading-snug text-[#c1c7c7]"
+            style={{ fontSize: "clamp(2rem, 4vw, 56px)" }}
+          >
+            {data.text}
+          </p>
+        </div>
+
+        <div className="relative aspect-square w-full max-w-sm overflow-hidden rounded-full justify-self-end">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={data.image}
+            alt={data.imageAlt ?? ""}
+            className="h-full w-full object-cover"
+          />
+        </div>
+      </div>
+    </section>
+  );
+}
