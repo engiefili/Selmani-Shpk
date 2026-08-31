@@ -35,7 +35,7 @@ export function AccordionGroup({
         aria-expanded={open}
         className="flex w-full items-center justify-between gap-4 pb-4 text-left"
       >
-        <p className="text-xl font-normal text-[#eaefef]">{title}</p>
+        <p className="text-2xl font-normal leading-none text-[#eaefef] sm:text-[32px]">{title}</p>
         <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[#c1c7c7] text-lg font-medium text-[#171919]">
           {open ? "−" : "+"}
         </span>

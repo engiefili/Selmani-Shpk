@@ -43,7 +43,7 @@ export function FeatureGrid({ items }: { items: FeatureItem[] }) {
                     )}
                   </div>
                 )}
-                <p className="text-xl font-light text-[#c1c7c7]">
+                <p className="text-xl font-light leading-[1.1] text-[#c1c7c7]">
                   {item.label}
                 </p>
               </div>
