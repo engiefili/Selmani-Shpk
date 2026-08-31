@@ -16,7 +16,7 @@ export default function PageSideNav({
           href={`#${section.id}`}
           className="flex w-fit items-center gap-8 whitespace-nowrap border-b border-[#c1c7c7] py-4 text-right font-light leading-none text-[#eaefef] transition"
           style={{
-            fontSize: "clamp(1.1rem, 1.7vw, 32px)",
+            fontSize: "clamp(1.5rem, 2.4vw, 44px)",
           }}
         >
           {section.label}
