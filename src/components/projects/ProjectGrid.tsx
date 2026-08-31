@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from "react";
 
 export type ProjectImage = {
   src: string;
+  full: string;
   alt: string;
 };
 
@@ -109,7 +110,7 @@ export default function ProjectGrid({ images }: { images: ProjectImage[] }) {
 
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={active.src}
+            src={active.full}
             alt={active.alt}
             onClick={(e) => e.stopPropagation()}
             className="max-h-full max-w-full rounded-lg object-contain"

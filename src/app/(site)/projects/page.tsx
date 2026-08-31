@@ -38,7 +38,8 @@ export default async function ProjectsPage() {
     groups: tab.groups.map((group) => ({
       subLabel: group.subLabel,
       images: group.images.map((img, i) => ({
-        src: urlForImage(img).width(600).height(600).url(),
+        src: urlForImage(img).width(900).height(900).quality(85).url(),
+        full: urlForImage(img).width(2000).quality(90).url(),
         alt: `${tab.label} project photo ${i + 1}`,
       })),
     })),
