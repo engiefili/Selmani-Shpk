@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
+import { draftMode } from "next/headers";
 import localFont from "next/font/local";
 import "./globals.css";
+
+import { DisableDraftMode } from "@/components/DisableDraftMode";
 
 // Geom — the brand typeface. Body text follows the typography spec
 // (Regular/Medium), but page hero titles use the Black weight for a
@@ -23,15 +26,18 @@ export const metadata: Metadata = {
     "Over 25 years of experience in industrial galvanizing and steel constructions, serving civil, industrial, and infrastructure sectors locally and internationally.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const { isEnabled: isDraftMode } = await draftMode();
+
   return (
     <html lang="en" className={`${geom.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-background text-foreground font-sans">
+      <body className="min-h-full flex flex-col overflow-x-hidden bg-background text-foreground font-sans">
         {children}
+        {isDraftMode && <DisableDraftMode />}
       </body>
     </html>
   );

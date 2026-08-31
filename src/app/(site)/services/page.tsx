@@ -5,11 +5,21 @@ import ServicesHero from "@/components/services/ServicesHero";
 import ServiceSection from "@/components/services/ServiceSection";
 import SelectedWork from "@/components/services/SelectedWork";
 import { renderTabContent } from "@/components/services/renderTabContent";
-import { getLocale } from "@/lib/locale";
+import { getLocale, localizePath } from "@/lib/locale";
 import { urlForImage } from "@/sanity/lib/image";
 import { fetchLocalizedServices } from "@/sanity/lib/localizedFetch";
 import { servicesByPageQuery } from "@/sanity/lib/queries";
 import type { ServiceDoc } from "@/sanity/lib/types";
+
+// Services page sections use one slug convention ("hot-dip-galvanizing"),
+// while the Projects page's gallery tabs use a slightly different one
+// ("hot-dip-galvanising", British spelling) — this maps a section to the
+// matching Projects tab so "See All" opens the right gallery pre-selected.
+const PROJECTS_TAB_BY_SECTION: Record<string, string> = {
+  "hot-dip-galvanizing": "hot-dip-galvanising",
+  "metal-constructions": "metal-constructions",
+  "tanks-containers": "tanks-containers",
+};
 
 export default async function ServicesPage() {
   const locale = await getLocale();
@@ -51,6 +61,13 @@ export default async function ServicesPage() {
                   urlForImage(img).width(900).url()
                 )}
                 locale={locale}
+                href={localizePath(
+                  `/projects?tab=${
+                    PROJECTS_TAB_BY_SECTION[section.sectionId.current] ??
+                    section.sectionId.current
+                  }`,
+                  locale
+                )}
               />
             )}
           </div>

@@ -1,7 +1,7 @@
 import type { Locale } from "@/lib/locale";
 import { localizedDocId } from "@/lib/locale";
 
-import { client } from "./client";
+import { sanityFetch } from "./fetch";
 
 // Fetches a singleton document for the given locale (e.g. "homePage"
 // vs "homePage_sq"). Falls back to the English document if an
@@ -13,10 +13,10 @@ export async function fetchLocalizedSingleton<T>(
   locale: Locale
 ): Promise<T | null> {
   const id = localizedDocId(baseId, locale);
-  const doc: T | null = await client.fetch(query, { id }, { next: { revalidate: 60 } });
+  const doc = await sanityFetch<T | null>(query, { id });
   if (doc) return doc;
   if (locale === "sq") {
-    return client.fetch(query, { id: baseId }, { next: { revalidate: 60 } });
+    return sanityFetch<T | null>(query, { id: baseId });
   }
   return null;
 }
@@ -29,18 +29,10 @@ export async function fetchLocalizedServices<T>(
   page: string,
   locale: Locale
 ): Promise<T[]> {
-  const docs: T[] = await client.fetch(
-    query,
-    { page, language: locale },
-    { next: { revalidate: 60 } }
-  );
+  const docs = await sanityFetch<T[]>(query, { page, language: locale });
   if (docs.length > 0) return docs;
   if (locale === "sq") {
-    return client.fetch(
-      query,
-      { page, language: "en" },
-      { next: { revalidate: 60 } }
-    );
+    return sanityFetch<T[]>(query, { page, language: "en" });
   }
   return docs;
 }

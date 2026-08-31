@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CtaBand from "@/components/CtaBand";
@@ -54,7 +55,9 @@ export default async function ProjectsPage() {
             imageAlt: page.heroImageAlt,
           }}
         />
-        <ProjectsTabs data={tabsData} locale={locale} />
+        <Suspense fallback={null}>
+          <ProjectsTabs data={tabsData} locale={locale} />
+        </Suspense>
         <CtaBand locale={locale} />
       </main>
       <Footer />

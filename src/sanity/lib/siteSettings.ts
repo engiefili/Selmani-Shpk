@@ -1,6 +1,6 @@
 import type { Locale } from "@/lib/locale";
 import { localizedDocId } from "@/lib/locale";
-import { client } from "@/sanity/lib/client";
+import { sanityFetch } from "@/sanity/lib/fetch";
 import { urlForImage } from "@/sanity/lib/image";
 import { siteSettingsQuery } from "@/sanity/lib/queries";
 import type { SiteSettingsDoc } from "@/sanity/lib/types";
@@ -67,18 +67,15 @@ export async function getSiteSettings(locale: Locale): Promise<{
   logoUrl: string;
 }> {
   const id = localizedDocId("siteSettings", locale);
-  let settings: SiteSettingsDoc | null = await client.fetch(
+  let settings: SiteSettingsDoc | null = await sanityFetch<SiteSettingsDoc | null>(
     siteSettingsQuery,
-    { id },
-    { next: { revalidate: 60 } }
+    { id }
   );
 
   if (!settings && locale === "sq") {
-    settings = await client.fetch(
-      siteSettingsQuery,
-      { id: "siteSettings" },
-      { next: { revalidate: 60 } }
-    );
+    settings = await sanityFetch<SiteSettingsDoc | null>(siteSettingsQuery, {
+      id: "siteSettings",
+    });
   }
 
   if (!settings) {

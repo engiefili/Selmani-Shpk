@@ -40,8 +40,8 @@ export default async function Footer() {
 
   return (
     <footer id="contacts" className="bg-black text-white">
-      <div className="flex flex-col gap-6 border-t border-[#9ba0a0] px-5 py-12 sm:px-10 lg:flex-row">
-        <div className="flex flex-col gap-16 lg:w-[46%] lg:gap-40">
+      <div className="flex flex-col gap-6 border-t border-[#9ba0a0] px-5 py-8 sm:px-10 sm:py-12 lg:flex-row">
+        <div className="flex flex-col gap-8 sm:gap-16 lg:w-[46%] lg:gap-40">
           <div className="flex flex-col gap-8">
             <p className="text-[10px] font-medium uppercase tracking-[0.4px] text-[#9ba0a0]">
               {locale === "sq" ? "Katalog" : "Catalog"}
@@ -59,8 +59,8 @@ export default async function Footer() {
           </Link>
         </div>
 
-        <div className="flex flex-1 flex-col justify-between gap-16">
-          <div className="flex flex-wrap items-start justify-between gap-10">
+        <div className="flex flex-1 flex-col justify-between gap-8 sm:gap-16">
+          <div className="flex flex-wrap items-start justify-between gap-6 sm:gap-10">
             <div className="flex flex-col gap-8">
               <p className="text-[10px] font-medium uppercase tracking-[0.4px] text-[#9ba0a0]">
                 {locale === "sq" ? "Na kontaktoni" : "Contact us"}

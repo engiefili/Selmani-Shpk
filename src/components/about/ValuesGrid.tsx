@@ -11,7 +11,7 @@ function ValueText({
 }) {
   return (
     <div>
-      <h3 className="text-2xl font-normal text-[#c1c7c7]">{title}</h3>
+      <h3 className="text-xl font-normal text-[#c1c7c7] sm:text-2xl">{title}</h3>
       <p className="mt-1 max-w-md text-base font-light leading-relaxed text-[#c1c7c7]">
         {description}
       </p>
@@ -23,10 +23,10 @@ export default function ValuesGrid({ data }: { data: ValuesGridData }) {
   const [performance, customer, durability] = data.values;
 
   return (
-    <section className="bg-neutral-950 px-5 py-10 text-white sm:px-10">
-      <div className="mx-auto grid w-full max-w-[1800px] grid-cols-1 gap-10 lg:grid-cols-3 lg:items-stretch">
+    <section className="bg-neutral-950 px-5 py-8 text-white sm:px-10 sm:py-10">
+      <div className="mx-auto grid w-full max-w-[1800px] grid-cols-1 gap-8 sm:gap-10 lg:grid-cols-3 lg:items-stretch">
         {/* Left: caption above image */}
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-5 sm:gap-6">
           <ValueText title={performance.title} description={performance.description} />
           {performance.image && (
             <div className="relative aspect-square w-full overflow-hidden bg-neutral-900">
@@ -48,7 +48,7 @@ export default function ValuesGrid({ data }: { data: ValuesGridData }) {
         </div>
 
         {/* Right: image above caption */}
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-5 sm:gap-6">
           {durability.image && (
             <div className="relative aspect-square w-full overflow-hidden bg-neutral-900">
               {/* eslint-disable-next-line @next/next/no-img-element */}

@@ -4,9 +4,10 @@ import AboutUs from "@/components/AboutUs";
 import MetallicConstructions from "@/components/MetallicConstructions";
 import HotDipGalvanizing from "@/components/HotDipGalvanizing";
 import TanksShowcase from "@/components/TanksShowcase";
+import MobileServiceCarousel from "@/components/MobileServiceCarousel";
 import CtaBand from "@/components/CtaBand";
 import Footer from "@/components/Footer";
-import { getLocale } from "@/lib/locale";
+import { getLocale, localizePath } from "@/lib/locale";
 import { urlForImage } from "@/sanity/lib/image";
 import { fetchLocalizedSingleton } from "@/sanity/lib/localizedFetch";
 import { homePageQuery } from "@/sanity/lib/queries";
@@ -47,6 +48,7 @@ export default async function Home() {
             certifications: home.hero.certifications,
             ctaLabel: home.hero.ctaLabel,
           }}
+          href={localizePath("/projects", locale)}
         />
         <AboutUs
           data={{
@@ -56,6 +58,41 @@ export default async function Home() {
             imageAlt: home.aboutUs.imageAlt,
           }}
         />
+        {/* Phone-only: the three service bands below become a single
+            swipeable card row instead of three full stacked sections. */}
+        <MobileServiceCarousel
+          title={home.hotDipGalvanizing.eyebrow ?? (locale === "sq" ? "Shërbime" : "Services")}
+          cards={[
+            {
+              key: "hot-dip-galvanizing",
+              eyebrow: home.hotDipGalvanizing.eyebrow,
+              title: home.hotDipGalvanizing.title,
+              image: urlForImage(home.hotDipGalvanizing.beforeImage).width(800).url(),
+              imageAlt: home.hotDipGalvanizing.beforeLabel,
+              ctaLabel: home.hotDipGalvanizing.ctaLabel ?? "Learn More",
+              href: localizePath("/services#hot-dip-galvanizing", locale),
+            },
+            {
+              key: "metal-constructions",
+              eyebrow: home.metallicConstructions.eyebrow,
+              title: home.metallicConstructions.title,
+              image: "/services/metal_main.jpg",
+              imageAlt: home.metallicConstructions.title,
+              ctaLabel: home.metallicConstructions.ctaLabel ?? "Learn More",
+              href: localizePath("/services#metal-constructions", locale),
+            },
+            {
+              key: "tanks-containers",
+              eyebrow: home.tanksShowcase.eyebrow,
+              title: home.tanksShowcase.title,
+              image: urlForImage(home.tanksShowcase.image).width(800).url(),
+              imageAlt: home.tanksShowcase.imageAlt,
+              ctaLabel: home.tanksShowcase.ctaLabel ?? "Learn More",
+              href: localizePath("/services#tanks-containers", locale),
+            },
+          ]}
+        />
+
         <HotDipGalvanizing
           data={{
             eyebrow: home.hotDipGalvanizing.eyebrow,
@@ -67,6 +104,7 @@ export default async function Home() {
             benefits: home.hotDipGalvanizing.benefits,
             ctaLabel: home.hotDipGalvanizing.ctaLabel,
           }}
+          href={localizePath("/services#hot-dip-galvanizing", locale)}
         />
         <MetallicConstructions
           data={{
@@ -80,6 +118,7 @@ export default async function Home() {
             description: home.metallicConstructions.description,
             ctaLabel: home.metallicConstructions.ctaLabel,
           }}
+          href={localizePath("/services#metal-constructions", locale)}
         />
         <TanksShowcase
           data={{
@@ -90,6 +129,7 @@ export default async function Home() {
             tanks: home.tanksShowcase.tanks,
             ctaLabel: home.tanksShowcase.ctaLabel,
           }}
+          href={localizePath("/services#tanks-containers", locale)}
         />
         <CtaBand locale={locale} />
       </main>

@@ -66,6 +66,7 @@ export default async function AboutPage() {
             bullets: about.servicesBand.bullets,
             ctaLabel: about.servicesBand.ctaLabel,
           }}
+          locale={locale}
         />
         <ClientsGrid
           data={{ heading: about.clientsGrid.heading, clients: about.clientsGrid.clients }}

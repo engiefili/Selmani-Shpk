@@ -108,6 +108,13 @@ export default defineType({
       type: "string",
       initialValue: "All rights reserved",
     }),
+    defineField({
+      name: "ctaBandImage",
+      title: "\"Let's shape your vision\" background image",
+      description:
+        "Background photo behind the contact CTA band shown at the bottom of every page.",
+      type: "image",
+    }),
   ],
   preview: {
     prepare() {

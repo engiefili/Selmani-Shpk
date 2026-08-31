@@ -1,4 +1,5 @@
 import CtaButton from "../CtaButton";
+import { localizePath, type Locale } from "@/lib/locale";
 
 export type ServicesBandData = {
   eyebrow?: string;
@@ -9,7 +10,13 @@ export type ServicesBandData = {
   ctaLabel?: string;
 };
 
-export default function ServicesBand({ data }: { data: ServicesBandData }) {
+export default function ServicesBand({
+  data,
+  locale = "en",
+}: {
+  data: ServicesBandData;
+  locale?: Locale;
+}) {
   return (
     <section className="bg-neutral-950 px-5 py-4 sm:px-10">
       <div className="relative mx-auto w-full max-w-[1800px] overflow-hidden rounded-2xl">
@@ -19,9 +26,13 @@ export default function ServicesBand({ data }: { data: ServicesBandData }) {
           alt=""
           className="absolute inset-0 h-full w-full object-cover"
         />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-l from-neutral-950 from-30% via-neutral-950/85 to-neutral-950/20" />
+        {/* Mobile: text spans the full card width, so a uniform dark
+            wash keeps it legible. Desktop/tablet: original side gradient,
+            since text sits in a narrower right-aligned column there. */}
+        <div className="pointer-events-none absolute inset-0 bg-neutral-950/80 sm:hidden" />
+        <div className="pointer-events-none absolute inset-0 hidden bg-gradient-to-l from-neutral-950 from-30% via-neutral-950/85 to-neutral-950/20 sm:block" />
 
-        <div className="relative z-10 ml-auto flex flex-col gap-8 px-6 py-14 text-white sm:px-12 sm:py-20 lg:w-[65%] lg:min-w-[680px]">
+        <div className="relative z-10 ml-auto flex flex-col gap-6 px-5 py-8 text-white sm:gap-8 sm:px-12 sm:py-20 lg:w-[65%] lg:min-w-[680px]">
           <span className="inline-flex items-center gap-2 text-sm font-light text-[#eaefef]">
             <span className="h-2 w-2 rounded-full bg-[#eaefef]" />
             {data.eyebrow ?? "Services"}
@@ -47,7 +58,7 @@ export default function ServicesBand({ data }: { data: ServicesBandData }) {
           </div>
           <CtaButton
             label={data.ctaLabel ?? "Explore Services"}
-            href="#"
+            href={localizePath("/services", locale)}
             className="mt-2 w-full max-w-md"
           />
         </div>

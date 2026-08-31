@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 import ProjectGrid, { type ProjectImage } from "./ProjectGrid";
 
 export type ProjectsTabsData = {
@@ -33,7 +34,16 @@ export default function ProjectsTabs({
   data: ProjectsTabsData;
   locale?: "en" | "sq";
 }) {
-  const [active, setActive] = useState<string>(data[0]?.id ?? "");
+  // Supports deep-linking from other pages (e.g. a service section's
+  // "See All" button) via /projects?tab=<tabId>, falling back to the
+  // first tab when absent or unrecognized.
+  const searchParams = useSearchParams();
+  const requestedTab = searchParams.get("tab");
+  const initialTab =
+    requestedTab && data.some((tab) => tab.id === requestedTab)
+      ? requestedTab
+      : (data[0]?.id ?? "");
+  const [active, setActive] = useState<string>(initialTab);
   const activeTab = data.find((tab) => tab.id === active);
 
   return (

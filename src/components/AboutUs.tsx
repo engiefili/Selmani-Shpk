@@ -11,9 +11,9 @@ export default function AboutUs({ data }: { data: AboutUsData }) {
   return (
     <section
       id="about"
-      className="bg-neutral-950 px-5 py-16 text-white sm:px-10"
+      className="bg-neutral-950 px-5 py-10 text-white sm:px-10 sm:py-16"
     >
-      <div className="mx-auto grid w-full max-w-[1800px] gap-8 lg:grid-cols-[5fr_2fr] lg:items-center">
+      <div className="mx-auto grid w-full max-w-[1800px] gap-6 sm:gap-8 lg:grid-cols-[5fr_2fr] lg:items-center">
         <div className="flex flex-col gap-6">
           <Eyebrow>{data.eyebrow ?? "About Us"}</Eyebrow>
           <p
@@ -24,7 +24,7 @@ export default function AboutUs({ data }: { data: AboutUsData }) {
           </p>
         </div>
 
-        <div className="relative aspect-square w-full max-w-sm overflow-hidden rounded-full justify-self-end">
+        <div className="relative hidden aspect-square w-full overflow-hidden rounded-full sm:block sm:max-w-sm sm:justify-self-end">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={data.image}

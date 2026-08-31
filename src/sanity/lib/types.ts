@@ -236,6 +236,7 @@ export type SiteSettingsDoc = {
   mapLinkUrl?: string;
   copyrightText?: string;
   rightsReservedText?: string;
+  ctaBandImage?: Image;
 };
 
 export type ContactPageDoc = {

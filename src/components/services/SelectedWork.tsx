@@ -3,9 +3,11 @@ import CtaButton from "../CtaButton";
 export default function SelectedWork({
   images,
   locale = "en",
+  href = "#",
 }: {
   images: string[];
   locale?: "en" | "sq";
+  href?: string;
 }) {
   return (
     <section className="bg-neutral-950 px-5 pb-16 pt-10 text-white sm:px-10">
@@ -19,7 +21,7 @@ export default function SelectedWork({
           </h3>
           <CtaButton
             label={locale === "sq" ? "Shiko të gjitha" : "See All"}
-            href="#"
+            href={href}
             className="w-full max-w-md"
           />
         </div>
