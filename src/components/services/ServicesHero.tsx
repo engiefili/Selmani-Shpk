@@ -17,17 +17,21 @@ export default function ServicesHero({
       />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-neutral-950/85 via-neutral-950/25 to-neutral-950/35" />
 
-      {/* Content sits near the bottom of the full-screen hero on mobile
-          (a comfortable gap above the next section, not a dead centered
-          gap below it), and reverts to vertical centering at lg. */}
-      <div className="absolute inset-0 mx-auto flex w-full max-w-[1800px] flex-col justify-end gap-6 px-5 pb-10 sm:px-10 lg:justify-center lg:py-24">
+      {/* Mobile mirrors the desktop hierarchy: title is the first thing
+          seen near the top, quick-nav pills sit separately in the bottom
+          right corner. lg reverts to the title vertically centered on its
+          own, with ServiceSideNavDesktop as the separate bottom-right block
+          below. */}
+      <div className="absolute inset-0 mx-auto flex w-full max-w-[1800px] flex-col justify-between gap-6 px-5 pt-28 pb-10 sm:px-10 lg:justify-center lg:py-24">
         <h1
           className="font-heading font-black leading-none tracking-tight text-[#c1c7c7]"
           style={{ fontSize: "clamp(2.5rem, 6.5vw, 7rem)" }}
         >
           {locale === "sq" ? "Shërbime & Produkte" : "Services & Products"}
         </h1>
-        <ServiceSideNavMobile locale={locale} />
+        <div className="flex justify-end lg:hidden">
+          <ServiceSideNavMobile locale={locale} />
+        </div>
       </div>
 
       <div className="absolute inset-x-0 bottom-0 z-10 mx-auto hidden w-full max-w-[1800px] justify-end px-5 pb-12 sm:px-10 lg:flex">

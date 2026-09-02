@@ -20,7 +20,7 @@ export default function PageHero({
   sections: PageNavSection[];
 }) {
   return (
-    <section className="relative min-h-[520px] overflow-hidden bg-neutral-950 text-white sm:min-h-[600px] lg:h-[90vh] lg:min-h-[760px]">
+    <section className="relative min-h-dvh overflow-hidden bg-neutral-950 text-white lg:h-[90vh] lg:min-h-[760px]">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={image}
@@ -30,7 +30,12 @@ export default function PageHero({
       />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-neutral-950/85 via-neutral-950/25 to-neutral-950/35" />
 
-      <div className="absolute inset-0 mx-auto flex w-full max-w-[1800px] flex-col justify-center px-5 py-24 sm:px-10">
+      {/* Mobile mirrors the desktop hierarchy: title/description is the
+          first thing seen near the top, quick-nav pills sit separately in
+          the bottom right corner. lg reverts to everything vertically
+          centered together, with PageSideNavDesktop as its own bottom-right
+          block below. */}
+      <div className="absolute inset-0 mx-auto flex w-full max-w-[1800px] flex-col justify-between gap-6 px-5 pt-28 pb-10 sm:px-10 lg:justify-center lg:py-24">
         <div className="flex flex-col gap-6">
           <h1
             className="whitespace-pre-line font-heading font-black leading-[0.95] tracking-tight text-white"
@@ -43,6 +48,8 @@ export default function PageHero({
               {description}
             </p>
           )}
+        </div>
+        <div className="flex justify-end lg:hidden">
           <PageSideNavMobile sections={sections} />
         </div>
       </div>

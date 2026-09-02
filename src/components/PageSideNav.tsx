@@ -27,7 +27,7 @@ export function PageSideNavMobile({
   sections: PageNavSection[];
 }) {
   return (
-    <nav className="flex w-full flex-col items-start gap-2.5 lg:hidden">
+    <nav className="flex w-full flex-col items-end gap-2.5 lg:hidden">
       {sections.map((section) => (
         <a
           key={section.id}
