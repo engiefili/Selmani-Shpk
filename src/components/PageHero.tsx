@@ -35,7 +35,7 @@ export default function PageHero({
           the bottom right corner. lg reverts to everything vertically
           centered together, with PageSideNavDesktop as its own bottom-right
           block below. */}
-      <div className="absolute inset-0 mx-auto flex w-full max-w-[1800px] flex-col justify-between gap-6 px-5 pt-28 pb-10 sm:px-10 lg:justify-center lg:py-24">
+      <div className="absolute inset-0 mx-auto flex w-full max-w-[1800px] flex-col justify-between gap-6 px-5 pt-40 pb-10 sm:px-10 lg:justify-center lg:py-24">
         <div className="flex flex-col gap-6">
           <h1
             className="whitespace-pre-line font-heading font-black leading-[0.95] tracking-tight text-white"
