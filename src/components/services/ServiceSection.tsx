@@ -59,8 +59,10 @@ export default function ServiceSection({
         </div>
 
         <div className="mt-10 grid grid-cols-1 items-stretch gap-3 lg:grid-cols-2">
-          {/* Tab card */}
-          <div className="flex flex-col rounded-xl bg-[#171919] p-8 lg:min-h-[820px] lg:p-10">
+          {/* Tab card — ordered after the image on mobile so the photo
+              gives context before the reader hits the detail text;
+              lg:order-none restores source order (card first) side by side. */}
+          <div className="order-2 flex flex-col rounded-xl bg-[#171919] p-8 lg:order-none lg:min-h-[820px] lg:p-10">
             <div className="flex w-full gap-3" role="tablist">
               {tabs.map((tab, i) => (
                 <button
@@ -104,7 +106,7 @@ export default function ServiceSection({
           </div>
 
           {/* Image */}
-          <div className="relative min-h-[360px] overflow-hidden rounded-xl bg-neutral-800 lg:h-full">
+          <div className="order-1 relative min-h-[360px] overflow-hidden rounded-xl bg-neutral-800 lg:order-none lg:h-full">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={activeImage}

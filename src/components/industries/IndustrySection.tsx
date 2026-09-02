@@ -72,8 +72,16 @@ export default function IndustrySection({
   imagePosition?: "left" | "right";
   locale?: "en" | "sq";
 }) {
+  // Image always renders first on mobile — visual context before the
+  // reading detail — regardless of which side it sits on at desktop
+  // width, where imagePosition controls left/right placement instead.
+  const imageOrderClass = imagePosition === "left" ? "" : "order-1 lg:order-2";
+  const textOrderClass = imagePosition === "left" ? "" : "order-2 lg:order-1";
+
   const imageBlock = image ? (
-    <div className="relative min-h-[320px] overflow-hidden rounded-xl bg-neutral-800 lg:h-full">
+    <div
+      className={`relative min-h-[320px] overflow-hidden rounded-xl bg-neutral-800 lg:h-full ${imageOrderClass}`}
+    >
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={image}
@@ -88,7 +96,7 @@ export default function IndustrySection({
   // heading -> applications -> optional closing paragraph, in that order.
   if (image) {
     const textBlock = (
-      <div className="flex flex-col gap-8">
+      <div className={`flex flex-col gap-8 ${textOrderClass}`}>
         <Heading eyebrow={eyebrow} title={title} description={description} />
         <Applications items={applications} locale={locale} />
         {closing && (

@@ -20,7 +20,7 @@ export default function PageHero({
   sections: PageNavSection[];
 }) {
   return (
-    <section className="relative h-[90vh] min-h-[760px] overflow-hidden bg-neutral-950 text-white">
+    <section className="relative min-h-[520px] overflow-hidden bg-neutral-950 text-white sm:min-h-[600px] lg:h-[90vh] lg:min-h-[760px]">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={image}
@@ -30,7 +30,7 @@ export default function PageHero({
       />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-neutral-950/85 via-neutral-950/25 to-neutral-950/35" />
 
-      <div className="relative mx-auto flex h-full w-full max-w-[1800px] flex-col justify-center px-5 sm:px-10">
+      <div className="absolute inset-0 mx-auto flex w-full max-w-[1800px] flex-col justify-center px-5 py-24 sm:px-10">
         <div className="flex flex-col gap-6">
           <h1
             className="whitespace-pre-line font-heading font-black leading-[0.95] tracking-tight text-white"
