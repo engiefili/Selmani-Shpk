@@ -6,7 +6,7 @@ export type ProjectsHeroData = {
 
 export default function ProjectsHero({ data }: { data: ProjectsHeroData }) {
   return (
-    <section className="relative h-[56vh] min-h-[460px] overflow-hidden bg-neutral-950 text-white">
+    <section className="relative h-[64vh] min-h-[560px] overflow-hidden bg-neutral-950 text-white">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={data.image}

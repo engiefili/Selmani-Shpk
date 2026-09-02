@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CtaBand from "@/components/CtaBand";
 import PageHero from "@/components/PageHero";
+import IndustriesIntro from "@/components/industries/IndustriesIntro";
 import IndustrySection from "@/components/industries/IndustrySection";
 import { getLocale } from "@/lib/locale";
 import { urlForImage } from "@/sanity/lib/image";
@@ -42,11 +43,12 @@ export default async function IndustriesPage() {
       <main className="flex flex-1 flex-col">
         <PageHero
           title={page.heroTitle}
-          description={page.heroDescription}
           image={urlForImage(page.heroImage).width(2400).url()}
           imageAlt={page.heroImageAlt ?? ""}
           sections={navSections}
         />
+
+        <IndustriesIntro description={page.heroDescription} />
 
         {page.sections.map((section) => (
           <IndustrySection

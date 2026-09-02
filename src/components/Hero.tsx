@@ -18,7 +18,7 @@ export default function Hero({
   const headingLines = data.heading.split("\n");
 
   return (
-    <section className="relative flex h-[90vh] min-h-[560px] flex-col overflow-hidden bg-neutral-950 px-5 pb-6 pt-20 text-white sm:min-h-[720px] sm:px-10 sm:pb-8 sm:pt-24">
+    <section className="relative flex min-h-dvh flex-col overflow-hidden bg-neutral-950 px-5 pb-10 pt-20 text-white sm:px-10 sm:pb-8 sm:pt-24 lg:h-[90vh] lg:min-h-[720px]">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={data.backgroundImage}
@@ -44,7 +44,7 @@ export default function Hero({
         </p>
       </div>
 
-      <div className="relative z-10 mt-6 flex flex-col items-stretch gap-8 border-t border-white/10 pt-5 sm:mt-10 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between sm:gap-6 sm:pt-6">
+      <div className="relative z-10 mt-10 flex flex-col items-stretch gap-8 border-t border-white/10 pt-5 sm:mt-10 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between sm:gap-6 sm:pt-6">
         {/* Mobile: equal-width badge chips, so certifications with
             different text lengths still line up cleanly in a row. */}
         <div className="grid grid-cols-3 gap-2 sm:hidden">
