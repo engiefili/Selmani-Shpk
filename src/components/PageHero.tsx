@@ -42,7 +42,7 @@ export default function PageHero({
         </div>
       </div>
 
-      <div className="absolute inset-x-0 bottom-0 z-10 mx-auto flex w-full max-w-[1800px] justify-end px-5 pb-12 sm:px-10">
+      <div className="absolute inset-x-0 bottom-0 z-10 mx-auto flex w-full max-w-[1800px] justify-start px-5 pb-8 sm:px-10 lg:justify-end lg:pb-12">
         <PageSideNav sections={sections} />
       </div>
     </section>
