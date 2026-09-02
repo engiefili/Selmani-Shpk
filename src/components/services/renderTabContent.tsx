@@ -23,23 +23,25 @@ function TextBlockEl({ block }: { block: TextBlock }) {
   switch (block.style) {
     case "intro":
       return (
-        <p className="text-[32px] font-normal leading-none text-[#c1c7c7]">
+        <p className="text-xl font-normal leading-tight text-[#c1c7c7] sm:text-2xl sm:leading-none lg:text-[32px]">
           {block.text}
         </p>
       );
     case "label":
       return (
-        <p className="text-2xl font-normal leading-[0.9] text-[#c1c7c7]">
+        <p className="text-lg font-normal leading-snug text-[#c1c7c7] sm:text-xl sm:leading-[0.9] lg:text-2xl">
           {block.text}
         </p>
       );
     case "title":
       return (
-        <p className="text-2xl font-normal text-[#eaefef]">{block.text}</p>
+        <p className="text-lg font-normal text-[#eaefef] sm:text-xl lg:text-2xl">
+          {block.text}
+        </p>
       );
     case "body":
       return (
-        <p className="mt-3 text-xl font-light text-[#c1c7c7]">
+        <p className="mt-3 text-base font-light text-[#c1c7c7] sm:text-lg lg:text-xl">
           {block.text}
         </p>
       );
@@ -56,7 +58,7 @@ function BlockEl({ block }: { block: ContentBlock }) {
       return (
         <div className="flex flex-col gap-6">
           {block.heading && (
-            <p className="text-2xl font-normal leading-[0.9] text-[#c1c7c7]">
+            <p className="text-lg font-normal leading-snug text-[#c1c7c7] sm:text-xl sm:leading-[0.9] lg:text-2xl">
               {block.heading}
             </p>
           )}
@@ -67,7 +69,7 @@ function BlockEl({ block }: { block: ContentBlock }) {
       return (
         <div>
           {block.heading && (
-            <p className="text-2xl font-normal leading-[0.9] text-[#c1c7c7]">
+            <p className="text-lg font-normal leading-snug text-[#c1c7c7] sm:text-xl sm:leading-[0.9] lg:text-2xl">
               {block.heading}
             </p>
           )}
