@@ -30,12 +30,13 @@ export default function PageHero({
       />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-neutral-950/85 via-neutral-950/25 to-neutral-950/35" />
 
-      {/* Mobile mirrors the desktop hierarchy: title/description is the
-          first thing seen near the top, quick-nav pills sit separately in
-          the bottom right corner. lg reverts to everything vertically
-          centered together, with PageSideNavDesktop as its own bottom-right
-          block below. */}
-      <div className="absolute inset-0 mx-auto flex w-full max-w-[1800px] flex-col justify-between gap-6 px-5 pt-40 pb-10 sm:px-10 lg:justify-center lg:py-24">
+      {/* Mobile mirrors the desktop hierarchy: title/description first,
+          quick-nav pills right underneath but right-aligned so they read
+          as a secondary corner element. Both sit near the top, leaving
+          the rest of the full-screen hero as open photo. lg reverts to
+          everything vertically centered together, with PageSideNavDesktop
+          as its own bottom-right block below. */}
+      <div className="absolute inset-0 mx-auto flex w-full max-w-[1800px] flex-col justify-start gap-6 px-5 pt-40 pb-10 sm:px-10 lg:justify-center lg:py-24">
         <div className="flex flex-col gap-6">
           <h1
             className="whitespace-pre-line font-heading font-black leading-[0.95] tracking-tight text-white"

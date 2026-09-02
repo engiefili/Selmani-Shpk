@@ -17,12 +17,14 @@ export default function ServicesHero({
       />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-neutral-950/85 via-neutral-950/25 to-neutral-950/35" />
 
-      {/* Mobile mirrors the desktop hierarchy: title is the first thing
-          seen near the top, quick-nav pills sit separately in the bottom
-          right corner. lg reverts to the title vertically centered on its
-          own, with ServiceSideNavDesktop as the separate bottom-right block
-          below. */}
-      <div className="absolute inset-0 mx-auto flex w-full max-w-[1800px] flex-col justify-between gap-6 px-5 pt-40 pb-10 sm:px-10 lg:justify-center lg:py-24">
+      {/* Mobile mirrors the desktop hierarchy: title first, quick-nav
+          pills right underneath it but right-aligned so they read as a
+          secondary corner element rather than part of the title block.
+          Both sit near the top, leaving the rest of the full-screen hero
+          as open photo. lg reverts to everything vertically centered
+          together, with ServiceSideNavDesktop as its own bottom-right
+          block below. */}
+      <div className="absolute inset-0 mx-auto flex w-full max-w-[1800px] flex-col justify-start gap-6 px-5 pt-40 pb-10 sm:px-10 lg:justify-center lg:py-24">
         <h1
           className="font-heading font-black leading-none tracking-tight text-[#c1c7c7]"
           style={{ fontSize: "clamp(2.5rem, 6.5vw, 7rem)" }}
