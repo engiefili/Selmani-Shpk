@@ -41,7 +41,18 @@ export function AccordionGroup({
         </span>
       </button>
       <div className="border-t border-[#e6e6e6]/25" />
-      {open && <div className="pt-6">{children}</div>}
+      {/* Grid-rows trick animates from 0fr to 1fr smoothly regardless of
+          the content's actual height, without measuring anything in JS. */}
+      <div
+        className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${
+          open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+        }`}
+        aria-hidden={!open}
+      >
+        <div className="overflow-hidden">
+          <div className="pt-6">{children}</div>
+        </div>
+      </div>
     </div>
   );
 }

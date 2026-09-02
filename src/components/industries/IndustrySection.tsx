@@ -110,7 +110,7 @@ export default function IndustrySection({
     return (
       <section
         id={id}
-        className="scroll-mt-24 bg-neutral-950 px-5 py-12 text-white sm:px-10"
+        className="scroll-mt-4 bg-neutral-950 px-5 py-12 text-white sm:px-10"
       >
         <div className="mx-auto grid w-full max-w-[1800px] grid-cols-1 items-stretch gap-x-16 gap-y-8 lg:grid-cols-2">
           {imagePosition === "left" ? (

@@ -32,7 +32,7 @@ export function ServiceSideNavMobile({
   const SECTIONS = locale === "sq" ? SECTIONS_SQ : SECTIONS_EN;
 
   return (
-    <nav className="flex w-full flex-wrap gap-2.5 lg:hidden">
+    <nav className="flex w-full flex-col items-start gap-2.5 lg:hidden">
       {SECTIONS.map((section) => (
         <a
           key={section.id}

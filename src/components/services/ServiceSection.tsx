@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useState, type CSSProperties, type ReactNode } from "react";
 
 export type ServiceTab = {
   label: string;
@@ -33,13 +33,22 @@ export default function ServiceSection({
   extra?: ReactNode;
 }) {
   const [activeTab, setActiveTab] = useState(0);
+  // Direction the content should swipe in from, based on whether the
+  // newly selected tab sits to the right or left of the current one.
+  const [tabDirection, setTabDirection] = useState(1);
   const activeImage = tabs[activeTab]?.image ?? image;
   const activeImageAlt = tabs[activeTab]?.imageAlt ?? imageAlt;
+
+  const selectTab = (i: number) => {
+    if (i === activeTab) return;
+    setTabDirection(i > activeTab ? 1 : -1);
+    setActiveTab(i);
+  };
 
   return (
     <section
       id={id}
-      className="scroll-mt-24 bg-neutral-950 px-5 pt-16 pb-4 text-white sm:px-10"
+      className="scroll-mt-4 bg-neutral-950 px-5 pt-16 pb-4 text-white sm:px-10"
     >
       <div className="mx-auto w-full max-w-[1800px]">
         <div className="flex max-w-3xl flex-col gap-[30px]">
@@ -69,7 +78,7 @@ export default function ServiceSection({
                   key={tab.label}
                   role="tab"
                   aria-selected={activeTab === i}
-                  onClick={() => setActiveTab(i)}
+                  onClick={() => selectTab(i)}
                   className={`flex-1 rounded-md px-4 py-3 text-center text-xl font-medium tracking-wide transition ${
                     activeTab === i
                       ? "border border-accent bg-accent text-[#eaefef]"
@@ -81,7 +90,12 @@ export default function ServiceSection({
               ))}
             </div>
 
-            <div className="mt-8 flex flex-1 flex-col" role="tabpanel">
+            <div
+              key={activeTab}
+              className="tab-swipe-in mt-8 flex flex-1 flex-col"
+              style={{ "--tab-dir": tabDirection } as CSSProperties}
+              role="tabpanel"
+            >
               {tabs[activeTab]?.content}
             </div>
 
