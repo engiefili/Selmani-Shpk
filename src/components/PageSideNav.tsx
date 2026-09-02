@@ -17,6 +17,59 @@ function ArrowIcon() {
   );
 }
 
+// Rendered right under the title/description on mobile — where the reader's
+// eye already is — instead of pinned to the bottom of a tall hero with a
+// dead gap in between. Desktop keeps its own bottom-right placement via
+// PageSideNavDesktop, since that layout has room to spare.
+export function PageSideNavMobile({
+  sections,
+}: {
+  sections: PageNavSection[];
+}) {
+  return (
+    <nav className="flex w-full flex-wrap gap-2.5 lg:hidden">
+      {sections.map((section) => (
+        <a
+          key={section.id}
+          href={`#${section.id}`}
+          className="inline-flex items-center gap-2.5 rounded-full border border-[#c1c7c7]/80 bg-black/25 py-2 pl-4 pr-2 text-sm font-light text-[#eaefef] backdrop-blur-sm transition hover:border-accent hover:text-accent"
+        >
+          {section.label}
+          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-current p-1">
+            <ArrowIcon />
+          </span>
+        </a>
+      ))}
+    </nav>
+  );
+}
+
+export function PageSideNavDesktop({
+  sections,
+}: {
+  sections: PageNavSection[];
+}) {
+  return (
+    <nav className="hidden w-full max-w-[min(920px,90vw)] flex-col items-end lg:flex">
+      {sections.map((section) => (
+        <a
+          key={section.id}
+          href={`#${section.id}`}
+          className="flex w-fit items-center gap-8 whitespace-nowrap border-b border-[#c1c7c7] py-4 text-right font-light leading-none text-[#eaefef] transition"
+          style={{
+            fontSize: "clamp(1.1rem, 1.7vw, 32px)",
+          }}
+        >
+          {section.label}
+          <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md border border-current p-3 text-lg transition">
+            <ArrowIcon />
+          </span>
+        </a>
+      ))}
+    </nav>
+  );
+}
+
 export default function PageSideNav({
   sections,
 }: {
@@ -24,41 +77,8 @@ export default function PageSideNav({
 }) {
   return (
     <>
-      {/* Mobile/tablet: wraps onto multiple lines so every section is
-          visible without swiping, instead of vanishing entirely below lg. */}
-      <nav className="flex w-full flex-wrap gap-2.5 lg:hidden">
-        {sections.map((section) => (
-          <a
-            key={section.id}
-            href={`#${section.id}`}
-            className="inline-flex items-center gap-2.5 rounded-full border border-[#c1c7c7]/80 bg-black/25 py-2 pl-4 pr-2 text-sm font-light text-[#eaefef] backdrop-blur-sm transition hover:border-accent hover:text-accent"
-          >
-            {section.label}
-            <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border border-current p-1">
-              <ArrowIcon />
-            </span>
-          </a>
-        ))}
-      </nav>
-
-      {/* Desktop: original vertical list */}
-      <nav className="hidden w-full max-w-[min(920px,90vw)] flex-col items-end lg:flex">
-        {sections.map((section) => (
-          <a
-            key={section.id}
-            href={`#${section.id}`}
-            className="flex w-fit items-center gap-8 whitespace-nowrap border-b border-[#c1c7c7] py-4 text-right font-light leading-none text-[#eaefef] transition"
-            style={{
-              fontSize: "clamp(1.1rem, 1.7vw, 32px)",
-            }}
-          >
-            {section.label}
-            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md border border-current p-3 text-lg transition">
-              <ArrowIcon />
-            </span>
-          </a>
-        ))}
-      </nav>
+      <PageSideNavMobile sections={sections} />
+      <PageSideNavDesktop sections={sections} />
     </>
   );
 }
