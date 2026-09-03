@@ -164,12 +164,29 @@ One more image-related note: Sanity's CDN serves images under hash-based filenam
 
 **Duplicate/overlapping content risk.** The homepage repeats condensed versions of the Hot Dip Galvanizing, Metal Constructions, and Tanks & Containers sections (via `MobileServiceCarousel` and the three showcase components) that also appear in full on the Services page. This is normal for a homepage teaser pattern and not a real duplicate-content penalty risk, but worth knowing the homepage's own keyword relevance for those specific terms is partially diluted by the fuller version living on `/services`.
 
+## Alt-Text Audit (Sanity CMS Content)
+
+Queried every document in the Sanity dataset (Home, About, Industries, Projects, Contact, Site Settings, and all 10 Service documents across both locales) and checked every image field against its alt-text field. The picture is better than the original audit assumed.
+
+**Primary content images are fully covered.** Every hero image, section image, and service-tab image in the CMS has a real, descriptive `imageAlt` value — not placeholder text. Examples: "Hot-dip galvanized steel staircase," "Telecommunications transmission tower," "Galvanized steel poles being dipped into a treatment bath," "Grain silo steel structures against an overcast sky." These fields are also marked required in the schema, so this isn't at risk of regressing as new content gets added. No action needed here.
+
+**Decorative icons correctly use empty alt text.** Feature-grid icons, commitment-grid icons, and metallic-constructions icons all render with `alt=""` in code. That's the right call under WCAG — each icon sits directly next to its own visible label ("Structural steel frames," "Mutual Trust," etc.), so a screen reader announcing the icon separately would just repeat the label. These have no alt field in the Sanity schema at all, which is fine since they're meant to stay decorative.
+
+**The real gap: gallery and project-grid thumbnails have no per-image alt text.** Two places in the schema — each service document's `gallery` array (used in the "Selected Work" strip, 5 images per service) and the Projects page's `tabs[].groups[].images` array (used in the project photo grids, ~35–40 images per language) — store images as bare references with no alt field attached at all. The code fills in a generic positional fallback instead (`"Selected work 1"`, `"Hot Dip Galvanising project photo 3"`), which is non-empty and passes automated accessibility checks, but doesn't describe what's actually in the photo. Fixing this properly means a schema change (adding an `alt` string field to each array's image objects) plus writing real captions for roughly 110+ individual photos — a genuine content task, not something I can do from here since the write token is read-only. Worth doing eventually, low urgency: these are supplementary gallery shots, not the primary content search engines weight most heavily.
+
+**Minor: a few alt texts aren't localized.** The About page's hero image, the Industries and Projects hero images, and the three Tanks & Containers tab images reuse the identical English alt string on the Albanian-locale documents (e.g. `industriesPage_sq` still has `"Grain silo steel structures against an overcast sky"` rather than an Albanian translation). Doesn't break anything — the description is still accurate — but a screen-reader user on the Albanian pages hears English. Nice-to-have, not urgent.
+
+**Logo has no CMS-level alt field.** `siteSettings.logo` is used sitewide but its alt text ("Selmani") is hardcoded in `HeaderClient.tsx` rather than editable in Studio. Not a bug — it's short, accurate, and unlikely to need changing — just noting it's a code-level string if anyone ever needs to edit it.
+
+If you want the gallery/project-grid captions written, I'd need real descriptions of what's in each photo (location, project type, etc.) — that's not something I can infer from a hash-named CDN filename. Happy to draft a schema change and placeholder Studio instructions whenever that content is ready.
+
 ## Next Steps
 
-Happy to:
-- Implement the technical fixes (sitemap, robots.txt, per-page metadata, hreflang, `lang` attribute, JSON-LD) directly in the codebase — this is the highest-value, lowest-effort chunk of this list.
-- Draft the Albanian title/description copy natively rather than translated.
-- Draft the FAQ content and schema.
-- Take a first pass at migrating images to `next/image`.
+Domain/redirect work remains on hold per your note that the client hasn't signed off on the site yet. Everything else from this report's original list is now done: sitemap, robots.txt, per-page metadata, hreflang, `lang` attribute, JSON-LD, the FAQ section, tab-content crawlability, and the `next/image` migration.
+
+Remaining open items, roughly in priority order:
+- Domain migration and 301 redirects (blocked on client sign-off).
+- Real per-image captions for the gallery/project-grid photos, if/when that content exists.
+- Localized Albanian alt text for the handful of images noted above.
 
 Let me know which of these you'd like tackled first — my instinct is the metadata/sitemap/robots.txt work, since it's self-contained and doesn't depend on the domain decision.

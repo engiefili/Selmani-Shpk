@@ -75,9 +75,10 @@ export default async function ServicesPage() {
             />
             {section.gallery && section.gallery.length > 0 && (
               <SelectedWork
-                images={section.gallery.map((img) =>
-                  urlForImage(img).width(900).url()
-                )}
+                images={section.gallery.map((img, i) => ({
+                  src: urlForImage(img).width(900).url(),
+                  alt: img.alt ?? `${section.title} — selected work ${i + 1}`,
+                }))}
                 locale={locale}
                 href={localizePath(
                   `/projects?tab=${

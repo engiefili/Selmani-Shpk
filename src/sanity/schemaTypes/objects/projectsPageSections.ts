@@ -15,7 +15,19 @@ export const projectImageGroup = defineType({
       name: "images",
       title: "Images",
       type: "array",
-      of: [{ type: "image" }],
+      of: [
+        {
+          type: "image",
+          fields: [
+            defineField({
+              name: "alt",
+              title: "Alt text",
+              type: "string",
+              validation: (Rule) => Rule.required(),
+            }),
+          ],
+        },
+      ],
       validation: (Rule) => Rule.required().min(1),
     }),
   ],

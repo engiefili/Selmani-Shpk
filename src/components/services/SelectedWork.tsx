@@ -1,12 +1,14 @@
 import Image from "next/image";
 import CtaButton from "../CtaButton";
 
+export type SelectedWorkImage = { src: string; alt: string };
+
 export default function SelectedWork({
   images,
   locale = "en",
   href = "#",
 }: {
-  images: string[];
+  images: SelectedWorkImage[];
   locale?: "en" | "sq";
   href?: string;
 }) {
@@ -23,7 +25,7 @@ export default function SelectedWork({
         </div>
 
         <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-          {images.map((src, i) => (
+          {images.map(({ src, alt }, i) => (
             <div
               key={src}
               // Below lg the grid is 2-3 columns, so a 5th (or later) image
@@ -35,7 +37,7 @@ export default function SelectedWork({
             >
               <Image
                 src={src}
-                alt={`Selected work ${i + 1}`}
+                alt={alt}
                 fill
                 sizes="(min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw"
                 className="object-cover"

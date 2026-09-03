@@ -55,7 +55,7 @@ export default async function ProjectsPage() {
       images: group.images.map((img, i) => ({
         src: urlForImage(img).width(700).height(700).quality(90).url(),
         full: urlForImage(img).width(900).fit("max").quality(95).url(),
-        alt: `${tab.label} project photo ${i + 1}`,
+        alt: img.alt ?? `${tab.label} project photo ${i + 1}`,
       })),
     })),
   }));

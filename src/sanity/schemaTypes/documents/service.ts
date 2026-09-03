@@ -125,7 +125,19 @@ export default defineType({
       name: "gallery",
       title: "Gallery images",
       type: "array",
-      of: [{ type: "image" }],
+      of: [
+        {
+          type: "image",
+          fields: [
+            defineField({
+              name: "alt",
+              title: "Alt text",
+              type: "string",
+              validation: (Rule) => Rule.required(),
+            }),
+          ],
+        },
+      ],
       description: "Shown in the \"Selected Work\" strip below this section.",
     }),
   ],

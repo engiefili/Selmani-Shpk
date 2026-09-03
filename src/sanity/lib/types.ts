@@ -1,5 +1,11 @@
 import type { Image } from "sanity";
 
+// An image array item with the "alt" field added by the array's `of`
+// definition in the schema (e.g. service.gallery, projectImageGroup.images)
+// — plain `Image` doesn't carry it since that field only exists on these
+// specific array item shapes, not on every image in the dataset.
+export type ImageWithAlt = Image & { _key?: string; alt?: string };
+
 export type SanityFeatureItem = {
   _key: string;
   label: string;
@@ -157,7 +163,7 @@ export type IndustriesPageDoc = {
 export type ProjectImageGroupDoc = {
   _key: string;
   subLabel?: string;
-  images: Image[];
+  images: ImageWithAlt[];
 };
 
 export type ProjectServiceTabDoc = {
@@ -192,7 +198,7 @@ export type ServiceDoc = {
     heading: string;
     steps: ProcessStepDoc[];
   };
-  gallery?: Image[];
+  gallery?: ImageWithAlt[];
 };
 
 export type NavDropdownItemDoc = {
