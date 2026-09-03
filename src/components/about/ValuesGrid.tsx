@@ -33,7 +33,10 @@ export default function ValuesGrid({
   return (
     <section className="bg-neutral-950 px-5 py-8 text-white sm:px-10 sm:py-10">
       <div className="mx-auto w-full max-w-[1800px]">
-        <h2 className="border-t border-[#e6e6e6]/20 pb-6 pt-6 text-3xl font-light text-[#c1c7c7] sm:text-4xl">
+        <h2
+          className="pb-8 font-light tracking-tight text-[#eaefef]"
+          style={{ fontSize: "clamp(2.5rem, 5vw, 72px)" }}
+        >
           {heading}
         </h2>
       </div>
