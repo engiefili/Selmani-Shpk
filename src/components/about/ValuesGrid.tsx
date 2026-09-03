@@ -2,6 +2,8 @@ export type ValuesGridData = {
   values: { title: string; description: string; image?: string }[];
 };
 
+const DEFAULT_HEADING = "Our Values";
+
 function ValueText({
   title,
   description,
@@ -19,11 +21,22 @@ function ValueText({
   );
 }
 
-export default function ValuesGrid({ data }: { data: ValuesGridData }) {
+export default function ValuesGrid({
+  data,
+  heading = DEFAULT_HEADING,
+}: {
+  data: ValuesGridData;
+  heading?: string;
+}) {
   const [performance, customer, durability] = data.values;
 
   return (
     <section className="bg-neutral-950 px-5 py-8 text-white sm:px-10 sm:py-10">
+      <div className="mx-auto w-full max-w-[1800px]">
+        <h2 className="border-t border-[#e6e6e6]/20 pb-6 pt-6 text-3xl font-light text-[#c1c7c7] sm:text-4xl">
+          {heading}
+        </h2>
+      </div>
       <div className="mx-auto grid w-full max-w-[1800px] grid-cols-1 gap-8 sm:gap-10 lg:grid-cols-3 lg:items-stretch">
         {/* Left: caption above image */}
         <div className="flex flex-col gap-5 sm:gap-6">

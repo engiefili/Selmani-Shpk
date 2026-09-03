@@ -76,8 +76,10 @@ export default function ServiceSection({
               {tabs.map((tab, i) => (
                 <button
                   key={tab.label}
+                  id={`tab-${id}-${i}`}
                   role="tab"
                   aria-selected={activeTab === i}
+                  aria-controls={`tabpanel-${id}-${i}`}
                   onClick={() => selectTab(i)}
                   className={`flex-1 rounded-md px-4 py-3 text-center text-xl font-medium tracking-wide transition ${
                     activeTab === i
@@ -90,13 +92,26 @@ export default function ServiceSection({
               ))}
             </div>
 
-            <div
-              key={activeTab}
-              className="tab-swipe-in mt-8 flex flex-1 flex-col"
-              style={{ "--tab-dir": tabDirection } as CSSProperties}
-              role="tabpanel"
-            >
-              {tabs[activeTab]?.content}
+            {/* Every tab's content stays in the DOM at all times — only
+                the active one is shown (via the "hidden" utility) — so
+                search engines can crawl all of it, not just whichever tab
+                happened to be open. Toggling display:none also naturally
+                replays the swipe-in animation each time a panel becomes
+                visible, so no remount/key trick is needed. */}
+            <div className="mt-8 flex flex-1 flex-col">
+              {tabs.map((tab, i) => (
+                <div
+                  key={tab.label}
+                  id={`tabpanel-${id}-${i}`}
+                  role="tabpanel"
+                  aria-labelledby={`tab-${id}-${i}`}
+                  aria-hidden={activeTab !== i}
+                  className={`tab-swipe-in flex flex-1 flex-col ${activeTab === i ? "" : "hidden"}`}
+                  style={{ "--tab-dir": tabDirection } as CSSProperties}
+                >
+                  {tab.content}
+                </div>
+              ))}
             </div>
 
             <div className="pt-8">

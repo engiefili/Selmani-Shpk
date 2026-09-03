@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import AboutUs from "@/components/AboutUs";
@@ -8,10 +9,27 @@ import MobileServiceCarousel from "@/components/MobileServiceCarousel";
 import CtaBand from "@/components/CtaBand";
 import Footer from "@/components/Footer";
 import { getLocale, localizePath } from "@/lib/locale";
+import { pageMetadata } from "@/lib/seo";
 import { urlForImage } from "@/sanity/lib/image";
 import { fetchLocalizedSingleton } from "@/sanity/lib/localizedFetch";
 import { homePageQuery } from "@/sanity/lib/queries";
 import type { HomePageDoc } from "@/sanity/lib/types";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  return pageMetadata({
+    path: "/",
+    locale,
+    title:
+      locale === "sq"
+        ? "Zinkim në të Nxehtë dhe Konstruksione Metalike në Shqipëri"
+        : "Hot-Dip Galvanizing & Steel Construction in Albania",
+    description:
+      locale === "sq"
+        ? "Selmani ofron zinkim në të nxehtë dhe konstruksione metalike për projekte civile, industriale dhe infrastrukturore në Shqipëri dhe jashtë saj, prej më shumë se 25 vjetësh."
+        : "Selmani has delivered hot-dip galvanizing and steel construction for civil, industrial, and infrastructure projects in Albania and abroad for over 25 years.",
+  });
+}
 
 export default async function Home() {
   const locale = await getLocale();

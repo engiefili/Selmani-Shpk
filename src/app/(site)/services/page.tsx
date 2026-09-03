@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CtaBand from "@/components/CtaBand";
@@ -6,6 +7,7 @@ import ServiceSection from "@/components/services/ServiceSection";
 import SelectedWork from "@/components/services/SelectedWork";
 import { renderTabContent } from "@/components/services/renderTabContent";
 import { getLocale, localizePath } from "@/lib/locale";
+import { pageMetadata } from "@/lib/seo";
 import { urlForImage } from "@/sanity/lib/image";
 import { fetchLocalizedServices } from "@/sanity/lib/localizedFetch";
 import { servicesByPageQuery } from "@/sanity/lib/queries";
@@ -20,6 +22,22 @@ const PROJECTS_TAB_BY_SECTION: Record<string, string> = {
   "metal-constructions": "metal-constructions",
   "tanks-containers": "tanks-containers",
 };
+
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  return pageMetadata({
+    path: "/services",
+    locale,
+    title:
+      locale === "sq"
+        ? "Shërbimet: Zinkim, Konstruksione Metalike & Depozita"
+        : "Services: Hot Dip Galvanizing, Metal Constructions & Tanks",
+    description:
+      locale === "sq"
+        ? "Zbuloni shërbimet e Selmani për zinkim në të nxehtë, konstruksione metalike dhe depozita e kontenierë çeliku sipas kërkesës."
+        : "Explore Selmani's hot-dip galvanizing, metal construction, and custom steel tank and container services.",
+  });
+}
 
 export default async function ServicesPage() {
   const locale = await getLocale();

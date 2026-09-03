@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CtaBand from "@/components/CtaBand";
@@ -5,10 +6,24 @@ import PageHero from "@/components/PageHero";
 import IndustriesIntro from "@/components/industries/IndustriesIntro";
 import IndustrySection from "@/components/industries/IndustrySection";
 import { getLocale } from "@/lib/locale";
+import { pageMetadata } from "@/lib/seo";
 import { urlForImage } from "@/sanity/lib/image";
 import { fetchLocalizedSingleton } from "@/sanity/lib/localizedFetch";
 import { industriesPageQuery } from "@/sanity/lib/queries";
 import type { IndustriesPageDoc } from "@/sanity/lib/types";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  return pageMetadata({
+    path: "/industries",
+    locale,
+    title: locale === "sq" ? "Industritë që Shërbejmë" : "Industries We Serve",
+    description:
+      locale === "sq"
+        ? "Nga telekomunikacioni tek infrastruktura publike, zbuloni industritë që Selmani pajis me konstruksione çeliku të zinkuara."
+        : "From telecommunications to public infrastructure, see the industries Selmani equips with galvanized steel construction.",
+  });
+}
 
 export default async function IndustriesPage() {
   const locale = await getLocale();

@@ -1,5 +1,16 @@
+import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+
+// English-only utility page — no Albanian translation exists, so no
+// hreflang alternates are set here (unlike the localized pages via
+// pageMetadata()).
+export const metadata: Metadata = {
+  title: "Privacy Policy",
+  description:
+    "Read Selmani's privacy policy to understand how we collect, use, and protect your personal information.",
+  alternates: { canonical: "/privacy-policy" },
+};
 
 const LAST_UPDATED = "August 13, 2026";
 

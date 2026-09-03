@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Suspense } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -5,10 +6,24 @@ import CtaBand from "@/components/CtaBand";
 import ProjectsHero from "@/components/projects/ProjectsHero";
 import ProjectsTabs from "@/components/projects/ProjectsTabs";
 import { getLocale } from "@/lib/locale";
+import { pageMetadata } from "@/lib/seo";
 import { urlForImage } from "@/sanity/lib/image";
 import { fetchLocalizedSingleton } from "@/sanity/lib/localizedFetch";
 import { projectsPageQuery } from "@/sanity/lib/queries";
 import type { ProjectsPageDoc } from "@/sanity/lib/types";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  return pageMetadata({
+    path: "/projects",
+    locale,
+    title: locale === "sq" ? "Projektet Tona" : "Our Projects",
+    description:
+      locale === "sq"
+        ? "Shfletoni projektet e përfunduara të zinkimit, konstruksioneve metalike dhe depozitave të realizuara nga Selmani në të gjithë Shqipërinë."
+        : "Browse completed hot-dip galvanizing, metal construction, and tank projects delivered by Selmani across Albania.",
+  });
+}
 
 export default async function ProjectsPage() {
   const locale = await getLocale();

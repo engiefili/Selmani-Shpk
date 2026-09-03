@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AboutHero from "@/components/about/AboutHero";
@@ -7,10 +8,24 @@ import ClientsGrid from "@/components/about/ClientsGrid";
 import CommitmentGrid from "@/components/about/CommitmentGrid";
 import CtaBand from "@/components/CtaBand";
 import { getLocale } from "@/lib/locale";
+import { pageMetadata } from "@/lib/seo";
 import { urlForImage } from "@/sanity/lib/image";
 import { fetchLocalizedSingleton } from "@/sanity/lib/localizedFetch";
 import { aboutPageQuery } from "@/sanity/lib/queries";
 import type { AboutPageDoc } from "@/sanity/lib/types";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  return pageMetadata({
+    path: "/about",
+    locale,
+    title: locale === "sq" ? "Rreth Nesh" : "About Us",
+    description:
+      locale === "sq"
+        ? "Selmani ofron zinkim në të nxehtë dhe konstruksione metalike të certifikuara që prej vitit 1998. Njihuni me historinë, vlerat dhe klientët tanë."
+        : "Selmani has delivered certified hot-dip galvanizing and steel construction since 1998. Learn about our story, values, and clients.",
+  });
+}
 
 export default async function AboutPage() {
   const locale = await getLocale();
@@ -49,6 +64,7 @@ export default async function AboutPage() {
           }}
         />
         <ValuesGrid
+          heading={locale === "sq" ? "Vlerat Tona" : "Our Values"}
           data={{
             values: about.valuesGrid.values.map((v) => ({
               title: v.title,

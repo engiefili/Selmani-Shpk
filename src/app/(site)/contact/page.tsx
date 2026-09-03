@@ -1,8 +1,10 @@
+import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ContactForm from "@/components/contact/ContactForm";
 import ContactMapBand from "@/components/contact/ContactMapBand";
 import { getLocale, localizePath } from "@/lib/locale";
+import { pageMetadata } from "@/lib/seo";
 import { contactPageQuery } from "@/sanity/lib/queries";
 import { fetchLocalizedSingleton } from "@/sanity/lib/localizedFetch";
 import type { ContactPageDoc } from "@/sanity/lib/types";
@@ -13,6 +15,19 @@ const fallback: ContactPageDoc = {
   heroSubtext:
     "Connect with us for advanced galvanizing solutions, expert consultation, and long-term partnerships.",
 };
+
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale();
+  return pageMetadata({
+    path: "/contact",
+    locale,
+    title: locale === "sq" ? "Na Kontaktoni" : "Contact Us",
+    description:
+      locale === "sq"
+        ? "Kontaktoni Selmani për oferta mbi zinkimin në të nxehtë, konstruksionet metalike ose prodhimin e depozitave sipas kërkesës."
+        : "Get in touch with Selmani for hot-dip galvanizing, steel construction, or custom tank manufacturing quotes.",
+  });
+}
 
 export default async function ContactPage() {
   const locale = await getLocale();
