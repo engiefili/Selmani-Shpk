@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Eyebrow from "./Eyebrow";
 
 export type AboutUsData = {
@@ -25,11 +26,12 @@ export default function AboutUs({ data }: { data: AboutUsData }) {
         </div>
 
         <div className="relative hidden aspect-square w-full overflow-hidden rounded-full sm:block sm:max-w-sm sm:justify-self-end">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src={data.image}
             alt={data.imageAlt ?? ""}
-            className="h-full w-full object-cover"
+            fill
+            sizes="384px"
+            className="object-cover"
           />
         </div>
       </div>

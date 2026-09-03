@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export type ProjectsHeroData = {
   title: string;
   image: string;
@@ -7,11 +9,13 @@ export type ProjectsHeroData = {
 export default function ProjectsHero({ data }: { data: ProjectsHeroData }) {
   return (
     <section className="relative h-[64vh] min-h-[560px] overflow-hidden bg-neutral-950 text-white">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
+      <Image
         src={data.image}
         alt={data.imageAlt ?? ""}
-        className="absolute inset-0 h-full w-full object-cover"
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover"
       />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-neutral-950/80 via-neutral-950/20 to-neutral-950/30" />
 

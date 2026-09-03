@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 
 export type ProjectImage = {
@@ -50,12 +51,12 @@ export default function ProjectGrid({ images }: { images: ProjectImage[] }) {
             onClick={() => setOpenIndex(i)}
             className="group relative aspect-square overflow-hidden rounded-lg bg-neutral-900"
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src={img.src}
               alt={img.alt}
-              loading="lazy"
-              className="absolute inset-0 h-full w-full object-cover transition duration-300 group-hover:scale-105"
+              fill
+              sizes="(min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw"
+              className="object-cover transition duration-300 group-hover:scale-105"
             />
           </button>
         ))}

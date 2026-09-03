@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export type ValuesGridData = {
   values: { title: string; description: string; image?: string }[];
 };
@@ -46,11 +48,12 @@ export default function ValuesGrid({
           <ValueText title={performance.title} description={performance.description} />
           {performance.image && (
             <div className="relative aspect-square w-full overflow-hidden bg-neutral-900">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src={performance.image}
                 alt="Performance-oriented facility"
-                className="h-full w-full object-cover"
+                fill
+                sizes="(min-width: 1024px) 33vw, 100vw"
+                className="object-cover"
               />
             </div>
           )}
@@ -67,11 +70,12 @@ export default function ValuesGrid({
         <div className="flex flex-col gap-5 sm:gap-6">
           {durability.image && (
             <div className="relative aspect-square w-full overflow-hidden bg-neutral-900">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src={durability.image}
                 alt="Durability-driven manufacturing"
-                className="h-full w-full object-cover"
+                fill
+                sizes="(min-width: 1024px) 33vw, 100vw"
+                className="object-cover"
               />
             </div>
           )}

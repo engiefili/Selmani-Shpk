@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState, type CSSProperties, type ReactNode } from "react";
 
 export type ServiceTab = {
@@ -127,8 +128,13 @@ export default function ServiceSection({
                   aria-label={pdfLabel}
                   className="flex h-full w-[58px] shrink-0 items-center justify-center"
                 >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="/icons/download.png" alt="" className="h-full w-full object-contain" />
+                  <Image
+                    src="/icons/download.png"
+                    alt=""
+                    width={96}
+                    height={96}
+                    className="h-full w-full object-contain"
+                  />
                 </a>
               </div>
             </div>
@@ -136,11 +142,12 @@ export default function ServiceSection({
 
           {/* Image */}
           <div className="order-1 relative min-h-[360px] overflow-hidden rounded-xl bg-neutral-800 lg:order-none lg:h-full">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src={activeImage}
               alt={activeImageAlt}
-              className={`absolute inset-0 h-full w-full ${imageFit === "contain" ? "object-contain" : "object-cover"}`}
+              fill
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              className={imageFit === "contain" ? "object-contain" : "object-cover"}
             />
             <div className="pointer-events-none absolute inset-0 bg-black/20" />
           </div>

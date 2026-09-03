@@ -1,3 +1,4 @@
+import Image from "next/image";
 import CtaButton from "../CtaButton";
 import { localizePath, type Locale } from "@/lib/locale";
 
@@ -20,11 +21,12 @@ export default function ServicesBand({
   return (
     <section className="bg-neutral-950 px-5 py-4 sm:px-10">
       <div className="relative mx-auto w-full max-w-[1800px] overflow-hidden rounded-2xl">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <Image
           src={data.backgroundImage}
           alt=""
-          className="absolute inset-0 h-full w-full object-cover"
+          fill
+          sizes="100vw"
+          className="object-cover"
         />
         {/* Mobile: text spans the full card width, so a uniform dark
             wash keeps it legible. Desktop/tablet: original side gradient,

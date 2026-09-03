@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useRef, useState } from "react";
 
 export default function TiltDragImage({
@@ -40,18 +41,19 @@ export default function TiltDragImage({
 
   return (
     <div
-      className="flex h-full w-full items-center justify-center [perspective:1000px]"
+      className="relative flex h-full w-full items-center justify-center [perspective:1000px]"
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
       onPointerCancel={onPointerUp}
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
+      <Image
         src={src}
         alt={alt}
         draggable={false}
-        className={`h-full w-full cursor-grab touch-none object-cover select-none active:cursor-grabbing ${
+        fill
+        sizes="100vw"
+        className={`cursor-grab touch-none object-cover select-none active:cursor-grabbing ${
           dragging ? "" : "transition-transform duration-500 ease-out"
         }`}
         style={{

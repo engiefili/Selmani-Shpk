@@ -1,3 +1,4 @@
+import Image from "next/image";
 import CtaButton from "./CtaButton";
 import Eyebrow from "./Eyebrow";
 
@@ -25,11 +26,12 @@ export default function TanksShowcase({
             className="relative aspect-square w-full overflow-hidden rounded-2xl border-2 border-accent/70"
             style={{ boxShadow: "0 0 22px 2px rgba(1, 135, 148, 0.3)" }}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src={data.image}
               alt={data.imageAlt ?? ""}
-              className="h-full w-full object-cover"
+              fill
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              className="object-cover"
             />
           </div>
 

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import CtaButton from "../CtaButton";
 
 export default function SelectedWork({
@@ -32,11 +33,12 @@ export default function SelectedWork({
                 i >= 4 ? "hidden lg:block" : ""
               }`}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src={src}
                 alt={`Selected work ${i + 1}`}
-                className="h-full w-full object-cover"
+                fill
+                sizes="(min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw"
+                className="object-cover"
               />
             </div>
           ))}

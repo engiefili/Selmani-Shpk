@@ -1,3 +1,4 @@
+import Image from "next/image";
 import {
   PageSideNavDesktop,
   PageSideNavMobile,
@@ -21,11 +22,13 @@ export default function PageHero({
 }) {
   return (
     <section className="relative min-h-dvh overflow-hidden bg-neutral-950 text-white lg:h-[90vh] lg:min-h-[760px]">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
+      <Image
         src={image}
         alt={imageAlt}
-        className="absolute inset-0 h-full w-full object-cover"
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover"
         style={{ objectPosition: imagePosition }}
       />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-neutral-950/85 via-neutral-950/25 to-neutral-950/35" />

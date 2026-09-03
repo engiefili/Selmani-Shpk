@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { LinkList } from "@/components/services/FeatureGrid";
 
 function Applications({
@@ -82,11 +83,12 @@ export default function IndustrySection({
     <div
       className={`relative min-h-[320px] overflow-hidden rounded-xl bg-neutral-800 lg:h-full ${imageOrderClass}`}
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
+      <Image
         src={image}
         alt={imageAlt ?? ""}
-        className="absolute inset-0 h-full w-full object-cover"
+        fill
+        sizes="(min-width: 1024px) 50vw, 100vw"
+        className="object-cover"
       />
       <div className="pointer-events-none absolute inset-0 bg-black/10" />
     </div>

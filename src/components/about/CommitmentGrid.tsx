@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export type CommitmentGridData = {
   heading?: string;
   intro: string;
@@ -19,13 +21,14 @@ export default function CommitmentGrid({ data }: { data: CommitmentGridData }) {
         <div className="mt-6 grid grid-cols-2 gap-3 sm:mt-10 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
           {data.commitments.map((item) => (
             <div key={item.label} className="flex flex-col gap-3.5">
-              <div className="flex h-[130px] items-center justify-center rounded-lg bg-accent p-6 sm:h-[190px] sm:p-10">
+              <div className="relative flex h-[130px] items-center justify-center rounded-lg bg-accent p-6 sm:h-[190px] sm:p-10">
                 {item.icon && (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
+                  <Image
                     src={item.icon}
                     alt=""
-                    className="h-full w-full object-contain"
+                    fill
+                    sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 50vw"
+                    className="object-contain p-6 sm:p-10"
                   />
                 )}
               </div>

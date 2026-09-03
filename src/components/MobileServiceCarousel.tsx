@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import Eyebrow from "./Eyebrow";
 
@@ -73,11 +74,12 @@ export default function MobileServiceCarousel({
             className="flex w-[80vw] shrink-0 snap-start flex-col overflow-hidden rounded-2xl bg-neutral-900 text-white"
           >
             <div className="relative aspect-[3/4] w-full shrink-0 overflow-hidden bg-neutral-900">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src={card.image}
                 alt={card.imageAlt ?? ""}
-                className={`h-full w-full ${card.imageFit === "contain" ? "object-contain" : "object-cover"}`}
+                fill
+                sizes="80vw"
+                className={card.imageFit === "contain" ? "object-contain" : "object-cover"}
               />
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-neutral-900 via-neutral-900/10 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-5">

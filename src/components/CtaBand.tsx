@@ -1,3 +1,4 @@
+import Image from "next/image";
 import CtaButton from "./CtaButton";
 import { localizePath } from "@/lib/locale";
 import { urlForImage } from "@/sanity/lib/image";
@@ -21,11 +22,12 @@ export default async function CtaBand({
   return (
     <section className="bg-neutral-950 px-5 py-4 sm:px-10">
       <div className="relative mx-auto flex w-full max-w-[1800px] flex-col justify-center overflow-hidden rounded-2xl bg-neutral-900 px-5 py-8 text-white sm:px-12 sm:py-12">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <Image
           src={backgroundImage}
           alt=""
-          className="absolute inset-0 h-full w-full object-cover opacity-80"
+          fill
+          sizes="100vw"
+          className="object-cover opacity-80"
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/0 to-black/80" />
 

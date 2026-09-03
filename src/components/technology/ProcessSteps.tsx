@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { LucideIcon } from "lucide-react";
 
 export type ProcessStep = {
@@ -74,8 +75,13 @@ export default function ProcessSteps({
           aria-label={pdfLabel}
           className="flex h-full w-[58px] shrink-0 items-center justify-center"
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/icons/download.png" alt="" className="h-full w-full object-contain" />
+          <Image
+            src="/icons/download.png"
+            alt=""
+            width={96}
+            height={96}
+            className="h-full w-full object-contain"
+          />
         </a>
       </div>
     </div>

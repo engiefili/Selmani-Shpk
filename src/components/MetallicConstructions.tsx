@@ -1,3 +1,4 @@
+import Image from "next/image";
 import CtaButton from "./CtaButton";
 import Eyebrow from "./Eyebrow";
 
@@ -38,10 +39,11 @@ export default function MetallicConstructions({
             >
               <div className="flex h-14 w-14 shrink-0 items-center justify-center">
                 {service.icon && (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
+                  <Image
                     src={service.icon}
                     alt=""
+                    width={44}
+                    height={44}
                     className="h-11 w-11 object-contain"
                   />
                 )}

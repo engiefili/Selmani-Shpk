@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useRef, useState } from "react";
 
 export default function CompareSlider({
@@ -45,23 +46,25 @@ export default function CompareSlider({
         dragging.current = false;
       }}
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
+      <Image
         src={beforeSrc}
         alt={beforeAlt}
         draggable={false}
-        className="absolute inset-0 h-full w-full object-cover"
+        fill
+        sizes="100vw"
+        className="object-cover"
       />
       <div
         className="absolute inset-0 overflow-hidden"
         style={{ clipPath: `inset(0 0 0 ${percent}%)` }}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <Image
           src={afterSrc}
           alt={afterAlt}
           draggable={false}
-          className="h-full w-full object-cover"
+          fill
+          sizes="100vw"
+          className="object-cover"
         />
       </div>
 

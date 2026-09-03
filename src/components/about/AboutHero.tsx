@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export type AboutHeroData = {
   heading?: string;
   intro: string;
@@ -32,11 +34,12 @@ export default function AboutHero({ data }: { data: AboutHeroData }) {
         </div>
 
         <div className="relative mx-auto flex aspect-square w-full max-w-[240px] items-center justify-center sm:mx-0 sm:max-w-none">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src={data.image}
             alt={data.imageAlt ?? ""}
-            className="h-full w-full object-contain"
+            fill
+            sizes="240px"
+            className="object-contain"
           />
         </div>
       </div>

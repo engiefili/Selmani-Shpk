@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { LucideIcon } from "lucide-react";
 
 export type FeatureItem = {
@@ -25,10 +26,11 @@ export function FeatureGrid({ items }: { items: FeatureItem[] }) {
               <div key={item.label} className="flex items-center gap-6">
                 {item.image ? (
                   <div className="flex h-14 w-14 shrink-0 items-center justify-center">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <Image
                       src={item.image}
                       alt=""
+                      width={44}
+                      height={44}
                       className="h-11 w-11 object-contain"
                     />
                   </div>
@@ -63,8 +65,13 @@ export function LinkList({ items }: { items: string[] }) {
           key={label}
           className="flex items-center gap-3 border-t border-[#e6e6e6]/15 py-2.5 first:border-t-0"
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/icons/list-arrow.png" alt="" className="h-4 w-4 shrink-0 object-contain" />
+          <Image
+            src="/icons/list-arrow.png"
+            alt=""
+            width={48}
+            height={48}
+            className="h-4 w-4 shrink-0 object-contain"
+          />
           <p className="text-xl font-light text-[#c1c7c7]">{label}</p>
         </div>
       ))}

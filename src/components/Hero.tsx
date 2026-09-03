@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export type HeroData = {
   heading: string;
   subheading: string;
@@ -19,11 +21,13 @@ export default function Hero({
 
   return (
     <section className="relative flex min-h-dvh flex-col overflow-hidden bg-neutral-950 px-5 pb-10 pt-20 text-white sm:px-10 sm:pb-8 sm:pt-24 lg:h-[90vh] lg:min-h-[720px]">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
+      <Image
         src={data.backgroundImage}
         alt={data.backgroundImageAlt ?? ""}
-        className="absolute inset-0 h-full w-full object-cover"
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover"
       />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-neutral-950/85 via-neutral-950/35 to-transparent" />
 
