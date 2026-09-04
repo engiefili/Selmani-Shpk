@@ -147,7 +147,7 @@ export default function ServiceSection({
           {/* Image */}
           <Reveal
             delay={200}
-            className="order-1 relative min-h-[360px] overflow-hidden rounded-xl bg-neutral-950 lg:order-none lg:h-full"
+            className="order-1 relative min-h-[360px] overflow-hidden rounded-xl bg-[#171919] lg:order-none lg:h-full"
           >
             <Image
               src={activeImage}
