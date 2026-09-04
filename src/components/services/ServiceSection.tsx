@@ -154,9 +154,15 @@ export default function ServiceSection({
               alt={activeImageAlt}
               fill
               sizes="(min-width: 1024px) 50vw, 100vw"
-              className={imageFit === "contain" ? "object-contain" : "object-cover"}
+              className={
+                imageFit === "contain"
+                  ? "object-contain p-8 sm:p-12"
+                  : "object-cover"
+              }
             />
-            <div className="pointer-events-none absolute inset-0 bg-black/20" />
+            {imageFit !== "contain" && (
+              <div className="pointer-events-none absolute inset-0 bg-black/20" />
+            )}
           </Reveal>
         </div>
 
