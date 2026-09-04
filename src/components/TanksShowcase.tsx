@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
 import { useState } from "react";
 import CtaButton from "./CtaButton";
 import Eyebrow from "./Eyebrow";
@@ -66,18 +67,20 @@ export default function TanksShowcase({
                       type="button"
                       onClick={() => setSelected(i)}
                       aria-pressed={isActive}
-                      className="flex w-full items-start gap-4 rounded-lg py-4 text-left transition outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900 sm:gap-5 sm:py-5"
+                      className={`group flex w-full cursor-pointer items-start gap-4 rounded-lg -mx-4 px-4 py-4 text-left transition outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900 sm:-mx-5 sm:gap-5 sm:px-5 sm:py-5 ${
+                        isActive ? "" : "hover:bg-white/5"
+                      }`}
                     >
                       <div
                         className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-base font-semibold transition ${
                           isActive
                             ? "bg-accent text-white"
-                            : "border border-[#9ba0a0] text-[#9ba0a0]"
+                            : "border border-[#9ba0a0] text-[#9ba0a0] group-hover:border-accent group-hover:text-accent"
                         }`}
                       >
                         {i + 1}
                       </div>
-                      <div>
+                      <div className="flex-1">
                         <h3
                           className={`font-semibold text-white transition-all ${isActive ? "text-xl sm:text-2xl" : "text-lg sm:text-xl"}`}
                         >
@@ -87,6 +90,12 @@ export default function TanksShowcase({
                           {tank.description}
                         </p>
                       </div>
+                      {!isActive && (
+                        <ArrowUpRight
+                          className="mt-1 h-5 w-5 shrink-0 text-[#9ba0a0] opacity-0 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent group-hover:opacity-100"
+                          aria-hidden="true"
+                        />
+                      )}
                     </button>
                   </li>
                 );
