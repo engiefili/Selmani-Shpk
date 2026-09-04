@@ -81,6 +81,7 @@ export default async function ServicesPage() {
               <SelectedWork
                 images={section.gallery.map((img, i) => ({
                   src: urlForImage(img).width(900).url(),
+                  full: urlForImage(img).width(1600).fit("max").quality(95).url(),
                   alt: img.alt ?? `${section.title} — selected work ${i + 1}`,
                 }))}
                 locale={locale}
