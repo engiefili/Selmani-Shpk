@@ -147,7 +147,12 @@ export default function ServiceSection({
           {/* Image */}
           <Reveal
             delay={200}
-            className="order-1 relative min-h-[360px] overflow-hidden rounded-xl bg-[#171919] lg:order-none lg:h-full"
+            // Base color is deliberately lighter than the text card's
+            // #171919 — the always-on bg-black/20 overlay below darkens
+            // it back down by exactly that much, so the two panels land
+            // on the same final shade instead of the image panel reading
+            // darker everywhere the overlay covers empty letterboxing.
+            className="order-1 relative min-h-[360px] overflow-hidden rounded-xl bg-[#1d1f1f] lg:order-none lg:h-full"
           >
             <Image
               src={activeImage}
