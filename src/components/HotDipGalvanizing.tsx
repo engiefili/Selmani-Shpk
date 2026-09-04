@@ -1,6 +1,7 @@
 import CompareSlider from "./CompareSlider";
 import CtaButton from "./CtaButton";
 import Eyebrow from "./Eyebrow";
+import Reveal from "./Reveal";
 
 export type HotDipHomeData = {
   eyebrow?: string;
@@ -25,7 +26,7 @@ export default function HotDipGalvanizing({
       <div className="mx-auto w-full max-w-[1800px] overflow-hidden rounded-2xl bg-[#d7dcdc] text-neutral-900">
         <div className="grid lg:grid-cols-2">
           {/* Before / after comparison slider — drag to reveal */}
-          <div className="relative">
+          <Reveal className="relative">
             <CompareSlider
               beforeSrc={data.beforeImage}
               beforeAlt="Hot-dip galvanized steel surface"
@@ -43,9 +44,12 @@ export default function HotDipGalvanizing({
                 {data.title}
               </h2>
             </div>
-          </div>
+          </Reveal>
 
-          <div className="flex flex-col p-6 sm:p-10 lg:min-h-[660px] lg:p-12">
+          <Reveal
+            delay={120}
+            className="flex flex-col p-6 sm:p-10 lg:min-h-[660px] lg:p-12"
+          >
             <ul>
               {data.benefits.map((benefit, i) => (
                 <li
@@ -70,7 +74,7 @@ export default function HotDipGalvanizing({
             <div className="mt-auto w-full max-w-md pt-8 sm:pt-12">
               <CtaButton label={data.ctaLabel ?? "Learn More"} href={href} className="w-full" />
             </div>
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

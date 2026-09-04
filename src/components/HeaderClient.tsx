@@ -108,7 +108,7 @@ export default function HeaderClient({ data }: { data: HeaderData }) {
                 </Link>
 
                 {dropdownOpen && (
-                  <div className="absolute left-0 top-full z-30 mt-1 w-64 overflow-hidden rounded-md bg-[#c1c7c7] shadow-lg">
+                  <div className="dropdown-in absolute left-0 top-full z-30 mt-1 w-64 overflow-hidden rounded-md bg-[#c1c7c7] shadow-lg">
                     {link.dropdown.map((item) => (
                       <Link
                         key={item.href}
@@ -172,9 +172,22 @@ export default function HeaderClient({ data }: { data: HeaderData }) {
       </div>
 
       {/* Mobile menu panel — links, contact CTA, and nested dropdowns
-          collapse into a single stacked list below "lg". */}
-      {mobileOpen && (
-        <div className="max-h-[calc(100vh-76px)] overflow-y-auto border-t border-[#9ba0a0]/40 bg-black px-5 py-6 sm:px-[45px] lg:hidden">
+          collapse into a single stacked list below "lg". Always mounted
+          (rather than conditionally rendered) so the open/close is an
+          actual height + fade transition instead of an instant swap;
+          `inert` keeps its links out of tab order and screen readers
+          while collapsed, so this isn't an accessibility regression. */}
+      <div
+        className="grid transition-[grid-template-rows] duration-300 ease-out motion-reduce:transition-none lg:hidden"
+        style={{ gridTemplateRows: mobileOpen ? "1fr" : "0fr" }}
+        inert={!mobileOpen}
+      >
+        <div
+          className={`overflow-hidden transition-opacity duration-300 motion-reduce:transition-none ${
+            mobileOpen ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          <div className="max-h-[calc(100vh-76px)] overflow-y-auto border-t border-[#9ba0a0]/40 bg-black px-5 py-6 sm:px-[45px]">
           <nav className="flex flex-col gap-1">
             {data.navLinks.map((link) => {
               const active = pathname === link.href;
@@ -255,8 +268,9 @@ export default function HeaderClient({ data }: { data: HeaderData }) {
           >
             {data.switchLabel}
           </Link>
+          </div>
         </div>
-      )}
+      </div>
     </header>
   );
 }

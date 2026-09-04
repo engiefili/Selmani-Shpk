@@ -42,8 +42,66 @@ body {
   animation: tab-swipe-in 0.32s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/* Hero entrance: heading, subtext, and trailing content fade + rise in on
+   load. Staggered across siblings via inline animation-delay. */
+@keyframes hero-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-fade-up {
+  animation: hero-fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Hero background: a slow drift tied to how far the hero has scrolled
+   through the viewport, for browsers that support scroll-driven
+   animations (Chrome/Edge, recent Safari). @supports means everywhere
+   else just gets the previous, perfectly fine static image. */
+@keyframes hero-parallax {
+  from {
+    transform: scale(1.08) translateY(0);
+  }
+  to {
+    transform: scale(1.08) translateY(5%);
+  }
+}
+
+@supports (animation-timeline: view()) {
+  .hero-parallax-bg {
+    animation: hero-parallax linear both;
+    animation-timeline: view();
+    animation-range: cover 0% cover 100%;
+  }
+}
+
+/* Desktop nav dropdown panel entrance. */
+@keyframes dropdown-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.dropdown-in {
+  animation: dropdown-in 0.18s cubic-bezier(0.22, 1, 0.36, 1);
+  transform-origin: top left;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .tab-swipe-in {
+  .tab-swipe-in,
+  .hero-fade-up,
+  .hero-parallax-bg,
+  .dropdown-in {
     animation: none;
   }
 }

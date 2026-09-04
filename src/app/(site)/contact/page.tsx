@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ContactForm from "@/components/contact/ContactForm";
 import ContactMapBand from "@/components/contact/ContactMapBand";
+import Reveal from "@/components/Reveal";
 import { getLocale, localizePath } from "@/lib/locale";
 import { pageMetadata } from "@/lib/seo";
 import { contactPageQuery } from "@/sanity/lib/queries";
@@ -47,7 +48,7 @@ export default async function ContactPage() {
           <div className="mx-auto grid w-full max-w-[1800px] grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]">
             <div className="flex flex-col gap-6">
               <h1
-                className="font-light leading-none text-[#eaefef]"
+                className="hero-fade-up font-light leading-none text-[#eaefef]"
                 style={{ fontSize: "clamp(2.75rem, 5vw, 64px)" }}
               >
                 {headingLines.map((line, i) => (
@@ -57,19 +58,26 @@ export default async function ContactPage() {
                   </span>
                 ))}
               </h1>
-              <p className="max-w-md text-lg font-light leading-snug text-[#c1c7c7]">
+              <p
+                className="hero-fade-up max-w-md text-lg font-light leading-snug text-[#c1c7c7]"
+                style={{ animationDelay: "0.15s" }}
+              >
                 {page.heroSubtext}
               </p>
             </div>
 
-            <ContactForm
-              privacyHref={localizePath("/privacy-policy", locale)}
-              locale={locale}
-            />
+            <Reveal delay={150}>
+              <ContactForm
+                privacyHref={localizePath("/privacy-policy", locale)}
+                locale={locale}
+              />
+            </Reveal>
           </div>
         </section>
 
-        <ContactMapBand />
+        <Reveal>
+          <ContactMapBand />
+        </Reveal>
       </main>
       <Footer />
     </div>

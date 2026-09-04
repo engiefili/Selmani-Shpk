@@ -1,5 +1,7 @@
 import Image from "next/image";
 import CtaButton from "../CtaButton";
+import Reveal from "../Reveal";
+import TiltCard from "../TiltCard";
 
 export type SelectedWorkImage = { src: string; alt: string };
 
@@ -26,23 +28,24 @@ export default function SelectedWork({
 
         <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
           {images.map(({ src, alt }, i) => (
-            <div
+            <Reveal
               key={src}
+              delay={Math.min(i * 60, 240)}
               // Below lg the grid is 2-3 columns, so a 5th (or later) image
               // leaves an orphaned row; only the 5-column desktop layout
               // has room for the full set.
-              className={`relative aspect-[358/442] overflow-hidden rounded-xl bg-[#1c1e1e] ${
-                i >= 4 ? "hidden lg:block" : ""
-              }`}
+              className={i >= 4 ? "hidden lg:block" : ""}
             >
-              <Image
-                src={src}
-                alt={alt}
-                fill
-                sizes="(min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw"
-                className="object-cover"
-              />
-            </div>
+              <TiltCard className="relative aspect-[358/442] overflow-hidden rounded-xl bg-[#1c1e1e]">
+                <Image
+                  src={src}
+                  alt={alt}
+                  fill
+                  sizes="(min-width: 1024px) 20vw, (min-width: 640px) 33vw, 50vw"
+                  className="object-cover"
+                />
+              </TiltCard>
+            </Reveal>
           ))}
         </div>
 

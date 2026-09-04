@@ -198,7 +198,7 @@ export default function ContactForm({
               key={s}
               type="button"
               onClick={() => setSubject(s)}
-              className={`rounded-md border px-6 py-3 text-center text-sm font-medium tracking-wide transition ${
+              className={`rounded-md border px-6 py-3 text-center text-sm font-medium tracking-wide transition-all duration-300 ease-out active:scale-[0.97] ${
                 subject === s
                   ? "border-accent bg-accent text-[#eaefef]"
                   : "border-[#9ba0a0]/60 text-[#c1c7c7] hover:border-accent hover:text-accent"

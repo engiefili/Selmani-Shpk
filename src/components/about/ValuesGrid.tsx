@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Reveal from "../Reveal";
 
 export type ValuesGridData = {
   values: { title: string; description: string; image?: string }[];
@@ -30,26 +31,29 @@ export default function ValuesGrid({
   data: ValuesGridData;
   heading?: string;
 }) {
-  const [performance, customer, durability] = data.values;
+  const [performanceValue, customer, durability] = data.values;
 
   return (
     <section className="bg-neutral-950 px-5 py-8 text-white sm:px-10 sm:py-10">
       <div className="mx-auto w-full max-w-[1800px]">
-        <h2
-          className="pb-8 font-light tracking-tight text-[#eaefef]"
-          style={{ fontSize: "clamp(2.5rem, 5vw, 72px)" }}
-        >
-          {heading}
-        </h2>
+        <Reveal as="div">
+          <h2
+            className="pb-8 font-light tracking-tight text-[#eaefef]"
+            style={{ fontSize: "clamp(2.5rem, 5vw, 72px)" }}
+          >
+            {heading}
+          </h2>
+        </Reveal>
       </div>
+
       <div className="mx-auto grid w-full max-w-[1800px] grid-cols-1 gap-8 sm:gap-10 lg:grid-cols-3 lg:items-stretch">
-        {/* Left: caption above image */}
-        <div className="flex flex-col gap-5 sm:gap-6">
-          <ValueText title={performance.title} description={performance.description} />
-          {performance.image && (
+        {/* Left: caption above image. */}
+        <Reveal as="div" className="flex flex-col gap-5 sm:gap-6">
+          <ValueText title={performanceValue.title} description={performanceValue.description} />
+          {performanceValue.image && (
             <div className="relative aspect-square w-full overflow-hidden bg-neutral-900">
               <Image
-                src={performance.image}
+                src={performanceValue.image}
                 alt="Performance-oriented facility"
                 fill
                 sizes="(min-width: 1024px) 33vw, 100vw"
@@ -57,17 +61,21 @@ export default function ValuesGrid({
               />
             </div>
           )}
-        </div>
+        </Reveal>
 
-        {/* Center: text only */}
-        <div className="flex items-center justify-center px-4">
+        {/* Center: vertically centered caption. */}
+        <Reveal
+          as="div"
+          delay={100}
+          className="flex flex-col items-center justify-center gap-8 px-4 text-center"
+        >
           <div className="max-w-sm">
             <ValueText title={customer.title} description={customer.description} />
           </div>
-        </div>
+        </Reveal>
 
-        {/* Right: image above caption */}
-        <div className="flex flex-col gap-5 sm:gap-6">
+        {/* Right: image above caption — mirrors the left column. */}
+        <Reveal as="div" delay={200} className="flex flex-col gap-5 sm:gap-6">
           {durability.image && (
             <div className="relative aspect-square w-full overflow-hidden bg-neutral-900">
               <Image
@@ -80,7 +88,7 @@ export default function ValuesGrid({
             </div>
           )}
           <ValueText title={durability.title} description={durability.description} />
-        </div>
+        </Reveal>
       </div>
     </section>
   );

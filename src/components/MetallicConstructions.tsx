@@ -1,6 +1,7 @@
 import Image from "next/image";
 import CtaButton from "./CtaButton";
 import Eyebrow from "./Eyebrow";
+import Reveal from "./Reveal";
 
 export type MetallicConstructionsData = {
   eyebrow?: string;
@@ -23,18 +24,22 @@ export default function MetallicConstructions({
       className="hidden bg-neutral-950 px-5 py-8 text-white sm:block sm:px-10 sm:py-10"
     >
       <div className="mx-auto w-full max-w-[1800px]">
-        <Eyebrow>{data.eyebrow ?? "Services"}</Eyebrow>
-        <h2
-          className="mt-3 font-light tracking-tight"
-          style={{ fontSize: "clamp(2rem, 4vw, 56px)" }}
-        >
-          {data.title}
-        </h2>
+        <Reveal>
+          <Eyebrow>{data.eyebrow ?? "Services"}</Eyebrow>
+          <h2
+            className="mt-3 font-light tracking-tight"
+            style={{ fontSize: "clamp(2rem, 4vw, 56px)" }}
+          >
+            {data.title}
+          </h2>
+        </Reveal>
 
         <ul className="mt-6 grid gap-x-16 sm:mt-10 sm:grid-cols-2">
-          {data.services.map((service) => (
-            <li
+          {data.services.map((service, i) => (
+            <Reveal
               key={service.title}
+              as="li"
+              delay={Math.min(i * 60, 240)}
               className="flex items-center gap-4 py-5 sm:gap-6 sm:py-7"
             >
               <div className="flex h-14 w-14 shrink-0 items-center justify-center">
@@ -59,7 +64,7 @@ export default function MetallicConstructions({
                   </span>
                 </p>
               </div>
-            </li>
+            </Reveal>
           ))}
 
           <li className="flex items-center gap-4 py-5 sm:gap-6 sm:py-7">

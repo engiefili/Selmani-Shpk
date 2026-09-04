@@ -1,4 +1,5 @@
 import { ExclusiveAccordionGroup } from "@/components/services/Accordion";
+import Reveal from "@/components/Reveal";
 
 export type FAQItem = { question: string; answer: string };
 
@@ -28,7 +29,7 @@ export default function FAQSection({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
       <div className="mx-auto w-full max-w-[1800px]">
-        <div className="flex max-w-3xl flex-col gap-[30px]">
+        <Reveal className="flex max-w-3xl flex-col gap-[30px]">
           <span className="inline-flex items-center gap-2 text-xl font-light tracking-wide text-accent">
             <span className="h-2 w-2 rounded-full bg-accent" />
             {eyebrow}
@@ -39,9 +40,9 @@ export default function FAQSection({
           >
             {heading}
           </h2>
-        </div>
+        </Reveal>
 
-        <div className="mt-10 max-w-3xl">
+        <Reveal delay={100} className="mt-10 max-w-3xl">
           <ExclusiveAccordionGroup
             defaultOpenIndex={0}
             items={items.map((item) => ({
@@ -53,7 +54,7 @@ export default function FAQSection({
               ),
             }))}
           />
-        </div>
+        </Reveal>
       </div>
     </section>
   );

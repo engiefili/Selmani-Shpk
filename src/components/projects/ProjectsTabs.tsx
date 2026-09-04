@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import ProjectGrid, { type ProjectImage } from "./ProjectGrid";
+import Reveal from "../Reveal";
 
 export type ProjectsTabsData = {
   id: string;
@@ -49,7 +50,7 @@ export default function ProjectsTabs({
   return (
     <section className="bg-neutral-950 px-5 pt-8 pb-16 text-white sm:px-10 sm:py-16">
       <div className="mx-auto flex w-full max-w-[1800px] flex-col gap-10">
-        <div className="flex flex-col gap-4">
+        <Reveal className="flex flex-col gap-4">
           <span className="text-2xl font-light text-[#eaefef]">
             {locale === "sq" ? "Shërbime:" : "Service:"}
           </span>
@@ -60,7 +61,7 @@ export default function ProjectsTabs({
                 role="tab"
                 aria-selected={active === tab.id}
                 onClick={() => setActive(tab.id)}
-                className={`rounded-md border px-6 py-3 text-sm font-medium tracking-wide transition ${
+                className={`rounded-md border px-6 py-3 text-sm font-medium tracking-wide transition-all duration-300 ease-out active:scale-[0.97] ${
                   active === tab.id
                     ? "border-[#c1c7c7] bg-[#c1c7c7] text-[#171919]"
                     : "border-[#9ba0a0]/60 text-[#c1c7c7] hover:border-accent hover:text-accent"
@@ -70,7 +71,7 @@ export default function ProjectsTabs({
               </button>
             ))}
           </div>
-        </div>
+        </Reveal>
 
         {activeTab && (
           <div className={`flex flex-col ${activeTab.groups.length > 1 ? "gap-10" : "gap-6"}`}>

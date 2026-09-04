@@ -1,6 +1,7 @@
 import Image from "next/image";
 import CtaButton from "./CtaButton";
 import Eyebrow from "./Eyebrow";
+import Reveal from "./Reveal";
 
 export type TanksShowcaseData = {
   eyebrow?: string;
@@ -22,7 +23,7 @@ export default function TanksShowcase({
     <section id="industries" className="hidden bg-neutral-950 px-5 py-4 sm:block sm:px-10">
       <div className="mx-auto w-full max-w-[1800px] overflow-hidden rounded-2xl bg-neutral-900 p-6 text-white sm:p-12">
         <div className="grid gap-8 sm:gap-12 lg:grid-cols-2 lg:items-center">
-          <div
+          <Reveal
             className="relative aspect-square w-full overflow-hidden rounded-2xl border-2 border-accent/70"
             style={{ boxShadow: "0 0 22px 2px rgba(1, 135, 148, 0.3)" }}
           >
@@ -33,9 +34,9 @@ export default function TanksShowcase({
               sizes="(min-width: 1024px) 50vw, 100vw"
               className="object-cover"
             />
-          </div>
+          </Reveal>
 
-          <div>
+          <Reveal delay={120}>
             <Eyebrow>{data.eyebrow ?? "Services"}</Eyebrow>
             <h2
               className="mt-3 font-light tracking-tight"
@@ -78,7 +79,7 @@ export default function TanksShowcase({
               href={href}
               className="mt-6 w-full max-w-md sm:mt-8"
             />
-          </div>
+          </Reveal>
         </div>
       </div>
     </section>

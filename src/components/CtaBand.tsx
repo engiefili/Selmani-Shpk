@@ -1,5 +1,6 @@
 import Image from "next/image";
 import CtaButton from "./CtaButton";
+import Reveal from "./Reveal";
 import { localizePath } from "@/lib/locale";
 import { urlForImage } from "@/sanity/lib/image";
 import { getSiteSettings } from "@/sanity/lib/siteSettings";
@@ -31,7 +32,7 @@ export default async function CtaBand({
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/0 to-black/80" />
 
-        <div className="relative z-10 flex max-w-3xl flex-col gap-6 sm:gap-10">
+        <Reveal className="relative z-10 flex max-w-3xl flex-col gap-6 sm:gap-10">
           <div className="flex flex-col gap-3">
             <h2
               className="font-light leading-tight text-[#c1c7c7]"
@@ -52,7 +53,7 @@ export default async function CtaBand({
             href={localizePath("/contact", locale)}
             className="w-full max-w-md"
           />
-        </div>
+        </Reveal>
       </div>
     </section>
   );

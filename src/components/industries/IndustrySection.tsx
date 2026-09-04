@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { LinkList } from "@/components/services/FeatureGrid";
+import Reveal from "@/components/Reveal";
 
 function Applications({
   items,
@@ -80,7 +81,8 @@ export default function IndustrySection({
   const textOrderClass = imagePosition === "left" ? "" : "order-2 lg:order-1";
 
   const imageBlock = image ? (
-    <div
+    <Reveal
+      delay={100}
       className={`relative min-h-[320px] overflow-hidden rounded-xl bg-neutral-800 lg:h-full ${imageOrderClass}`}
     >
       <Image
@@ -91,14 +93,14 @@ export default function IndustrySection({
         className="object-cover"
       />
       <div className="pointer-events-none absolute inset-0 bg-black/10" />
-    </div>
+    </Reveal>
   ) : null;
 
   // With an image: one column is the photo, the other holds
   // heading -> applications -> optional closing paragraph, in that order.
   if (image) {
     const textBlock = (
-      <div className={`flex flex-col gap-8 ${textOrderClass}`}>
+      <Reveal as="div" className={`flex flex-col gap-8 ${textOrderClass}`}>
         <Heading eyebrow={eyebrow} title={title} description={description} />
         <Applications items={applications} locale={locale} />
         {closing && (
@@ -106,7 +108,7 @@ export default function IndustrySection({
             {closing}
           </p>
         )}
-      </div>
+      </Reveal>
     );
 
     return (
@@ -138,10 +140,12 @@ export default function IndustrySection({
       className="scroll-mt-24 bg-neutral-950 px-5 py-12 text-white sm:px-10"
     >
       <div className="mx-auto grid w-full max-w-[1800px] grid-cols-1 items-start gap-x-16 gap-y-8 lg:grid-cols-2">
-        <Heading eyebrow={eyebrow} title={title} description={description} />
-        <div className="lg:pt-[92px]">
+        <Reveal>
+          <Heading eyebrow={eyebrow} title={title} description={description} />
+        </Reveal>
+        <Reveal delay={100} className="lg:pt-[92px]">
           <Applications items={applications} locale={locale} />
-        </div>
+        </Reveal>
       </div>
     </section>
   );

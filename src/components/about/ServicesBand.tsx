@@ -1,5 +1,6 @@
 import Image from "next/image";
 import CtaButton from "../CtaButton";
+import Reveal from "../Reveal";
 import { localizePath, type Locale } from "@/lib/locale";
 
 export type ServicesBandData = {
@@ -34,7 +35,7 @@ export default function ServicesBand({
         <div className="pointer-events-none absolute inset-0 bg-neutral-950/80 sm:hidden" />
         <div className="pointer-events-none absolute inset-0 hidden bg-gradient-to-l from-neutral-950 from-30% via-neutral-950/85 to-neutral-950/20 sm:block" />
 
-        <div className="relative z-10 ml-auto flex flex-col gap-6 px-5 py-8 text-white sm:gap-8 sm:px-12 sm:py-20 lg:w-[65%] lg:min-w-[680px]">
+        <Reveal className="relative z-10 ml-auto flex flex-col gap-6 px-5 py-8 text-white sm:gap-8 sm:px-12 sm:py-20 lg:w-[65%] lg:min-w-[680px]">
           <span className="inline-flex items-center gap-2 text-sm font-light text-[#eaefef]">
             <span className="h-2 w-2 rounded-full bg-[#eaefef]" />
             {data.eyebrow ?? "Services"}
@@ -63,7 +64,7 @@ export default function ServicesBand({
             href={localizePath("/services", locale)}
             className="mt-2 w-full max-w-md"
           />
-        </div>
+        </Reveal>
       </div>
     </section>
   );

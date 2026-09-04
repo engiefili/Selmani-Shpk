@@ -12,25 +12,21 @@ export default function CtaButton({
   className?: string;
 }) {
   const pillClass =
-    "inline-flex h-full flex-1 items-center justify-center rounded-md bg-accent px-6 text-base font-medium tracking-[0.5px] text-white transition hover:bg-accent-hover";
+    "inline-flex h-full flex-1 items-center justify-center rounded-md bg-accent px-6 text-base font-medium tracking-[0.5px] text-white transition duration-200 hover:bg-accent-hover active:scale-[0.97]";
   const squareClass =
-    "flex h-full w-[58px] shrink-0 items-center justify-center rounded-md bg-accent text-lg transition hover:bg-accent-hover";
+    "flex h-full w-[58px] shrink-0 items-center justify-center rounded-md bg-accent text-lg transition duration-200 hover:bg-accent-hover active:scale-[0.97]";
 
-  if (href) {
-    return (
-      <div className={`inline-flex h-[58px] items-stretch gap-1 ${className}`}>
-        <a href={href} className={pillClass}>
-          {label}
-        </a>
-        <a href={href} aria-hidden="true" tabIndex={-1} className={squareClass}>
-          ↗
-        </a>
-      </div>
-    );
-  }
-
-  return (
-    <div className={`inline-flex h-[58px] items-stretch gap-1 ${className}`}>
+  const content = href ? (
+    <>
+      <a href={href} className={pillClass}>
+        {label}
+      </a>
+      <a href={href} aria-hidden="true" tabIndex={-1} className={squareClass}>
+        ↗
+      </a>
+    </>
+  ) : (
+    <>
       <button type={type} onClick={onClick} className={pillClass}>
         {label}
       </button>
@@ -43,6 +39,12 @@ export default function CtaButton({
       >
         ↗
       </button>
+    </>
+  );
+
+  return (
+    <div className={`inline-flex h-[58px] items-stretch gap-1 ${className}`}>
+      {content}
     </div>
   );
 }

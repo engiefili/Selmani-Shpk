@@ -10,14 +10,16 @@ export default function ServicesHero({
 } = {}) {
   return (
     <section className="relative min-h-dvh overflow-hidden bg-neutral-950 text-white lg:h-[90vh] lg:min-h-[760px]">
-      <Image
-        src={HERO_IMAGE}
-        alt="Selmani steel tanks"
-        fill
-        priority
-        sizes="100vw"
-        className="object-cover"
-      />
+      <div className="hero-parallax-bg absolute inset-0">
+        <Image
+          src={HERO_IMAGE}
+          alt="Selmani steel tanks"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+        />
+      </div>
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-neutral-950/85 via-neutral-950/25 to-neutral-950/35" />
 
       {/* Mobile mirrors the desktop hierarchy: title is the first thing
@@ -28,7 +30,7 @@ export default function ServicesHero({
           below. */}
       <div className="absolute inset-0 mx-auto flex w-full max-w-[1800px] flex-col justify-between gap-6 px-5 pt-[30vh] pb-10 sm:px-10 lg:justify-center lg:py-24">
         <h1
-          className="font-heading font-black leading-none tracking-tight text-[#c1c7c7]"
+          className="hero-fade-up font-heading font-black leading-none tracking-tight text-[#c1c7c7]"
           style={{ fontSize: "clamp(3.75rem, 6.5vw, 7rem)" }}
         >
           {locale === "sq" ? "Shërbime & Produkte" : "Services & Products"}

@@ -86,7 +86,6 @@ export default async function AboutPage() {
         />
         <ClientsGrid
           data={{ heading: about.clientsGrid.heading, clients: about.clientsGrid.clients }}
-          locale={locale}
         />
         <CommitmentGrid
           data={{

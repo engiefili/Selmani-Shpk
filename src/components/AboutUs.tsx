@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Eyebrow from "./Eyebrow";
+import Reveal from "./Reveal";
 
 export type AboutUsData = {
   eyebrow?: string;
@@ -15,7 +16,7 @@ export default function AboutUs({ data }: { data: AboutUsData }) {
       className="bg-neutral-950 px-5 py-10 text-white sm:px-10 sm:py-16"
     >
       <div className="mx-auto grid w-full max-w-[1800px] gap-6 sm:gap-8 lg:grid-cols-[5fr_2fr] lg:items-center">
-        <div className="flex flex-col gap-6">
+        <Reveal className="flex flex-col gap-6">
           <Eyebrow>{data.eyebrow ?? "About Us"}</Eyebrow>
           <p
             className="max-w-none font-medium leading-snug text-[#c1c7c7]"
@@ -23,9 +24,12 @@ export default function AboutUs({ data }: { data: AboutUsData }) {
           >
             {data.text}
           </p>
-        </div>
+        </Reveal>
 
-        <div className="relative hidden aspect-square w-full overflow-hidden rounded-full sm:block sm:max-w-sm sm:justify-self-end">
+        <Reveal
+          delay={120}
+          className="relative hidden aspect-square w-full overflow-hidden rounded-full sm:block sm:max-w-sm sm:justify-self-end"
+        >
           <Image
             src={data.image}
             alt={data.imageAlt ?? ""}
@@ -33,7 +37,7 @@ export default function AboutUs({ data }: { data: AboutUsData }) {
             sizes="384px"
             className="object-cover"
           />
-        </div>
+        </Reveal>
       </div>
     </section>
   );

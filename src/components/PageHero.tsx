@@ -22,15 +22,17 @@ export default function PageHero({
 }) {
   return (
     <section className="relative min-h-dvh overflow-hidden bg-neutral-950 text-white lg:h-[90vh] lg:min-h-[760px]">
-      <Image
-        src={image}
-        alt={imageAlt}
-        fill
-        priority
-        sizes="100vw"
-        className="object-cover"
-        style={{ objectPosition: imagePosition }}
-      />
+      <div className="hero-parallax-bg absolute inset-0">
+        <Image
+          src={image}
+          alt={imageAlt}
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+          style={{ objectPosition: imagePosition }}
+        />
+      </div>
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-neutral-950/85 via-neutral-950/25 to-neutral-950/35" />
 
       {/* Mobile mirrors the desktop hierarchy: title/description is the
@@ -42,13 +44,16 @@ export default function PageHero({
       <div className="absolute inset-0 mx-auto flex w-full max-w-[1800px] flex-col justify-between gap-6 px-5 pt-[30vh] pb-10 sm:px-10 lg:justify-center lg:py-24">
         <div className="flex flex-col gap-6">
           <h1
-            className="whitespace-pre-line font-heading font-black leading-[0.95] tracking-tight text-white"
+            className="hero-fade-up whitespace-pre-line font-heading font-black leading-[0.95] tracking-tight text-white"
             style={{ fontSize: "clamp(3.75rem, 6.5vw, 7rem)" }}
           >
             {title}
           </h1>
           {description && (
-            <p className="max-w-xl text-lg font-light leading-snug text-[#c1c7c7] sm:text-xl">
+            <p
+              className="hero-fade-up max-w-xl text-lg font-light leading-snug text-[#c1c7c7] sm:text-xl"
+              style={{ animationDelay: "0.15s" }}
+            >
               {description}
             </p>
           )}

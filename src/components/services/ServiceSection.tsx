@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useState, type CSSProperties, type ReactNode } from "react";
+import Reveal from "../Reveal";
 
 export type ServiceTab = {
   label: string;
@@ -52,7 +53,7 @@ export default function ServiceSection({
       className="scroll-mt-4 bg-neutral-950 px-5 pt-16 pb-4 text-white sm:px-10"
     >
       <div className="mx-auto w-full max-w-[1800px]">
-        <div className="flex max-w-3xl flex-col gap-[30px]">
+        <Reveal className="flex max-w-3xl flex-col gap-[30px]">
           <span className="inline-flex items-center gap-2 text-xl font-light tracking-wide text-accent">
             <span className="h-2 w-2 rounded-full bg-accent" />
             {eyebrow}
@@ -66,13 +67,16 @@ export default function ServiceSection({
           <p className="max-w-2xl text-xl font-light leading-snug text-[#c1c7c7]">
             {description}
           </p>
-        </div>
+        </Reveal>
 
         <div className="mt-10 grid grid-cols-1 items-stretch gap-3 lg:grid-cols-2">
           {/* Tab card — ordered after the image on mobile so the photo
               gives context before the reader hits the detail text;
               lg:order-none restores source order (card first) side by side. */}
-          <div className="order-2 flex flex-col rounded-xl bg-[#171919] p-8 lg:order-none lg:min-h-[820px] lg:p-10">
+          <Reveal
+            delay={100}
+            className="order-2 flex flex-col rounded-xl bg-[#171919] p-8 lg:order-none lg:min-h-[820px] lg:p-10"
+          >
             <div className="flex w-full gap-3" role="tablist">
               {tabs.map((tab, i) => (
                 <button
@@ -82,7 +86,7 @@ export default function ServiceSection({
                   aria-selected={activeTab === i}
                   aria-controls={`tabpanel-${id}-${i}`}
                   onClick={() => selectTab(i)}
-                  className={`flex-1 rounded-md px-4 py-3 text-center text-xl font-medium tracking-wide transition ${
+                  className={`flex-1 rounded-md px-4 py-3 text-center text-xl font-medium tracking-wide transition-all duration-300 ease-out active:scale-[0.97] ${
                     activeTab === i
                       ? "border border-accent bg-accent text-[#eaefef]"
                       : "border border-[#9ba0a0] text-[#9ba0a0] hover:border-[#c1c7c7] hover:text-[#c1c7c7]"
@@ -138,10 +142,13 @@ export default function ServiceSection({
                 </a>
               </div>
             </div>
-          </div>
+          </Reveal>
 
           {/* Image */}
-          <div className="order-1 relative min-h-[360px] overflow-hidden rounded-xl bg-neutral-800 lg:order-none lg:h-full">
+          <Reveal
+            delay={200}
+            className="order-1 relative min-h-[360px] overflow-hidden rounded-xl bg-neutral-800 lg:order-none lg:h-full"
+          >
             <Image
               src={activeImage}
               alt={activeImageAlt}
@@ -150,7 +157,7 @@ export default function ServiceSection({
               className={imageFit === "contain" ? "object-contain" : "object-cover"}
             />
             <div className="pointer-events-none absolute inset-0 bg-black/20" />
-          </div>
+          </Reveal>
         </div>
 
         {extra}

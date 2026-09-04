@@ -21,19 +21,21 @@ export default function Hero({
 
   return (
     <section className="relative flex min-h-dvh flex-col overflow-hidden bg-neutral-950 px-5 pb-10 pt-20 text-white sm:px-10 sm:pb-8 sm:pt-24 lg:h-[90vh] lg:min-h-[720px]">
-      <Image
-        src={data.backgroundImage}
-        alt={data.backgroundImageAlt ?? ""}
-        fill
-        priority
-        sizes="100vw"
-        className="object-cover"
-      />
+      <div className="hero-parallax-bg absolute inset-0">
+        <Image
+          src={data.backgroundImage}
+          alt={data.backgroundImageAlt ?? ""}
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
+        />
+      </div>
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-neutral-950/85 via-neutral-950/35 to-transparent" />
 
       <div className="relative z-10 flex max-w-full flex-1 flex-col justify-center sm:max-w-[85%]">
         <h1
-          className="font-heading font-black leading-[0.95] tracking-tight text-[#eaefef]"
+          className="hero-fade-up font-heading font-black leading-[0.95] tracking-tight text-[#eaefef]"
           style={{ fontSize: "clamp(2.5rem, 6.5vw, 7rem)" }}
         >
           {headingLines.map((line, i) => (
@@ -43,12 +45,18 @@ export default function Hero({
             </span>
           ))}
         </h1>
-        <p className="mt-4 max-w-2xl text-lg font-light text-[#c1c7c7] sm:mt-6 sm:text-2xl">
+        <p
+          className="hero-fade-up mt-4 max-w-2xl text-lg font-light text-[#c1c7c7] sm:mt-6 sm:text-2xl"
+          style={{ animationDelay: "0.15s" }}
+        >
           {data.subheading}
         </p>
       </div>
 
-      <div className="relative z-10 mt-10 flex flex-col items-stretch gap-8 border-t border-white/10 pt-5 sm:mt-10 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between sm:gap-6 sm:pt-6">
+      <div
+        className="hero-fade-up relative z-10 mt-10 flex flex-col items-stretch gap-8 border-t border-white/10 pt-5 sm:mt-10 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between sm:gap-6 sm:pt-6"
+        style={{ animationDelay: "0.3s" }}
+      >
         {/* Mobile: equal-width badge chips, so certifications with
             different text lengths still line up cleanly in a row. */}
         <div className="grid grid-cols-3 gap-2 sm:hidden">
