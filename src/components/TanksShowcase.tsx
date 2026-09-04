@@ -30,7 +30,7 @@ export default function TanksShowcase({
   return (
     <section id="industries" className="hidden bg-neutral-950 px-5 py-4 sm:block sm:px-10">
       <div className="mx-auto w-full max-w-[1800px] overflow-hidden rounded-2xl bg-neutral-900 p-6 text-white sm:p-12">
-        <div className="grid gap-8 sm:gap-12 lg:grid-cols-2 lg:items-center">
+        <div className="grid gap-8 sm:gap-12 xl:grid-cols-2 xl:items-center">
           <Reveal
             className="relative aspect-square w-full overflow-hidden rounded-2xl border-2 border-accent/70 bg-gradient-to-br from-[#2a2c2c] to-black"
             style={{ boxShadow: "0 0 22px 2px rgba(1, 135, 148, 0.3)" }}
@@ -40,7 +40,7 @@ export default function TanksShowcase({
               src={displayImage}
               alt={displayAlt}
               fill
-              sizes="(min-width: 1024px) 50vw, 100vw"
+              sizes="(min-width: 1280px) 50vw, 100vw"
               className="object-contain p-8 transition-opacity duration-300 sm:p-12"
             />
           </Reveal>
@@ -66,7 +66,7 @@ export default function TanksShowcase({
                       type="button"
                       onClick={() => setSelected(i)}
                       aria-pressed={isActive}
-                      className="flex w-full items-start gap-4 py-4 text-left transition sm:gap-5 sm:py-5"
+                      className="flex w-full items-start gap-4 rounded-lg py-4 text-left transition outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-900 sm:gap-5 sm:py-5"
                     >
                       <div
                         className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-base font-semibold transition ${

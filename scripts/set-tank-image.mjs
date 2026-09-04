@@ -1,8 +1,10 @@
-// Test script: uploads a per-tank image (the new transparent-PNG style) and
-// sets it on a specific item in the homepage's "Tanks & Containers" list —
-// e.g. the water tank item, so you can see how the click-to-swap + the new
-// object-contain frame actually looks with a real image before generating
-// the rest.
+// Uploads the 4 generated product images and sets them on the matching
+// items in the homepage's "Tanks & Containers" list, for both locales.
+//
+// This also FIXES a mix-up from the first pass: the very first test image
+// (water-tank.png — the one with a gauge + two valves) was actually meant
+// to be the Fuel Tanks shot, not the water tank. This run moves it there
+// and uploads the correct, simpler water tank image instead.
 //
 // SETUP: same as scripts/set-image-alt-text.mjs — needs SANITY_API_WRITE_TOKEN
 // in .env.local.
@@ -41,56 +43,91 @@ const client = createClient({
   useCdn: false,
 });
 
-// Which item in each locale's tanksShowcase.tanks array to update, and the
-// alt text to set alongside it.
-const TARGETS = [
+// One entry per product. `imagePath` is a local file to upload;
+// `reuseAssetId` reuses an asset that's already in Sanity instead (used for
+// the fuel tank, since that exact file was already uploaded under the wrong
+// item last time — no need to upload the same bytes twice).
+const PRODUCTS = [
   {
-    docId: "homePage",
-    tankKey: "eb873f62-cb18-484e-8180-fe1881c4a13d", // "Hot Dip Galvanized Sanitary Water Tanks"
-    imageAlt: "Galvanized steel sanitary water tank with an inspection hatch and vent cap",
+    label: "Water Tank",
+    imagePath: new URL("./product-images/water-tank-v2.png", import.meta.url),
+    keys: { homePage: "eb873f62-cb18-484e-8180-fe1881c4a13d", homePage_sq: "d00b842a-3310-4706-bd42-722126343f01" },
+    alt: {
+      homePage: "Galvanized steel sanitary water tank with an inspection hatch and vent cap",
+      homePage_sq: "Depozitë uji prej çeliku të zinkuar me kapak inspektimi dhe valvul ajrimi",
+    },
   },
   {
-    docId: "homePage_sq",
-    tankKey: "d00b842a-3310-4706-bd42-722126343f01", // "Depozita Uji të Zinkuara"
-    imageAlt: "Depozitë uji prej çeliku të zinkuar me kapak inspektimi dhe valvul ajrimi",
+    label: "Fuel Tank",
+    reuseAssetId: "image-19021054e698f61d684fca3a1fbacca41dab6aab-1536x1024-png",
+    keys: { homePage: "e0df7069-80bf-4b81-bfb7-6898bc74cad9", homePage_sq: "55fd1d65-1654-4dfe-9b43-3bb986f7899f" },
+    alt: {
+      homePage: "Galvanized steel fuel tank with a fill cap, pressure gauge, and valve fittings",
+      homePage_sq: "Depozitë karburanti prej çeliku të zinkuar me kapak mbushjeje, manometër dhe valvula",
+    },
+  },
+  {
+    label: "Stainless Steel Container",
+    imagePath: new URL("./product-images/stainless-container.png", import.meta.url),
+    keys: { homePage: "a05205f0-e1e5-441c-965a-02ae1aa503ec", homePage_sq: "4eda4af4-971a-42e1-817a-0525d548e0a3" },
+    alt: {
+      homePage: "Polished stainless steel food-grade mixing vessel with a hinged lid",
+      homePage_sq: "Enë përzierjeje inoksi e lëmuar për industrinë ushqimore me kapak me menteshë",
+    },
+  },
+  {
+    label: "HVAC Tank",
+    imagePath: new URL("./product-images/hvac-tank.png", import.meta.url),
+    keys: { homePage: "5477a7d2-aa16-4f92-ba09-c44d24e5daa4", homePage_sq: "1c33a38f-b705-47d9-bc3f-0e16f3fb8c6a" },
+    alt: {
+      homePage: "Upright HVAC accumulator tank with pipe connections and a pressure gauge",
+      homePage_sq: "Depozitë akumuluese HVAC vertikale me lidhje tubash dhe manometër",
+    },
   },
 ];
 
-const IMAGE_PATH = new URL("./product-images/water-tank.png", import.meta.url);
-
 async function run() {
-  console.log(`Image: ${IMAGE_PATH.pathname}`);
+  for (const product of PRODUCTS) {
+    console.log(`\n${product.label}:`);
 
-  if (DRY_RUN) {
-    for (const t of TARGETS) {
-      console.log(`\nWould upload image + set on ${t.docId} -> tanks[_key=="${t.tankKey}"]`);
-      console.log(`  alt: ${t.imageAlt}`);
+    let assetId = product.reuseAssetId;
+    if (!assetId) {
+      console.log(`  reading ${product.imagePath.pathname}`);
+      if (!DRY_RUN) {
+        const buffer = await readFile(product.imagePath);
+        console.log("  uploading...");
+        const asset = await client.assets.upload("image", buffer, {
+          filename: product.imagePath.pathname.split("/").pop(),
+        });
+        assetId = asset._id;
+        console.log(`  ✓ uploaded: ${assetId}`);
+      } else {
+        console.log("  (would upload)");
+      }
+    } else {
+      console.log(`  reusing existing asset: ${assetId}`);
     }
-    console.log("\nDry run — no changes written.");
-    return;
+
+    for (const docId of ["homePage", "homePage_sq"]) {
+      const key = product.keys[docId];
+      const alt = product.alt[docId];
+      console.log(`  ${docId} -> tanks[_key=="${key}"]  alt: ${alt}`);
+      if (DRY_RUN) continue;
+
+      await client
+        .patch(docId)
+        .set({
+          [`tanksShowcase.tanks[_key=="${key}"].image`]: {
+            _type: "image",
+            asset: { _type: "reference", _ref: assetId },
+          },
+          [`tanksShowcase.tanks[_key=="${key}"].imageAlt`]: alt,
+        })
+        .commit();
+    }
   }
 
-  const buffer = await readFile(IMAGE_PATH);
-  console.log("Uploading image asset to Sanity...");
-  const asset = await client.assets.upload("image", buffer, { filename: "water-tank.png" });
-  console.log(`  ✓ uploaded: ${asset._id}`);
-
-  for (const t of TARGETS) {
-    console.log(`\n${t.docId}:`);
-    await client
-      .patch(t.docId)
-      .set({
-        [`tanksShowcase.tanks[_key=="${t.tankKey}"].image`]: {
-          _type: "image",
-          asset: { _type: "reference", _ref: asset._id },
-        },
-        [`tanksShowcase.tanks[_key=="${t.tankKey}"].imageAlt`]: t.imageAlt,
-      })
-      .commit();
-    console.log(`  ✓ updated`);
-  }
-
-  console.log("\nDone.");
+  console.log(DRY_RUN ? "\nDry run — no changes written." : "\nDone.");
 }
 
 run().catch((err) => {
