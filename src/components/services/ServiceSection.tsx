@@ -160,9 +160,7 @@ export default function ServiceSection({
                   : "object-cover"
               }
             />
-            {imageFit !== "contain" && (
-              <div className="pointer-events-none absolute inset-0 bg-black/20" />
-            )}
+            <div className="pointer-events-none absolute inset-0 bg-black/20" />
           </Reveal>
         </div>
 

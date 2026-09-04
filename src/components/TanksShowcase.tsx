@@ -44,6 +44,7 @@ export default function TanksShowcase({
               sizes="(min-width: 1280px) 50vw, 100vw"
               className="object-contain p-8 transition-opacity duration-300 sm:p-12"
             />
+            <div className="pointer-events-none absolute inset-0 bg-black/20" />
           </Reveal>
 
           <Reveal delay={120}>
