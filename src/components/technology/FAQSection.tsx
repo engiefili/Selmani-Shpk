@@ -45,10 +45,11 @@ export default function FAQSection({
         <Reveal delay={100} className="mt-10 max-w-3xl">
           <ExclusiveAccordionGroup
             defaultOpenIndex={0}
+            titleClassName="text-lg font-normal leading-snug text-[#c1c7c7] sm:text-xl sm:leading-[0.9] lg:text-2xl"
             items={items.map((item) => ({
               title: item.question,
               content: (
-                <p className="max-w-3xl text-lg font-light leading-relaxed text-[#c1c7c7]">
+                <p className="max-w-3xl text-xl font-light leading-relaxed text-[#c1c7c7]">
                   {item.answer}
                 </p>
               ),

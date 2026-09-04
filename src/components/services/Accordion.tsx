@@ -4,12 +4,15 @@ import { useState, type ReactNode } from "react";
 
 export function AccordionGroup({
   title,
+  titleClassName = "text-2xl font-normal leading-none text-[#eaefef] sm:text-[32px]",
   defaultOpen = false,
   open: openProp,
   onToggle,
   children,
 }: {
   title: string;
+  /** Override the title's text styling (defaults to the large accordion-panel look). */
+  titleClassName?: string;
   defaultOpen?: boolean;
   /** Controlled open state. When provided (with onToggle), internal state is ignored. */
   open?: boolean;
@@ -35,7 +38,7 @@ export function AccordionGroup({
         aria-expanded={open}
         className="flex w-full items-center justify-between gap-4 pb-4 text-left"
       >
-        <p className="text-2xl font-normal leading-none text-[#eaefef] sm:text-[32px]">{title}</p>
+        <p className={titleClassName}>{title}</p>
         <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-[#c1c7c7] text-lg font-medium text-[#171919]">
           {open ? "−" : "+"}
         </span>
@@ -61,9 +64,12 @@ export function AccordionGroup({
 export function ExclusiveAccordionGroup({
   items,
   defaultOpenIndex = 0,
+  titleClassName,
 }: {
   items: { title: string; content: ReactNode }[];
   defaultOpenIndex?: number | null;
+  /** Override every item's title styling (defaults to the large accordion-panel look). */
+  titleClassName?: string;
 }) {
   const [openIndex, setOpenIndex] = useState<number | null>(defaultOpenIndex);
 
@@ -73,6 +79,7 @@ export function ExclusiveAccordionGroup({
         <AccordionGroup
           key={item.title}
           title={item.title}
+          titleClassName={titleClassName}
           open={openIndex === i}
           onToggle={() => setOpenIndex((current) => (current === i ? null : i))}
         >
