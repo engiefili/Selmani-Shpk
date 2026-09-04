@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useState } from "react";
 import CtaButton from "./CtaButton";
 import Eyebrow from "./Eyebrow";
 import Reveal from "./Reveal";
@@ -8,7 +11,7 @@ export type TanksShowcaseData = {
   title: string;
   image: string;
   imageAlt?: string;
-  tanks: { title: string; description: string }[];
+  tanks: { title: string; description: string; image?: string; imageAlt?: string }[];
   ctaLabel?: string;
 };
 
@@ -19,20 +22,26 @@ export default function TanksShowcase({
   data: TanksShowcaseData;
   href?: string;
 }) {
+  const [selected, setSelected] = useState(0);
+  const active = data.tanks[selected];
+  const displayImage = active?.image ?? data.image;
+  const displayAlt = active?.image ? active.imageAlt ?? active.title : data.imageAlt ?? "";
+
   return (
     <section id="industries" className="hidden bg-neutral-950 px-5 py-4 sm:block sm:px-10">
       <div className="mx-auto w-full max-w-[1800px] overflow-hidden rounded-2xl bg-neutral-900 p-6 text-white sm:p-12">
         <div className="grid gap-8 sm:gap-12 lg:grid-cols-2 lg:items-center">
           <Reveal
-            className="relative aspect-square w-full overflow-hidden rounded-2xl border-2 border-accent/70"
+            className="relative aspect-square w-full overflow-hidden rounded-2xl border-2 border-accent/70 bg-gradient-to-br from-[#2a2c2c] to-black"
             style={{ boxShadow: "0 0 22px 2px rgba(1, 135, 148, 0.3)" }}
           >
             <Image
-              src={data.image}
-              alt={data.imageAlt ?? ""}
+              key={displayImage}
+              src={displayImage}
+              alt={displayAlt}
               fill
               sizes="(min-width: 1024px) 50vw, 100vw"
-              className="object-cover"
+              className="object-contain p-8 transition-opacity duration-300 sm:p-12"
             />
           </Reveal>
 
@@ -46,32 +55,42 @@ export default function TanksShowcase({
             </h2>
 
             <ul className="mt-6 sm:mt-8">
-              {data.tanks.map((tank, i) => (
-                <li
-                  key={tank.title}
-                  className="flex items-start gap-4 border-t border-white/10 py-4 first:border-t-0 sm:gap-5 sm:py-5"
-                >
-                  <div
-                    className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-base font-semibold ${
-                      i === 0
-                        ? "bg-accent text-white"
-                        : "border border-[#9ba0a0] text-[#9ba0a0]"
-                    }`}
+              {data.tanks.map((tank, i) => {
+                const isActive = i === selected;
+                return (
+                  <li
+                    key={tank.title}
+                    className="border-t border-white/10 first:border-t-0"
                   >
-                    {i + 1}
-                  </div>
-                  <div>
-                    <h3
-                      className={`font-semibold text-white ${i === 0 ? "text-xl sm:text-2xl" : "text-lg sm:text-xl"}`}
+                    <button
+                      type="button"
+                      onClick={() => setSelected(i)}
+                      aria-pressed={isActive}
+                      className="flex w-full items-start gap-4 py-4 text-left transition sm:gap-5 sm:py-5"
                     >
-                      {tank.title}
-                    </h3>
-                    <p className="mt-1 text-base font-light text-[#9ba0a0] sm:text-xl">
-                      {tank.description}
-                    </p>
-                  </div>
-                </li>
-              ))}
+                      <div
+                        className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-base font-semibold transition ${
+                          isActive
+                            ? "bg-accent text-white"
+                            : "border border-[#9ba0a0] text-[#9ba0a0]"
+                        }`}
+                      >
+                        {i + 1}
+                      </div>
+                      <div>
+                        <h3
+                          className={`font-semibold text-white transition-all ${isActive ? "text-xl sm:text-2xl" : "text-lg sm:text-xl"}`}
+                        >
+                          {tank.title}
+                        </h3>
+                        <p className="mt-1 text-base font-light text-[#9ba0a0] sm:text-xl">
+                          {tank.description}
+                        </p>
+                      </div>
+                    </button>
+                  </li>
+                );
+              })}
             </ul>
 
             <CtaButton

@@ -108,8 +108,16 @@ export const tankItem = defineType({
   fields: [
     defineField({ name: "title", title: "Title", type: "string", validation: (Rule) => Rule.required() }),
     defineField({ name: "description", title: "Description", type: "text", rows: 2, validation: (Rule) => Rule.required() }),
+    defineField({
+      name: "image",
+      title: "Image",
+      type: "image",
+      description:
+        "Optional — shown in the big frame when this item is selected. Falls back to the section's main image above if left blank.",
+    }),
+    defineField({ name: "imageAlt", title: "Image alt text", type: "string" }),
   ],
-  preview: { select: { title: "title" } },
+  preview: { select: { title: "title", media: "image" } },
 });
 
 export const tanksShowcaseSection = defineType({

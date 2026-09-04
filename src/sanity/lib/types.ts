@@ -101,7 +101,7 @@ export type HomePageDoc = {
     title: string;
     image: Image;
     imageAlt?: string;
-    tanks: { title: string; description: string }[];
+    tanks: { title: string; description: string; image?: Image; imageAlt?: string }[];
     ctaLabel?: string;
   };
 };

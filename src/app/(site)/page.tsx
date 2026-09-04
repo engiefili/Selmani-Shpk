@@ -144,7 +144,12 @@ export default async function Home() {
             title: home.tanksShowcase.title,
             image: urlForImage(home.tanksShowcase.image).width(1200).url(),
             imageAlt: home.tanksShowcase.imageAlt,
-            tanks: home.tanksShowcase.tanks,
+            tanks: home.tanksShowcase.tanks.map((tank) => ({
+              title: tank.title,
+              description: tank.description,
+              image: tank.image ? urlForImage(tank.image).width(1200).url() : undefined,
+              imageAlt: tank.imageAlt,
+            })),
             ctaLabel: home.tanksShowcase.ctaLabel,
           }}
           href={localizePath("/services#tanks-containers", locale)}
