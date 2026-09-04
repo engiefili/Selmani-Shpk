@@ -14,7 +14,7 @@ export default function CtaButton({
   const pillClass =
     "inline-flex h-full flex-1 items-center justify-center rounded-md bg-accent px-6 text-base font-medium tracking-[0.5px] text-white transition duration-200 hover:bg-accent-hover active:scale-[0.97]";
   const squareClass =
-    "flex h-full w-[58px] shrink-0 items-center justify-center rounded-md bg-accent text-lg transition duration-200 hover:bg-accent-hover active:scale-[0.97]";
+    "flex h-full w-[58px] shrink-0 items-center justify-center rounded-md bg-accent text-lg text-white transition duration-200 hover:bg-accent-hover active:scale-[0.97]";
 
   const content = href ? (
     <>
