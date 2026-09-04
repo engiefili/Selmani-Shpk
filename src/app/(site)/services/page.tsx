@@ -23,16 +23,6 @@ const PROJECTS_TAB_BY_SECTION: Record<string, string> = {
   "tanks-containers": "tanks-containers",
 };
 
-// These three sections show a single product shot on a plain background
-// (galvanized staircase, transmission tower, tank/container renders) —
-// always display the whole product rather than cropping it to fill the
-// frame, regardless of what's saved in the CMS's per-document toggle.
-const CONTAIN_FIT_SECTIONS = new Set([
-  "hot-dip-galvanizing",
-  "metal-constructions",
-  "tanks-containers",
-]);
-
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale();
   return pageMetadata({
@@ -72,11 +62,11 @@ export default async function ServicesPage() {
               description={section.description}
               image={urlForImage(section.image).width(1600).url()}
               imageAlt={section.imageAlt}
-              imageFit={
-                CONTAIN_FIT_SECTIONS.has(section.sectionId.current)
-                  ? "contain"
-                  : section.imageFit
-              }
+              // Every section on this page is a single-product shot on a
+              // plain background — always show the whole product rather
+              // than cropping it to fill the frame, regardless of locale
+              // or the CMS's per-document toggle.
+              imageFit="contain"
               pdfLabel={section.pdfLabel}
               tabs={section.tabs.map((tab) => ({
                 label: tab.label,
