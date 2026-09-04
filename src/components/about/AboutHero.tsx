@@ -42,7 +42,7 @@ export default function AboutHero({ data }: { data: AboutHeroData }) {
           </div>
         </div>
 
-        <div className="relative mx-auto flex aspect-square w-full max-w-[240px] items-center justify-center sm:mx-0 sm:max-w-none">
+        <div className="relative mx-auto hidden aspect-square w-full max-w-[240px] items-center justify-center lg:mx-0 lg:flex lg:max-w-none">
           <Image
             src={data.image}
             alt={data.imageAlt ?? ""}

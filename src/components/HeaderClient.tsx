@@ -76,7 +76,7 @@ export default function HeaderClient({ data }: { data: HeaderData }) {
         </div>
       </Link>
 
-      <nav className="hidden items-center gap-2.5 lg:flex">
+      <nav className="hidden items-center gap-2.5 xl:flex">
         {data.navLinks.map((link) => {
           const active = pathname === link.href;
 
@@ -93,7 +93,7 @@ export default function HeaderClient({ data }: { data: HeaderData }) {
                   href={link.href}
                   onClick={() => setDropdownOpen(false)}
                   aria-expanded={dropdownOpen}
-                  className={`flex h-10 items-center gap-1 rounded-md px-4 text-[16px] font-medium tracking-[0.5px] transition ${
+                  className={`flex h-10 items-center gap-1 whitespace-nowrap rounded-md px-4 text-[16px] font-medium tracking-[0.5px] transition ${
                     active || dropdownOpen
                       ? "bg-[#c1c7c7] text-[#171919]"
                       : "border border-[#c1c7c7]/60 text-[#c1c7c7] hover:border-accent hover:text-accent"
@@ -129,7 +129,7 @@ export default function HeaderClient({ data }: { data: HeaderData }) {
             <Link
               key={link.label}
               href={link.href}
-              className={`flex h-10 items-center gap-1 rounded-md px-4 text-[16px] font-medium tracking-[0.5px] transition ${
+              className={`flex h-10 items-center gap-1 whitespace-nowrap rounded-md px-4 text-[16px] font-medium tracking-[0.5px] transition ${
                 active
                   ? "bg-[#c1c7c7] text-[#171919]"
                   : "border border-[#c1c7c7]/60 text-[#c1c7c7] hover:border-accent hover:text-accent"
@@ -144,7 +144,7 @@ export default function HeaderClient({ data }: { data: HeaderData }) {
       <div className="flex items-center gap-3">
         <Link
           href={data.contactHref}
-          className={`hidden h-10 items-center rounded-md border px-4 text-[16px] font-medium tracking-[0.5px] transition sm:flex ${
+          className={`hidden h-10 items-center whitespace-nowrap rounded-md border px-4 text-[16px] font-medium tracking-[0.5px] transition sm:flex ${
             pathname === data.contactHref
               ? "border-[#c1c7c7] bg-[#c1c7c7] text-[#171919]"
               : "border-[#c1c7c7]/60 text-[#c1c7c7] hover:border-accent hover:text-accent"
@@ -154,7 +154,7 @@ export default function HeaderClient({ data }: { data: HeaderData }) {
         </Link>
         <Link
           href={data.switchHref}
-          className="hidden h-10 items-center rounded-md border border-[#c1c7c7]/60 px-4 text-[16px] font-medium tracking-[0.5px] text-[#c1c7c7] hover:border-accent hover:text-accent lg:flex"
+          className="hidden h-10 items-center whitespace-nowrap rounded-md border border-[#c1c7c7]/60 px-4 text-[16px] font-medium tracking-[0.5px] text-[#c1c7c7] hover:border-accent hover:text-accent xl:flex"
         >
           {data.switchLabel}
         </Link>
@@ -164,7 +164,7 @@ export default function HeaderClient({ data }: { data: HeaderData }) {
           aria-label={mobileOpen ? "Close menu" : "Open menu"}
           aria-expanded={mobileOpen}
           onClick={() => setMobileOpen((v) => !v)}
-          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-[#c1c7c7]/60 text-[#c1c7c7] transition hover:border-accent hover:text-accent lg:hidden"
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-[#c1c7c7]/60 text-[#c1c7c7] transition hover:border-accent hover:text-accent xl:hidden"
         >
           {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
@@ -178,7 +178,7 @@ export default function HeaderClient({ data }: { data: HeaderData }) {
           `inert` keeps its links out of tab order and screen readers
           while collapsed, so this isn't an accessibility regression. */}
       <div
-        className="grid transition-[grid-template-rows] duration-300 ease-out motion-reduce:transition-none lg:hidden"
+        className="grid transition-[grid-template-rows] duration-300 ease-out motion-reduce:transition-none xl:hidden"
         style={{ gridTemplateRows: mobileOpen ? "1fr" : "0fr" }}
         inert={!mobileOpen}
       >
