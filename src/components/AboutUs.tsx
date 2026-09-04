@@ -28,7 +28,7 @@ export default function AboutUs({ data }: { data: AboutUsData }) {
 
         <Reveal
           delay={120}
-          className="relative hidden aspect-square w-full overflow-hidden rounded-full sm:block sm:max-w-sm sm:justify-self-end"
+          className="relative hidden aspect-square w-full max-w-sm overflow-hidden rounded-full lg:block lg:justify-self-end"
         >
           <Image
             src={data.image}
