@@ -152,12 +152,18 @@ export default function HeaderClient({ data }: { data: HeaderData }) {
         >
           {data.contactCtaLabel}
         </Link>
-        <Link
+        {/* A plain <a>, not next/link's <Link>: the "/al" ↔ "/" switch is a
+            middleware rewrite to the *same* route, so Next's client-side
+            router cache treats them as one page and can serve a stale,
+            wrong-locale render on the first click — a real navigation
+            (full page load) always renders the correct locale on the
+            first click, which is what a language switch should do. */}
+        <a
           href={data.switchHref}
-          className="hidden h-10 items-center whitespace-nowrap rounded-md border border-[#c1c7c7]/60 px-4 text-[16px] font-medium tracking-[0.5px] text-[#c1c7c7] hover:border-accent hover:text-accent xl:flex"
+          className="flex h-10 items-center whitespace-nowrap rounded-md border border-[#c1c7c7]/60 px-3 text-sm font-medium tracking-[0.5px] text-[#c1c7c7] transition hover:border-accent hover:text-accent sm:px-4 sm:text-[16px]"
         >
           {data.switchLabel}
-        </Link>
+        </a>
 
         <button
           type="button"
@@ -260,13 +266,6 @@ export default function HeaderClient({ data }: { data: HeaderData }) {
             className="mt-6 flex h-12 items-center justify-center rounded-md border border-accent bg-accent text-[16px] font-medium tracking-[0.5px] text-white transition hover:bg-accent-hover"
           >
             {data.contactCtaLabel}
-          </Link>
-
-          <Link
-            href={data.switchHref}
-            className="mt-3 flex h-12 items-center justify-center rounded-md border border-[#c1c7c7]/60 text-[16px] font-medium tracking-[0.5px] text-[#c1c7c7] transition hover:border-accent hover:text-accent"
-          >
-            {data.switchLabel}
           </Link>
           </div>
         </div>
