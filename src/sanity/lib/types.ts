@@ -66,9 +66,22 @@ export type ProcessStepDoc = {
 export type HomePageDoc = {
   _id: string;
   hero: {
-    heading: string;
-    subheading: string;
-    backgroundImage: Image;
+    // New multi-slide shape. Optional for one deploy cycle: the published
+    // document won't have this until the content is published in Studio
+    // (see the legacy fields below, kept as a same-cutover fallback).
+    slides?: {
+      _key: string;
+      image: Image;
+      imageAlt?: string;
+      heading: string;
+      subheading: string;
+    }[];
+    // Legacy single-slide shape — no longer editable in Studio, but kept
+    // here so the site keeps rendering correctly on published content
+    // that hasn't been migrated to `slides` yet.
+    heading?: string;
+    subheading?: string;
+    backgroundImage?: Image;
     backgroundImageAlt?: string;
     certifications?: { line1: string; line2: string }[];
     ctaLabel?: string;

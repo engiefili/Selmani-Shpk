@@ -59,10 +59,27 @@ export default async function Home() {
       <main className="flex flex-1 flex-col">
         <Hero
           data={{
-            heading: home.hero.heading,
-            subheading: home.hero.subheading,
-            backgroundImage: urlForImage(home.hero.backgroundImage).width(2400).url(),
-            backgroundImageAlt: home.hero.backgroundImageAlt,
+            // Prefer the new multi-slide content once it's published in
+            // Sanity; fall back to the legacy single-image shape so the
+            // site keeps rendering correctly until that publish happens.
+            slides:
+              home.hero.slides && home.hero.slides.length > 0
+                ? home.hero.slides.map((slide) => ({
+                    image: urlForImage(slide.image).width(2400).url(),
+                    imageAlt: slide.imageAlt,
+                    heading: slide.heading,
+                    subheading: slide.subheading,
+                  }))
+                : [
+                    {
+                      image: urlForImage(home.hero.backgroundImage!)
+                        .width(2400)
+                        .url(),
+                      imageAlt: home.hero.backgroundImageAlt,
+                      heading: home.hero.heading ?? "",
+                      subheading: home.hero.subheading ?? "",
+                    },
+                  ],
             certifications: home.hero.certifications,
             ctaLabel: home.hero.ctaLabel,
           }}

@@ -36,6 +36,7 @@ import {
   benefitItem,
   certificationBadge,
   heroSection,
+  heroSlide,
   hotDipHomeSection,
   metallicConstructionsSection,
   metallicServiceItem,
@@ -65,6 +66,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     accordionGroupBlock,
     // Home page objects
     heroSection,
+    heroSlide,
     certificationBadge,
     aboutUsSection,
     hotDipHomeSection,

@@ -1,13 +1,23 @@
-import Image from "next/image";
+"use client";
 
-export type HeroData = {
+import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+
+export type HeroSlideData = {
+  image: string;
+  imageAlt?: string;
   heading: string;
   subheading: string;
-  backgroundImage: string;
-  backgroundImageAlt?: string;
+};
+
+export type HeroData = {
+  slides: HeroSlideData[];
   certifications?: { line1: string; line2: string }[];
   ctaLabel?: string;
 };
+
+const AUTOPLAY_MS = 5000;
+const SWIPE_THRESHOLD = 40;
 
 export default function Hero({
   data,
@@ -16,20 +26,73 @@ export default function Hero({
   data: HeroData;
   href?: string;
 }) {
+  const slides = data.slides;
   const certifications = data.certifications ?? [];
-  const headingLines = data.heading.split("\n");
+  const [active, setActive] = useState(0);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const touchStartX = useRef<number | null>(null);
+
+  const restartAutoplay = () => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    if (slides.length <= 1) return;
+    timerRef.current = setInterval(() => {
+      setActive((i) => (i + 1) % slides.length);
+    }, AUTOPLAY_MS);
+  };
+
+  useEffect(() => {
+    restartAutoplay();
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [slides.length]);
+
+  const goTo = (index: number) => {
+    setActive(((index % slides.length) + slides.length) % slides.length);
+    restartAutoplay();
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const delta = e.changedTouches[0].clientX - touchStartX.current;
+    if (Math.abs(delta) > SWIPE_THRESHOLD) {
+      goTo(active + (delta < 0 ? 1 : -1));
+    }
+    touchStartX.current = null;
+  };
+
+  const current = slides[active];
+  const headingLines = current.heading.split("\n");
 
   return (
-    <section className="relative flex min-h-dvh flex-col overflow-hidden bg-neutral-950 px-5 pb-10 pt-20 text-white sm:px-10 sm:pb-8 sm:pt-24 lg:h-[90vh] lg:min-h-[720px]">
+    <section
+      className="relative flex min-h-dvh flex-col overflow-hidden bg-neutral-950 px-5 pb-10 pt-20 text-white sm:px-10 sm:pb-8 sm:pt-24 lg:h-[90vh] lg:min-h-[720px]"
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+    >
       <div className="hero-parallax-bg absolute inset-0">
-        <Image
-          src={data.backgroundImage}
-          alt={data.backgroundImageAlt ?? ""}
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover"
-        />
+        {slides.map((slide, i) => (
+          <div
+            key={i}
+            aria-hidden={i !== active}
+            className="absolute inset-0 transition-opacity duration-700 ease-out"
+            style={{ opacity: i === active ? 1 : 0 }}
+          >
+            <Image
+              src={slide.image}
+              alt={slide.imageAlt ?? ""}
+              fill
+              priority={i === 0}
+              sizes="100vw"
+              className="object-cover"
+            />
+          </div>
+        ))}
       </div>
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-neutral-950/85 via-neutral-950/35 to-transparent" />
 
@@ -49,12 +112,48 @@ export default function Hero({
           className="hero-fade-up mt-4 max-w-2xl text-lg font-light text-[#c1c7c7] sm:mt-6 sm:text-2xl"
           style={{ animationDelay: "0.15s" }}
         >
-          {data.subheading}
+          {current.subheading}
         </p>
       </div>
 
+      {/* Slide navigation — desktop only, right-aligned, sits above the
+          footer divider line. Mobile relies on autoplay + swipe. */}
+      {slides.length > 1 && (
+        <div className="hero-fade-up relative z-10 mt-6 hidden justify-end gap-2.5 sm:flex">
+          <button
+            type="button"
+            aria-label="Previous slide"
+            onClick={() => goTo(active - 1)}
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-white/25 text-lg text-[#c1c7c7] transition hover:border-accent hover:text-accent"
+          >
+            ‹
+          </button>
+          <div className="flex items-center gap-2 px-1">
+            {slides.map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                aria-label={`Slide ${i + 1}`}
+                onClick={() => goTo(i)}
+                className={`h-2 w-2 rounded-full transition ${
+                  i === active ? "bg-accent" : "bg-white/30 hover:bg-white/50"
+                }`}
+              />
+            ))}
+          </div>
+          <button
+            type="button"
+            aria-label="Next slide"
+            onClick={() => goTo(active + 1)}
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-white/25 text-lg text-[#c1c7c7] transition hover:border-accent hover:text-accent"
+          >
+            ›
+          </button>
+        </div>
+      )}
+
       <div
-        className="hero-fade-up relative z-10 mt-10 flex flex-col items-stretch gap-8 border-t border-white/10 pt-5 sm:mt-10 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between sm:gap-6 sm:pt-6"
+        className="hero-fade-up relative z-10 mt-4 flex flex-col items-stretch gap-8 border-t border-white/10 pt-5 sm:mt-4 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between sm:gap-6 sm:pt-6"
         style={{ animationDelay: "0.3s" }}
       >
         {/* Mobile: equal-width badge chips, so certifications with

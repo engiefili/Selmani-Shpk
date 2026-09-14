@@ -11,22 +11,37 @@ export const certificationBadge = defineType({
   preview: { select: { title: "line1", subtitle: "line2" } },
 });
 
+export const heroSlide = defineType({
+  name: "heroSlide",
+  title: "Hero slide",
+  type: "object",
+  fields: [
+    defineField({ name: "image", title: "Background image", type: "image", validation: (Rule) => Rule.required() }),
+    defineField({ name: "imageAlt", title: "Background image alt text", type: "string" }),
+    defineField({
+      name: "heading",
+      title: "Heading",
+      type: "string",
+      description: 'Short punchy line, e.g. "WE BUILD IT."',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({ name: "subheading", title: "Subheading", type: "text", rows: 2, validation: (Rule) => Rule.required() }),
+  ],
+  preview: { select: { title: "heading", media: "image" } },
+});
+
 export const heroSection = defineType({
   name: "heroSection",
   title: "Hero",
   type: "object",
   fields: [
     defineField({
-      name: "heading",
-      title: "Heading",
-      type: "text",
-      rows: 2,
-      description: 'Line break becomes a new line, e.g. "Building Stronger,\\nProtecting Longer."',
-      validation: (Rule) => Rule.required(),
+      name: "slides",
+      title: "Slides",
+      type: "array",
+      of: [{ type: "heroSlide" }],
+      validation: (Rule) => Rule.required().min(1),
     }),
-    defineField({ name: "subheading", title: "Subheading", type: "text", rows: 2, validation: (Rule) => Rule.required() }),
-    defineField({ name: "backgroundImage", title: "Background image", type: "image", validation: (Rule) => Rule.required() }),
-    defineField({ name: "backgroundImageAlt", title: "Background image alt text", type: "string" }),
     defineField({
       name: "certifications",
       title: "Certification badges",
