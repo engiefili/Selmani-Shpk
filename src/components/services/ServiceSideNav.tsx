@@ -1,12 +1,12 @@
 const SECTIONS_EN = [
+  { id: "metal-constructions", label: "Steel Constructions" },
   { id: "hot-dip-galvanizing", label: "Hot Dip Galvanizing" },
-  { id: "metal-constructions", label: "Metal Constructions" },
   { id: "tanks-containers", label: "Tanks & Containers" },
 ];
 
 const SECTIONS_SQ = [
-  { id: "hot-dip-galvanizing", label: "Zinkim në të Nxehtë" },
   { id: "metal-constructions", label: "Konstruksione Metalike" },
+  { id: "hot-dip-galvanizing", label: "Zinkim në të Nxehtë" },
   { id: "tanks-containers", label: "Depozita & Kontenier" },
 ];
 

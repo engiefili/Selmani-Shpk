@@ -4,8 +4,8 @@ import Link from "next/link";
 import { useState, type FormEvent } from "react";
 
 const SUBJECTS_EN = [
+  "Steel Constructions",
   "Hot Dip Galvanizing",
-  "Metal Constructions",
   "Tanks & Containers",
   "Other",
 ] as const;

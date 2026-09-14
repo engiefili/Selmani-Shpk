@@ -82,15 +82,6 @@ export default async function Home() {
           title={home.hotDipGalvanizing.eyebrow ?? (locale === "sq" ? "Shërbime" : "Services")}
           cards={[
             {
-              key: "hot-dip-galvanizing",
-              eyebrow: home.hotDipGalvanizing.eyebrow,
-              title: home.hotDipGalvanizing.title,
-              image: urlForImage(home.hotDipGalvanizing.beforeImage).width(800).url(),
-              imageAlt: home.hotDipGalvanizing.beforeLabel,
-              ctaLabel: home.hotDipGalvanizing.ctaLabel ?? "Learn More",
-              href: localizePath("/services#hot-dip-galvanizing", locale),
-            },
-            {
               key: "metal-constructions",
               eyebrow: home.metallicConstructions.eyebrow,
               title: home.metallicConstructions.title,
@@ -98,6 +89,15 @@ export default async function Home() {
               imageAlt: home.metallicConstructions.title,
               ctaLabel: home.metallicConstructions.ctaLabel ?? "Learn More",
               href: localizePath("/services#metal-constructions", locale),
+            },
+            {
+              key: "hot-dip-galvanizing",
+              eyebrow: home.hotDipGalvanizing.eyebrow,
+              title: home.hotDipGalvanizing.title,
+              image: urlForImage(home.hotDipGalvanizing.beforeImage).width(800).url(),
+              imageAlt: home.hotDipGalvanizing.beforeLabel,
+              ctaLabel: home.hotDipGalvanizing.ctaLabel ?? "Learn More",
+              href: localizePath("/services#hot-dip-galvanizing", locale),
             },
             {
               key: "tanks-containers",
@@ -111,19 +111,6 @@ export default async function Home() {
           ]}
         />
 
-        <HotDipGalvanizing
-          data={{
-            eyebrow: home.hotDipGalvanizing.eyebrow,
-            title: home.hotDipGalvanizing.title,
-            beforeImage: urlForImage(home.hotDipGalvanizing.beforeImage).width(1200).url(),
-            beforeLabel: home.hotDipGalvanizing.beforeLabel,
-            afterImage: urlForImage(home.hotDipGalvanizing.afterImage).width(1200).url(),
-            afterLabel: home.hotDipGalvanizing.afterLabel,
-            benefits: home.hotDipGalvanizing.benefits,
-            ctaLabel: home.hotDipGalvanizing.ctaLabel,
-          }}
-          href={localizePath("/services#hot-dip-galvanizing", locale)}
-        />
         <MetallicConstructions
           data={{
             eyebrow: home.metallicConstructions.eyebrow,
@@ -137,6 +124,19 @@ export default async function Home() {
             ctaLabel: home.metallicConstructions.ctaLabel,
           }}
           href={localizePath("/services#metal-constructions", locale)}
+        />
+        <HotDipGalvanizing
+          data={{
+            eyebrow: home.hotDipGalvanizing.eyebrow,
+            title: home.hotDipGalvanizing.title,
+            beforeImage: urlForImage(home.hotDipGalvanizing.beforeImage).width(1200).url(),
+            beforeLabel: home.hotDipGalvanizing.beforeLabel,
+            afterImage: urlForImage(home.hotDipGalvanizing.afterImage).width(1200).url(),
+            afterLabel: home.hotDipGalvanizing.afterLabel,
+            benefits: home.hotDipGalvanizing.benefits,
+            ctaLabel: home.hotDipGalvanizing.ctaLabel,
+          }}
+          href={localizePath("/services#hot-dip-galvanizing", locale)}
         />
         <TanksShowcase
           data={{

@@ -21,8 +21,8 @@ export const siteSettingsFallback: SiteSettingsDoc = {
       label: "Services & Products",
       href: "/services",
       dropdown: [
+        { _key: "mc", label: "Steel Constructions", href: "/services#metal-constructions" },
         { _key: "hdg", label: "Hot Dip Galvanizing", href: "/services#hot-dip-galvanizing" },
-        { _key: "mc", label: "Metal Constructions", href: "/services#metal-constructions" },
         { _key: "tanks", label: "Tanks & Containers", href: "/services#tanks-containers" },
       ],
     },

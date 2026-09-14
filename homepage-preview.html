@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Selmani — Homepage Preview (hero concept)</title>
+<style>
+  :root {
+    --bg: #171919;
+    --fg: #eaefef;
+    --accent: #018794;
+    --accent-hover: #00616a;
+    --muted: #c1c7c7;
+    --muted-2: #9ba0a0;
+    --neutral-950: #0a0a0a;
+    --neutral-900: #171717;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: var(--bg); color: var(--fg); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1800px; margin: 0 auto; }
+  .px { padding-left: 40px; padding-right: 40px; }
+  @media (max-width: 640px) { .px { padding-left: 20px; padding-right: 20px; } }
+
+  .banner {
+    background: var(--accent);
+    color: #fff;
+    text-align: center;
+    font-size: 13px;
+    padding: 8px 16px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  /* Header */
+  header.site {
+    background: var(--neutral-950);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .logo { font-weight: 800; font-size: 20px; letter-spacing: -0.02em; color: var(--fg); }
+  nav.main-nav { display: flex; align-items: center; gap: 32px; font-size: 15px; color: var(--muted); }
+  nav.main-nav a:hover { color: var(--fg); }
+  .contact-btn {
+    border: 1px solid var(--muted);
+    border-radius: 6px;
+    padding: 9px 20px;
+    font-size: 14px;
+    color: var(--muted);
+  }
+  @media (max-width: 900px) { nav.main-nav { display: none; } }
+
+  /* Hero */
+  .hero {
+    position: relative;
+    min-height: 90vh;
+    background: var(--neutral-950);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 40px 40px;
+  }
+  .hero-bg { position: absolute; inset: 0; }
+  .slide {
+    position: absolute; inset: 0;
+    background-size: cover; background-position: center;
+    opacity: 0; transition: opacity 1.2s ease;
+  }
+  .slide.active { opacity: 1; }
+  .slide[data-i="0"] { background-image: url('https://cdn.sanity.io/images/gp1cx0a9/production/c008c9d616796798a90c0f58d0831a909ae93b58-2600x768.jpg?w=1800&q=80'); }
+  .slide[data-i="1"] { background-image: url('https://cdn.sanity.io/images/gp1cx0a9/production/3f36e097c4f27d32c18e2bd2a4ec08b8690e4331-706x878.jpg?w=1400&q=80'); }
+  .slide[data-i="2"] { background-image: url('https://cdn.sanity.io/images/gp1cx0a9/production/963d720d488eed680b6e9b0f0ac5a93b54f3ac92-706x878.jpg?w=1400&q=80'); }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(0deg, rgba(10,10,10,0.9), rgba(10,10,10,0.35) 55%, rgba(10,10,10,0.15)); }
+  .hero-content { position: relative; z-index: 10; max-width: 85%; flex: 1; display: flex; flex-direction: column; justify-content: center; }
+  .hero-content h1 {
+    font-weight: 900; line-height: 0.95; letter-spacing: -0.02em;
+    color: var(--fg); font-size: clamp(2.5rem, 6.5vw, 7rem);
+    min-height: 1.1em;
+  }
+  .hero-content p.sub { margin-top: 20px; max-width: 640px; font-size: clamp(1.125rem, 1.6vw, 1.5rem); font-weight: 300; color: var(--muted); }
+  .hero-footer {
+    position: relative; z-index: 10;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); flex-wrap: wrap;
+  }
+  .hero-nav { display: flex; align-items: center; gap: 16px; }
+  .dots { display: flex; gap: 6px; }
+  .dots button { width: 24px; height: 3px; border-radius: 2px; background: rgba(255,255,255,0.25); transition: background .4s; border: none; padding: 0; cursor: pointer; }
+  .dots button.active { background: var(--accent); }
+  .dots button:hover { background: rgba(255,255,255,0.5); }
+  .dots button.active:hover { background: var(--accent); }
+
+  .hero-arrow {
+    flex-shrink: 0; width: 38px; height: 38px; border-radius: 50%;
+    border: 1px solid rgba(234,239,239,0.35); background: transparent;
+    color: var(--fg); display: flex; align-items: center; justify-content: center;
+    font-size: 16px; cursor: pointer; transition: 0.2s;
+  }
+  .hero-arrow:hover { border-color: var(--accent); color: var(--accent); }
+  @media (max-width: 640px) {
+    .hero { padding: 72px 20px 28px; }
+    .hero-content h1 { font-size: clamp(2.1rem, 11vw, 3.5rem); }
+    .hero-footer { align-items: flex-start; }
+    .hero-nav { order: 2; width: 100%; justify-content: space-between; }
+    .cta-pill { order: 1; width: 100%; }
+  }
+  .cta-pill {
+    display: inline-block; border: 1px solid var(--muted); border-radius: 6px;
+    padding: 13px 32px; font-size: 15px; color: var(--muted); white-space: nowrap; transition: 0.2s;
+  }
+  .cta-pill:hover { border-color: var(--accent); color: var(--accent); }
+  .cta-pill.solid { background: var(--accent); border-color: var(--accent); color: #fff; text-align: center; }
+  .cta-pill.solid:hover { background: var(--accent-hover); border-color: var(--accent-hover); color: #fff; }
+  @media (max-width: 640px) { .hero-content { max-width: 100%; } }
+
+  /* About */
+  .about { background: var(--neutral-950); padding: 64px 40px; }
+  .about .wrap { display: grid; grid-template-columns: 5fr 2fr; gap: 32px; align-items: center; }
+  .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+  .about p.lead { margin-top: 16px; font-weight: 500; line-height: 1.25; color: var(--muted); font-size: clamp(2rem, 4vw, 56px); }
+  .about .medallion { justify-self: end; width: 220px; height: 220px; border-radius: 50%; overflow: hidden; }
+  .about .medallion img { width: 100%; height: 100%; object-fit: cover; }
+  @media (max-width: 900px) { .about .wrap { grid-template-columns: 1fr; } .about .medallion { display: none; } }
+
+  /* Hot Dip Galvanizing */
+  .hdg-section { background: var(--neutral-950); padding: 8px 40px; }
+  .hdg-card { background: #d7dcdc; color: #171717; border-radius: 16px; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; }
+  .hdg-image { position: relative; min-height: 480px; }
+  .hdg-image-row { display: flex; height: 100%; }
+  .hdg-image-row div { flex: 1; position: relative; overflow: hidden; }
+  .hdg-image-row img { width: 100%; height: 100%; object-fit: cover; }
+  .hdg-label { position: absolute; bottom: 12px; left: 12px; font-size: 11px; background: rgba(0,0,0,0.6); color: #fff; padding: 4px 10px; border-radius: 4px; }
+  .hdg-overlay { position: absolute; inset: 0; top: 0; height: 40%; background: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent); padding: 24px; z-index: 5; }
+  .hdg-overlay h2 { margin-top: 12px; color: #fff; font-weight: 700; font-size: clamp(2rem, 4vw, 56px); letter-spacing: -0.02em; }
+  .hdg-body { padding: 48px; display: flex; flex-direction: column; }
+  .hdg-body ul { list-style: none; }
+  .hdg-body li { display: flex; gap: 18px; padding: 18px 0; border-top: 1px solid #9ba0a0; }
+  .hdg-body li:first-child { border-top: none; }
+  .num-circle { flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%; border: 1px solid #9ba0a0; display: flex; align-items: center; justify-content: center; font-weight: 600; color: #555; }
+  .hdg-body h3 { font-size: 18px; font-weight: 600; }
+  .hdg-body li p { margin-top: 4px; font-weight: 300; color: #555; font-size: 15px; }
+  @media (max-width: 900px) { .hdg-card, .hdg-image-row { grid-template-columns: 1fr; display: block; } .hdg-image { min-height: 260px; } }
+
+  /* Metallic Constructions */
+  .services-section { background: var(--neutral-950); padding: 40px 40px; }
+  .services-section h2 { margin-top: 12px; font-weight: 300; letter-spacing: -0.02em; font-size: clamp(2rem, 4vw, 56px); }
+  .services-grid { margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 0 64px; }
+  .service-row { display: flex; align-items: center; gap: 20px; padding: 22px 0; }
+  .service-icon { width: 56px; height: 56px; flex-shrink: 0; border-radius: 50%; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; font-size: 22px; }
+  .service-row h3 { font-size: 18px; font-weight: 600; }
+  .service-row .industries { margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 13px; color: #777b7b; display: flex; gap: 10px; }
+  .service-row .industries span:last-child { color: var(--muted); }
+  .services-desc { color: rgba(255,255,255,0.5); max-width: 380px; font-size: 15px; }
+  @media (max-width: 900px) { .services-grid { grid-template-columns: 1fr; } }
+
+  /* Tanks */
+  .tanks-section { background: var(--neutral-950); padding: 8px 40px; }
+  .tanks-card { background: var(--neutral-900); border-radius: 16px; padding: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+  .tanks-image { aspect-ratio: 1; border-radius: 16px; border: 2px solid rgba(1,135,148,0.7); background: linear-gradient(to bottom right, #2a2c2c, #000); box-shadow: 0 0 22px 2px rgba(1,135,148,0.3); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .tanks-image img { width: 70%; object-fit: contain; }
+  .tanks-card h2 { margin-top: 12px; font-weight: 300; letter-spacing: -0.02em; font-size: clamp(2rem, 4vw, 56px); }
+  .tanks-card ul { margin-top: 24px; list-style: none; }
+  .tanks-card li { display: flex; gap: 18px; padding: 16px 0; border-top: 1px solid rgba(255,255,255,0.1); }
+  .tanks-card li:first-child { border-top: none; }
+  .tank-num { flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; }
+  .tank-num.active { background: var(--accent); color: #fff; }
+  .tank-num.inactive { border: 1px solid var(--muted-2); color: var(--muted-2); }
+  .tanks-card li h3 { font-weight: 600; font-size: 18px; }
+  .tanks-card li p { margin-top: 4px; font-weight: 300; color: var(--muted-2); font-size: 15px; }
+  @media (max-width: 900px) { .tanks-card { grid-template-columns: 1fr; } }
+
+  /* CTA band */
+  .cta-band { background: var(--neutral-950); padding: 8px 40px; }
+  .cta-band-inner { position: relative; border-radius: 16px; overflow: hidden; background: var(--neutral-900); padding: 56px 48px; }
+  .cta-band-inner img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
+  .cta-band-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.8)); }
+  .cta-band-content { position: relative; z-index: 5; max-width: 720px; }
+  .cta-band-content h2 { font-weight: 300; line-height: 1.2; color: var(--muted); font-size: clamp(2rem, 4vw, 56px); }
+  .cta-band-content p { margin-top: 12px; font-weight: 300; color: var(--fg); font-size: 20px; }
+  .cta-band-content .cta-pill.solid { margin-top: 32px; max-width: 300px; }
+
+  /* Footer */
+  footer.site { background: #000; }
+  .footer-top { display: flex; gap: 24px; border-top: 1px solid var(--muted-2); padding: 48px 40px; flex-wrap: wrap; }
+  .footer-col-label { font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted-2); margin-bottom: 24px; }
+  .catalog-row { display: flex; gap: 12px; font-size: 22px; color: var(--fg); flex-wrap: wrap; margin-bottom: 12px; }
+  .catalog-row span.sep { color: var(--muted-2); }
+  .footer-right { flex: 1; display: flex; flex-direction: column; gap: 32px; min-width: 260px; }
+  .footer-right-top { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+  .footer-contact p.phone { color: var(--accent); font-size: 14px; }
+  .footer-contact p.email { color: var(--muted-2); font-size: 14px; margin-top: 4px; }
+  .footer-social { text-align: right; }
+  .footer-social a { display: block; font-size: 14px; color: var(--fg); margin-top: 4px; }
+  .footer-bottom-row { display: flex; justify-content: space-between; font-size: 14px; color: var(--muted-2); }
+  .footer-legal { background: #353737; padding: 16px 40px; display: flex; justify-content: space-between; font-size: 12px; color: var(--muted-2); opacity: 0.7; flex-wrap: wrap; gap: 8px; }
+
+  .note {
+    text-align: center; font-size: 13px; color: rgba(255,255,255,0.4);
+    padding: 20px; background: #000;
+  }
+  .note strong { color: var(--accent); }
+</style>
+</head>
+<body>
+
+  <div class="banner">PREVIEW — hero concept only, not live on the site</div>
+
+  <header class="site">
+    <div class="logo">SELMANI</div>
+    <nav class="main-nav">
+      <a href="#">Home</a>
+      <a href="#">About</a>
+      <a href="#">Services</a>
+      <a href="#">Projects</a>
+      <a href="#">Industries</a>
+    </nav>
+    <span class="contact-btn">Contact Us</span>
+  </header>
+
+  <!-- HERO — the only section that differs from the live site -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="slide active" data-i="0"></div>
+      <div class="slide" data-i="1"></div>
+      <div class="slide" data-i="2"></div>
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-content">
+      <h1 id="tagline">WE BUILD IT.</h1>
+      <p class="sub">Steel structures and hot-dip galvanizing from one integrated manufacturing partner.</p>
+    </div>
+    <div class="hero-footer">
+      <div class="hero-nav">
+        <button class="hero-arrow" id="heroPrev" aria-label="Previous slide">‹</button>
+        <div class="dots">
+          <button class="active" data-i="0" aria-label="Slide 1"></button>
+          <button data-i="1" aria-label="Slide 2"></button>
+          <button data-i="2" aria-label="Slide 3"></button>
+        </div>
+        <button class="hero-arrow" id="heroNext" aria-label="Next slide">›</button>
+      </div>
+      <span class="cta-pill">Explore our work</span>
+    </div>
+  </section>
+
+  <!-- ABOUT US — unchanged from live site -->
+  <section class="about">
+    <div class="wrap">
+      <div>
+        <span class="eyebrow">About Us</span>
+        <p class="lead">Over 25 years of experience in industrial galvanizing and steel constructions, serving civil, industrial, and infrastructure sectors locally and internationally.</p>
+      </div>
+      <div class="medallion">
+        <img src="https://cdn.sanity.io/images/gp1cx0a9/production/4706ab7c76be58cfe4b5846ba24106fc7f301916-900x900.jpg?w=440&q=80" alt="Selmani metal medallion emblem" />
+      </div>
+    </div>
+  </section>
+
+  <!-- HOT DIP GALVANIZING — unchanged from live site -->
+  <section class="hdg-section">
+    <div class="wrap hdg-card">
+      <div class="hdg-image">
+        <div class="hdg-image-row">
+          <div>
+            <img src="https://cdn.sanity.io/images/gp1cx0a9/production/98e1dae3d009cd563351dae7723b5e6017cb8649-1254x1254.jpg?w=700&q=80" alt="Hot-dip galvanized steel surface" />
+            <span class="hdg-label">Hot-dip galvanized</span>
+          </div>
+          <div>
+            <img src="https://cdn.sanity.io/images/gp1cx0a9/production/5aaaf7d2fe800ba867a086fcfc550937b61e7453-1254x1254.jpg?w=700&q=80" alt="Non-galvanized, rusted steel surface" />
+            <span class="hdg-label">Non-galvanized</span>
+          </div>
+        </div>
+        <div class="hdg-overlay">
+          <span class="eyebrow">Services</span>
+          <h2>Hot Dip Galvanizing</h2>
+        </div>
+      </div>
+      <div class="hdg-body">
+        <ul>
+          <li><div class="num-circle">1</div><div><h3>Saves Time</h3><p>Hot-Dip Galvanizing (HDG) technology provides the most efficient protection against corrosion, surpassing any other treatment or coating method.</p></div></li>
+          <li><div class="num-circle">2</div><div><h3>Protects the Environment</h3><p>Hot-Dip Galvanizing (HDG) technology provides the most efficient protection against corrosion, surpassing any other treatment or coating method.</p></div></li>
+          <li><div class="num-circle">3</div><div><h3>Economic Advantages</h3><p>Hot-Dip Galvanizing (HDG) technology provides the most efficient protection against corrosion, surpassing any other treatment or coating method.</p></div></li>
+          <li><div class="num-circle">4</div><div><h3>Structural Durability</h3><p>Hot-Dip Galvanizing (HDG) technology provides the most efficient protection against corrosion, surpassing any other treatment or coating method.</p></div></li>
+        </ul>
+        <span class="cta-pill solid" style="margin-top:32px;">Learn More</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- METALLIC CONSTRUCTIONS — unchanged from live site -->
+  <section class="services-section">
+    <div class="wrap">
+      <span class="eyebrow">Services</span>
+      <h2>Metallic Constructions</h2>
+      <div class="services-grid">
+        <div class="service-row"><div class="service-icon">📡</div><div style="flex:1;"><h3>Telecom Structures</h3><div class="industries"><span>Industries</span><span>GSM &amp; Transmission</span></div></div></div>
+        <div class="service-row"><div class="service-icon">🏗️</div><div style="flex:1;"><h3>Steel Platforms</h3><div class="industries"><span>Industries</span><span>Industrial Facilities</span></div></div></div>
+        <div class="service-row"><div class="service-icon">🏢</div><div style="flex:1;"><h3>Civil Metal Works</h3><div class="industries"><span>Industries</span><span>Public &amp; Private Construction</span></div></div></div>
+        <div class="service-row"><div class="service-icon">🛢️</div><div style="flex:1;"><h3>Process Tanks</h3><div class="industries"><span>Industries</span><span>Water, Fuel &amp; HVAC</span></div></div></div>
+        <div class="service-row"><div class="service-icon">⚙️</div><div style="flex:1;"><h3>Industrial Steel Works</h3><div class="industries"><span>Industries</span><span>Manufacturing &amp; Processing</span></div></div></div>
+        <div class="service-row">
+          <div style="flex:1;">
+            <p class="services-desc">Our company provides construction solutions for various civil projects, designed and executed according to your specific requirements.</p>
+            <span class="cta-pill solid" style="margin-top:16px; display:inline-block;">Learn More</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TANKS & CONTAINERS — unchanged from live site -->
+  <section class="tanks-section">
+    <div class="wrap tanks-card">
+      <div class="tanks-image">
+        <img src="https://cdn.sanity.io/images/gp1cx0a9/production/b84bbe7e8abe116b429b1d75abf8ce209f685dd7-1254x1254.png?w=700&q=80" alt="Galvanized steel sanitary water tank" />
+      </div>
+      <div>
+        <span class="eyebrow">Services</span>
+        <h2>Tanks &amp; Containers for Various Usages</h2>
+        <ul>
+          <li><div class="tank-num active">1</div><div><h3>Hot Dip Galvanized Sanitary Water Tanks</h3><p>We also manufacture custom water tanks according to client requirements, with various geometries depending on the installation site.</p></div></li>
+          <li><div class="tank-num inactive">2</div><div><h3>Fuel Tanks</h3><p>Fuel tanks up to 20,000 L, with static configuration, which can be installed above or below ground. Tanker trucks up to 10,000 L.</p></div></li>
+          <li><div class="tank-num inactive">3</div><div><h3>Stainless Steel Containers</h3><p>Stainless steel vessels and tanks for the food industry, in various shapes and volumes (containers, mixers, etc.)</p></div></li>
+          <li><div class="tank-num inactive">4</div><div><h3>HVAC Storage Tanks &amp; Boilers</h3><p>Accumulators for HVAC systems (central heating and cooling). Heat exchangers (boilers) with 1, 2, or 3 heat exchange coils.</p></div></li>
+        </ul>
+        <span class="cta-pill solid" style="margin-top:24px; max-width:300px; display:block; text-align:center;">Learn More</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BAND — unchanged from live site -->
+  <section class="cta-band">
+    <div class="wrap cta-band-inner">
+      <img src="https://cdn.sanity.io/images/gp1cx0a9/production/848e72263c5d9d70a6c9c099071e9e5a155e00d5-2600x1338.jpg?w=1400&q=80" alt="" />
+      <div class="cta-band-overlay"></div>
+      <div class="cta-band-content">
+        <h2>Let&rsquo;s shape your vision, together.</h2>
+        <p>We want to know more about your project</p>
+        <span class="cta-pill solid" style="display:inline-block;">Get in Touch</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER — unchanged from live site -->
+  <footer class="site">
+    <div class="footer-top">
+      <div style="flex:1; min-width:280px;">
+        <div class="footer-col-label">Catalog</div>
+        <div class="catalog-row"><a href="#">Home</a><span class="sep">/</span><a href="#">About</a><span class="sep">/</span><a href="#">Services</a></div>
+        <div class="catalog-row"><a href="#">Projects</a><span class="sep">/</span><a href="#">Industries</a><span class="sep">/</span><a href="#">Contact</a></div>
+        <a href="#" style="display:inline-block; margin-top:32px; font-size:14px; color:var(--muted-2);">Contacts</a>
+      </div>
+      <div class="footer-right">
+        <div class="footer-right-top">
+          <div class="footer-contact">
+            <div class="footer-col-label">Contact us</div>
+            <p class="phone">+355 XX XXX XXX</p>
+            <p class="email">info@selmani.al</p>
+          </div>
+          <div class="footer-social">
+            <div class="footer-col-label">Follow us</div>
+            <a href="#">Linkedin</a>
+            <a href="#">Instagram</a>
+            <a href="#">Facebook</a>
+          </div>
+        </div>
+        <div class="footer-bottom-row">
+          <span>Tirana, Albania</span>
+          <span>↗</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer-legal">
+      <span>© Selmani. All rights reserved.</span>
+      <span style="display:flex; gap:24px;"><a href="#">Privacy</a><span>All rights reserved</span></span>
+    </div>
+  </footer>
+
+  <div class="note">Preview built from the real homepage's own content and layout — only the hero has been changed. <strong>Nothing here is live on the site.</strong></div>
+
+  <script>
+    const words = ["WE BUILD IT.", "WE GALVANIZE IT.", "WE MAKE IT LAST."];
+    let i = 0;
+    let timer;
+
+    function goTo(index) {
+      i = ((index % 3) + 3) % 3;
+      document.querySelectorAll('.slide').forEach(el => el.classList.toggle('active', el.dataset.i == i));
+      document.querySelectorAll('.dots button').forEach(el => el.classList.toggle('active', el.dataset.i == i));
+      document.getElementById('tagline').textContent = words[i];
+    }
+
+    function restartAutoplay() {
+      clearInterval(timer);
+      timer = setInterval(() => goTo(i + 1), 3000);
+    }
+
+    document.querySelectorAll('.dots button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        goTo(Number(btn.dataset.i));
+        restartAutoplay();
+      });
+    });
+    document.getElementById('heroPrev').addEventListener('click', () => { goTo(i - 1); restartAutoplay(); });
+    document.getElementById('heroNext').addEventListener('click', () => { goTo(i + 1); restartAutoplay(); });
+
+    restartAutoplay();
+  </script>
+</body>
+</html>

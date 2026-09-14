@@ -88,7 +88,7 @@ export default function PrivacyPolicyPage() {
                 When you use the contact form on this website, we collect the
                 information you enter, which may include your name, email
                 address, phone number, company name, the subject of your
-                inquiry (e.g. Hot Dip Galvanizing, Metal Constructions, Tanks
+                inquiry (e.g. Steel Constructions, Hot Dip Galvanizing, Tanks
                 &amp; Containers), and the content of your message.
               </p>
               <p>

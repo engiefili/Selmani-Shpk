@@ -31,7 +31,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title:
       locale === "sq"
         ? "Shërbimet: Zinkim, Konstruksione Metalike & Depozita"
-        : "Services: Hot Dip Galvanizing, Metal Constructions & Tanks",
+        : "Services: Steel Constructions, Hot Dip Galvanizing & Tanks",
     description:
       locale === "sq"
         ? "Zbuloni shërbimet e Selmani për zinkim në të nxehtë, konstruksione metalike dhe depozita e kontenierë çeliku sipas kërkesës."
