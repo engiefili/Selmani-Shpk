@@ -10,7 +10,7 @@ export type CommitmentGridData = {
 export default function CommitmentGrid({ data }: { data: CommitmentGridData }) {
   return (
     <section className="bg-neutral-950 px-5 py-10 text-white sm:px-[45px] sm:py-14">
-      <div className="mx-auto w-full max-w-[1800px]">
+      <div className="mx-auto w-full">
         <Reveal>
           <h2
             className="font-light tracking-tight text-[#eaefef]"

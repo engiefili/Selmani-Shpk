@@ -21,7 +21,7 @@ export default function SelectedWork({
 
   return (
     <section className="bg-neutral-950 px-5 pb-16 pt-10 text-white sm:px-[45px]">
-      <div className="mx-auto w-full max-w-[1800px]">
+      <div className="mx-auto w-full">
         <div className="border-t border-[#e6e6e6]/35 pt-6">
           <h3
             className="font-light leading-none text-[#c1c7c7]"

@@ -12,7 +12,7 @@ export type AboutHeroData = {
 export default function AboutHero({ data }: { data: AboutHeroData }) {
   return (
     <section className="bg-neutral-950 px-5 pt-6 pb-10 text-white sm:px-[45px] sm:pt-24 sm:pb-14">
-      <div className="mx-auto grid w-full max-w-[1800px] gap-8 sm:gap-12 lg:grid-cols-[3fr_2fr] lg:items-start">
+      <div className="mx-auto grid w-full gap-8 sm:gap-12 lg:grid-cols-[3fr_2fr] lg:items-start">
         <div>
           <h1
             className="hero-fade-up font-light tracking-tight text-[#c1c7c7]"

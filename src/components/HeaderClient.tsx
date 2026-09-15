@@ -62,7 +62,7 @@ export default function HeaderClient({ data }: { data: HeaderData }) {
 
   return (
     <header className="absolute top-0 left-0 right-0 z-20 border-b border-[#9ba0a0]/40 bg-black">
-      <div className="mx-auto flex w-full max-w-[1800px] items-center justify-between px-5 py-4 sm:px-[45px] sm:py-[25px]">
+      <div className="mx-auto flex w-full items-center justify-between px-5 py-4 sm:px-[45px] sm:py-[25px]">
       <Link href={data.homeHref} className="flex items-center">
         <div className="relative h-9 w-28">
           <Image
@@ -193,7 +193,7 @@ export default function HeaderClient({ data }: { data: HeaderData }) {
             mobileOpen ? "opacity-100" : "opacity-0"
           }`}
         >
-          <div className="mx-auto max-h-[calc(100vh-76px)] w-full max-w-[1800px] overflow-y-auto border-t border-[#9ba0a0]/40 bg-black px-5 py-6 sm:px-[45px]">
+          <div className="mx-auto max-h-[calc(100vh-76px)] w-full overflow-y-auto border-t border-[#9ba0a0]/40 bg-black px-5 py-6 sm:px-[45px]">
           <nav className="flex flex-col gap-1">
             {data.navLinks.map((link) => {
               const active = pathname === link.href;

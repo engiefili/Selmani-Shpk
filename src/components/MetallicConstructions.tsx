@@ -23,7 +23,7 @@ export default function MetallicConstructions({
       id="services"
       className="hidden bg-neutral-950 px-5 py-8 text-white sm:block sm:px-[45px] sm:py-10"
     >
-      <div className="mx-auto w-full max-w-[1800px]">
+      <div className="mx-auto w-full">
         <Reveal>
           <Eyebrow>{data.eyebrow ?? "Services"}</Eyebrow>
           <h2

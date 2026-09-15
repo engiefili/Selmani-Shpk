@@ -45,7 +45,7 @@ export default async function ContactPage() {
       <Header />
       <main className="flex flex-1 flex-col pt-[76px]">
         <section className="bg-neutral-950 px-5 py-16 text-white sm:px-[45px] sm:py-24">
-          <div className="mx-auto grid w-full max-w-[1800px] grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]">
+          <div className="mx-auto grid w-full grid-cols-1 gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]">
             <div className="flex flex-col gap-6">
               <h1
                 className="hero-fade-up font-light leading-none text-[#eaefef]"

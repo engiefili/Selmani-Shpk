@@ -52,7 +52,7 @@ export default function ServiceSection({
       id={id}
       className="scroll-mt-4 bg-neutral-950 px-5 pt-16 pb-4 text-white sm:px-[45px]"
     >
-      <div className="mx-auto w-full max-w-[1800px]">
+      <div className="mx-auto w-full">
         <Reveal className="flex max-w-3xl flex-col gap-[30px]">
           <span className="inline-flex items-center gap-2 text-xl font-light tracking-wide text-accent">
             <span className="h-2 w-2 rounded-full bg-accent" />

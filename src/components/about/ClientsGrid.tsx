@@ -13,7 +13,7 @@ export type ClientsGridData = {
 export default function ClientsGrid({ data }: { data: ClientsGridData }) {
   return (
     <section className="bg-neutral-950 px-5 py-10 text-white sm:px-[45px] sm:py-14">
-      <div className="mx-auto grid w-full max-w-[1800px] gap-8 sm:gap-10 lg:grid-cols-[1fr_2.5fr] lg:items-start">
+      <div className="mx-auto grid w-full gap-8 sm:gap-10 lg:grid-cols-[1fr_2.5fr] lg:items-start">
         <Reveal as="div">
           <h2
             className="font-light tracking-tight text-[#e6e6e6]"

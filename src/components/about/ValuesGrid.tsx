@@ -35,7 +35,7 @@ export default function ValuesGrid({
 
   return (
     <section className="bg-neutral-950 px-5 py-8 text-white sm:px-[45px] sm:py-10">
-      <div className="mx-auto w-full max-w-[1800px]">
+      <div className="mx-auto w-full">
         <Reveal as="div">
           <h2
             className="pb-8 font-light tracking-tight text-[#eaefef]"
@@ -46,7 +46,7 @@ export default function ValuesGrid({
         </Reveal>
       </div>
 
-      <div className="mx-auto grid w-full max-w-[1800px] grid-cols-1 gap-8 sm:gap-10 lg:grid-cols-3 lg:items-stretch">
+      <div className="mx-auto grid w-full grid-cols-1 gap-8 sm:gap-10 lg:grid-cols-3 lg:items-stretch">
         {/* Left: caption above image. */}
         <Reveal as="div" className="flex flex-col gap-5 sm:gap-6">
           <ValueText title={performanceValue.title} description={performanceValue.description} />
