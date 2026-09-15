@@ -28,7 +28,7 @@ export default function ServicesHero({
           right corner. lg reverts to the title vertically centered on its
           own, with ServiceSideNavDesktop as the separate bottom-right block
           below. */}
-      <div className="absolute inset-0 mx-auto flex w-full max-w-[1800px] flex-col justify-between gap-6 px-5 pt-[30vh] pb-10 sm:px-10 lg:justify-center lg:py-24">
+      <div className="absolute inset-0 mx-auto flex w-full max-w-[1800px] flex-col justify-between gap-6 px-5 pt-[30vh] pb-10 sm:px-[45px] lg:justify-center lg:py-24">
         <h1
           className="hero-fade-up font-heading font-black leading-none tracking-tight text-[#c1c7c7]"
           style={{ fontSize: "clamp(3.75rem, 6.5vw, 7rem)" }}
@@ -40,7 +40,7 @@ export default function ServicesHero({
         </div>
       </div>
 
-      <div className="absolute inset-x-0 bottom-0 z-10 mx-auto hidden w-full max-w-[1800px] justify-end px-5 pb-12 sm:px-10 lg:flex">
+      <div className="absolute inset-x-0 bottom-0 z-10 mx-auto hidden w-full max-w-[1800px] justify-end px-5 pb-12 sm:px-[45px] lg:flex">
         <ServiceSideNavDesktop locale={locale} />
       </div>
     </section>

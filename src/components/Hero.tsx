@@ -71,7 +71,7 @@ export default function Hero({
 
   return (
     <section
-      className="relative flex min-h-dvh flex-col overflow-hidden bg-neutral-950 px-5 pb-10 pt-20 text-white sm:px-10 sm:pb-8 sm:pt-24 lg:h-[90vh] lg:min-h-[720px]"
+      className="relative flex min-h-dvh flex-col overflow-hidden bg-neutral-950 px-5 pb-10 pt-20 text-white sm:px-[45px] sm:pb-8 sm:pt-24 lg:h-[90vh] lg:min-h-[720px]"
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >

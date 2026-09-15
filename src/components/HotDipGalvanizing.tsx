@@ -22,7 +22,7 @@ export default function HotDipGalvanizing({
   href?: string;
 }) {
   return (
-    <section id="technology" className="hidden bg-neutral-950 px-5 py-4 sm:block sm:px-10">
+    <section id="technology" className="hidden bg-neutral-950 px-5 py-4 sm:block sm:px-[45px]">
       <div className="mx-auto w-full max-w-[1800px] overflow-hidden rounded-2xl bg-[#d7dcdc] text-neutral-900">
         <div className="grid lg:grid-cols-2">
           {/* Before / after comparison slider — drag to reveal */}

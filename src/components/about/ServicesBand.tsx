@@ -20,7 +20,7 @@ export default function ServicesBand({
   locale?: Locale;
 }) {
   return (
-    <section className="bg-neutral-950 px-5 py-4 sm:px-10">
+    <section className="bg-neutral-950 px-5 py-4 sm:px-[45px]">
       <div className="relative mx-auto w-full max-w-[1800px] overflow-hidden rounded-2xl">
         <Image
           src={data.backgroundImage}

@@ -48,7 +48,7 @@ export default function ProjectsTabs({
   const activeTab = data.find((tab) => tab.id === active);
 
   return (
-    <section className="bg-neutral-950 px-5 pt-8 pb-16 text-white sm:px-10 sm:py-16">
+    <section className="bg-neutral-950 px-5 pt-8 pb-16 text-white sm:px-[45px] sm:py-16">
       <div className="mx-auto flex w-full max-w-[1800px] flex-col gap-10">
         <Reveal className="flex flex-col gap-4">
           <span className="text-2xl font-light text-[#eaefef]">

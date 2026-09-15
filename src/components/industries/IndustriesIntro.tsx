@@ -11,7 +11,7 @@ export default function IndustriesIntro({
   if (!description) return null;
 
   return (
-    <section className="bg-neutral-950 px-5 pt-14 pb-2 text-white sm:px-10 sm:pt-20">
+    <section className="bg-neutral-950 px-5 pt-14 pb-2 text-white sm:px-[45px] sm:pt-20">
       <div className="mx-auto w-full max-w-[1800px]">
         <Reveal className="max-w-3xl border-l-2 border-accent pl-6 text-xl font-light leading-snug text-[#c1c7c7] sm:text-2xl">
           {description}

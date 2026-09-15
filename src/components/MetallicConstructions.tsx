@@ -21,7 +21,7 @@ export default function MetallicConstructions({
   return (
     <section
       id="services"
-      className="hidden bg-neutral-950 px-5 py-8 text-white sm:block sm:px-10 sm:py-10"
+      className="hidden bg-neutral-950 px-5 py-8 text-white sm:block sm:px-[45px] sm:py-10"
     >
       <div className="mx-auto w-full max-w-[1800px]">
         <Reveal>

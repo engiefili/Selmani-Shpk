@@ -72,9 +72,9 @@
     opacity: 0; transition: opacity 1.2s ease;
   }
   .slide.active { opacity: 1; }
-  .slide[data-i="0"] { background-image: url('https://cdn.sanity.io/images/gp1cx0a9/production/c008c9d616796798a90c0f58d0831a909ae93b58-2600x768.jpg?w=1800&q=80'); }
-  .slide[data-i="1"] { background-image: url('https://cdn.sanity.io/images/gp1cx0a9/production/3f36e097c4f27d32c18e2bd2a4ec08b8690e4331-706x878.jpg?w=1400&q=80'); }
-  .slide[data-i="2"] { background-image: url('https://cdn.sanity.io/images/gp1cx0a9/production/963d720d488eed680b6e9b0f0ac5a93b54f3ac92-706x878.jpg?w=1400&q=80'); }
+  .slide[data-i="0"] { background-image: url('hero-preview-images/build.png'); }
+  .slide[data-i="1"] { background-image: url('hero-preview-images/galvanize-2.png'); }
+  .slide[data-i="2"] { background-image: url('hero-preview-images/last.png'); }
   .hero-overlay { position: absolute; inset: 0; background: linear-gradient(0deg, rgba(10,10,10,0.9), rgba(10,10,10,0.35) 55%, rgba(10,10,10,0.15)); }
   .hero-content { position: relative; z-index: 10; max-width: 85%; flex: 1; display: flex; flex-direction: column; justify-content: center; }
   .hero-content h1 {
@@ -83,32 +83,54 @@
     min-height: 1.1em;
   }
   .hero-content p.sub { margin-top: 20px; max-width: 640px; font-size: clamp(1.125rem, 1.6vw, 1.5rem); font-weight: 300; color: var(--muted); }
-  .hero-footer {
-    position: relative; z-index: 10;
-    display: flex; align-items: center; justify-content: space-between; gap: 16px;
-    margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); flex-wrap: wrap;
-  }
-  .hero-nav { display: flex; align-items: center; gap: 16px; }
-  .dots { display: flex; gap: 6px; }
-  .dots button { width: 24px; height: 3px; border-radius: 2px; background: rgba(255,255,255,0.25); transition: background .4s; border: none; padding: 0; cursor: pointer; }
-  .dots button.active { background: var(--accent); }
-  .dots button:hover { background: rgba(255,255,255,0.5); }
-  .dots button.active:hover { background: var(--accent); }
 
+  /* Slide controls — arrows + dots, right-aligned above the footer's divider line. Desktop only; mobile relies on autoplay + swipe. */
+  .slide-controls-row { display: none; }
+  @media (min-width: 641px) {
+    .slide-controls-row { position: relative; z-index: 10; display: flex; justify-content: flex-end; margin-top: 24px; }
+  }
+  .slide-controls { display: flex; align-items: center; gap: 10px; }
+  .dots { display: flex; align-items: center; gap: 6px; }
+  .dots button { width: 20px; height: 3px; border-radius: 2px; background: rgba(255,255,255,0.3); transition: background .4s; border: none; padding: 0; cursor: pointer; }
+  .dots button.active { background: var(--accent); }
+  .dots button:hover { background: rgba(255,255,255,0.55); }
+  .dots button.active:hover { background: var(--accent); }
   .hero-arrow {
-    flex-shrink: 0; width: 38px; height: 38px; border-radius: 50%;
-    border: 1px solid rgba(234,239,239,0.35); background: transparent;
-    color: var(--fg); display: flex; align-items: center; justify-content: center;
-    font-size: 16px; cursor: pointer; transition: 0.2s;
+    flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
+    border: 1px solid rgba(234,239,239,0.3); background: transparent;
+    color: var(--muted); display: flex; align-items: center; justify-content: center;
+    font-size: 13px; cursor: pointer; transition: 0.2s;
   }
   .hero-arrow:hover { border-color: var(--accent); color: var(--accent); }
-  @media (max-width: 640px) {
-    .hero { padding: 72px 20px 28px; }
-    .hero-content h1 { font-size: clamp(2.1rem, 11vw, 3.5rem); }
-    .hero-footer { align-items: flex-start; }
-    .hero-nav { order: 2; width: 100%; justify-content: space-between; }
-    .cta-pill { order: 1; width: 100%; }
+
+  /* Footer — certifications + CTA, matching the real site */
+  .hero-footer {
+    position: relative; z-index: 10;
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 24px;
+    margin-top: 16px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); flex-wrap: wrap;
   }
+  .cert-row { display: none; }
+  @media (min-width: 641px) {
+    .cert-row { display: flex; align-items: center; gap: 32px; flex-wrap: wrap; }
+    .cert-item { display: flex; align-items: center; }
+    .cert-sep { width: 1px; height: 48px; background: rgba(1,135,148,0.4); flex-shrink: 0; }
+    .cert-badge {
+      z-index: 1; margin-right: -12px; width: 44px; height: 44px; border-radius: 50%;
+      border: 1px solid var(--accent); background: var(--neutral-950); color: var(--accent);
+      display: flex; align-items: center; justify-content: center; font-size: 14px; flex-shrink: 0;
+    }
+    .cert-text { padding-left: 20px; font-size: 17px; line-height: 1.25; color: var(--muted); }
+  }
+  .cert-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 100%; }
+  @media (min-width: 641px) { .cert-grid { display: none; } }
+  .cert-chip {
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+    border: 1px solid rgba(1,135,148,0.4); background: rgba(255,255,255,0.03); border-radius: 6px;
+    padding: 12px 8px; text-align: center;
+  }
+  .cert-chip .l1 { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--accent); }
+  .cert-chip .l2 { font-size: 11px; line-height: 1.2; color: var(--muted); }
+
   .cta-pill {
     display: inline-block; border: 1px solid var(--muted); border-radius: 6px;
     padding: 13px 32px; font-size: 15px; color: var(--muted); white-space: nowrap; transition: 0.2s;
@@ -116,7 +138,14 @@
   .cta-pill:hover { border-color: var(--accent); color: var(--accent); }
   .cta-pill.solid { background: var(--accent); border-color: var(--accent); color: #fff; text-align: center; }
   .cta-pill.solid:hover { background: var(--accent-hover); border-color: var(--accent-hover); color: #fff; }
-  @media (max-width: 640px) { .hero-content { max-width: 100%; } }
+
+  @media (max-width: 640px) {
+    .hero { padding: 72px 20px 28px; }
+    .hero-content { max-width: 100%; }
+    .hero-content h1 { font-size: clamp(2.1rem, 11vw, 3.5rem); }
+    .hero-footer { flex-direction: column; align-items: stretch; }
+    .cta-pill { width: 100%; }
+  }
 
   /* About */
   .about { background: var(--neutral-950); padding: 64px 40px; }
@@ -208,7 +237,7 @@
 </head>
 <body>
 
-  <div class="banner">PREVIEW — hero concept only, not live on the site</div>
+  <div class="banner">PREVIEW — hero &amp; Steel Constructions concepts only, not live on the site</div>
 
   <header class="site">
     <div class="logo">SELMANI</div>
@@ -232,10 +261,10 @@
     </div>
     <div class="hero-content">
       <h1 id="tagline">WE BUILD IT.</h1>
-      <p class="sub">Steel structures and hot-dip galvanizing from one integrated manufacturing partner.</p>
+      <p class="sub" id="subline">Custom steel structures engineered and fabricated to your exact specifications.</p>
     </div>
-    <div class="hero-footer">
-      <div class="hero-nav">
+    <div class="slide-controls-row">
+      <div class="slide-controls">
         <button class="hero-arrow" id="heroPrev" aria-label="Previous slide">‹</button>
         <div class="dots">
           <button class="active" data-i="0" aria-label="Slide 1"></button>
@@ -243,6 +272,31 @@
           <button data-i="2" aria-label="Slide 3"></button>
         </div>
         <button class="hero-arrow" id="heroNext" aria-label="Next slide">›</button>
+      </div>
+    </div>
+    <div class="hero-footer">
+      <!-- Desktop: connected badge row, matching the real site -->
+      <div class="cert-row">
+        <div class="cert-item">
+          <span class="cert-badge">↘</span>
+          <span class="cert-text">Certified<br>EQA 2011005</span>
+        </div>
+        <span class="cert-sep"></span>
+        <div class="cert-item">
+          <span class="cert-badge">↘</span>
+          <span class="cert-text">Certified<br>ISO 9001</span>
+        </div>
+        <span class="cert-sep"></span>
+        <div class="cert-item">
+          <span class="cert-badge">↘</span>
+          <span class="cert-text">Certified<br>OHSAS540</span>
+        </div>
+      </div>
+      <!-- Mobile: chip grid, matching the real site -->
+      <div class="cert-grid">
+        <div class="cert-chip"><span class="l1">Certified</span><span class="l2">EQA 2011005</span></div>
+        <div class="cert-chip"><span class="l1">Certified</span><span class="l2">ISO 9001</span></div>
+        <div class="cert-chip"><span class="l1">Certified</span><span class="l2">OHSAS540</span></div>
       </div>
       <span class="cta-pill">Explore our work</span>
     </div>
@@ -296,7 +350,7 @@
   <section class="services-section">
     <div class="wrap">
       <span class="eyebrow">Services</span>
-      <h2>Metallic Constructions</h2>
+      <h2>Steel Constructions</h2>
       <div class="services-grid">
         <div class="service-row"><div class="service-icon">📡</div><div style="flex:1;"><h3>Telecom Structures</h3><div class="industries"><span>Industries</span><span>GSM &amp; Transmission</span></div></div></div>
         <div class="service-row"><div class="service-icon">🏗️</div><div style="flex:1;"><h3>Steel Platforms</h3><div class="industries"><span>Industries</span><span>Industrial Facilities</span></div></div></div>
@@ -381,10 +435,15 @@
     </div>
   </footer>
 
-  <div class="note">Preview built from the real homepage's own content and layout — only the hero has been changed. <strong>Nothing here is live on the site.</strong></div>
+  <div class="note">Preview built from the real homepage's own content and layout — the hero and the Steel Constructions section have been redesigned. <strong>Nothing here is live on the site.</strong></div>
 
   <script>
     const words = ["WE BUILD IT.", "WE GALVANIZE IT.", "WE MAKE IT LAST."];
+    const subs = [
+      "Custom steel structures engineered and fabricated to your exact specifications.",
+      "High-capacity hot-dip galvanizing for lasting corrosion protection.",
+      "Structures built for decades of industrial, infrastructure, and civil performance."
+    ];
     let i = 0;
     let timer;
 
@@ -393,6 +452,7 @@
       document.querySelectorAll('.slide').forEach(el => el.classList.toggle('active', el.dataset.i == i));
       document.querySelectorAll('.dots button').forEach(el => el.classList.toggle('active', el.dataset.i == i));
       document.getElementById('tagline').textContent = words[i];
+      document.getElementById('subline').textContent = subs[i];
     }
 
     function restartAutoplay() {
@@ -408,6 +468,20 @@
     });
     document.getElementById('heroPrev').addEventListener('click', () => { goTo(i - 1); restartAutoplay(); });
     document.getElementById('heroNext').addEventListener('click', () => { goTo(i + 1); restartAutoplay(); });
+
+    // Mobile: swipe left/right on the hero to change slides (no visible arrows on small screens)
+    const heroEl = document.querySelector('.hero');
+    let touchStartX = null;
+    heroEl.addEventListener('touchstart', (e) => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    heroEl.addEventListener('touchend', (e) => {
+      if (touchStartX === null) return;
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) > 40) {
+        goTo(dx < 0 ? i + 1 : i - 1);
+        restartAutoplay();
+      }
+      touchStartX = null;
+    }, { passive: true });
 
     restartAutoplay();
   </script>

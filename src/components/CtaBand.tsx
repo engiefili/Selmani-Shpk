@@ -21,7 +21,7 @@ export default async function CtaBand({
     : FALLBACK_IMAGE;
 
   return (
-    <section className="bg-neutral-950 px-5 py-4 sm:px-10">
+    <section className="bg-neutral-950 px-5 py-4 sm:px-[45px]">
       <div className="relative mx-auto flex w-full max-w-[1800px] flex-col justify-center overflow-hidden rounded-2xl bg-neutral-900 px-5 py-8 text-white sm:px-12 sm:py-12">
         <Image
           src={backgroundImage}

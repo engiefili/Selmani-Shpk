@@ -12,7 +12,7 @@ export type ClientsGridData = {
 // rather than a grid of boxes sized for logos that don't exist.
 export default function ClientsGrid({ data }: { data: ClientsGridData }) {
   return (
-    <section className="bg-neutral-950 px-5 py-10 text-white sm:px-10 sm:py-14">
+    <section className="bg-neutral-950 px-5 py-10 text-white sm:px-[45px] sm:py-14">
       <div className="mx-auto grid w-full max-w-[1800px] gap-8 sm:gap-10 lg:grid-cols-[1fr_2.5fr] lg:items-start">
         <Reveal as="div">
           <h2

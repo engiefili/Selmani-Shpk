@@ -50,7 +50,7 @@ export default function ServiceSection({
   return (
     <section
       id={id}
-      className="scroll-mt-4 bg-neutral-950 px-5 pt-16 pb-4 text-white sm:px-10"
+      className="scroll-mt-4 bg-neutral-950 px-5 pt-16 pb-4 text-white sm:px-[45px]"
     >
       <div className="mx-auto w-full max-w-[1800px]">
         <Reveal className="flex max-w-3xl flex-col gap-[30px]">

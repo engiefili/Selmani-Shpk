@@ -23,7 +23,7 @@ export default function FAQSection({
   };
 
   return (
-    <section className="bg-neutral-950 px-5 py-16 text-white sm:px-10">
+    <section className="bg-neutral-950 px-5 py-16 text-white sm:px-[45px]">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}

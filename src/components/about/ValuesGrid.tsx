@@ -34,7 +34,7 @@ export default function ValuesGrid({
   const [performanceValue, customer, durability] = data.values;
 
   return (
-    <section className="bg-neutral-950 px-5 py-8 text-white sm:px-10 sm:py-10">
+    <section className="bg-neutral-950 px-5 py-8 text-white sm:px-[45px] sm:py-10">
       <div className="mx-auto w-full max-w-[1800px]">
         <Reveal as="div">
           <h2

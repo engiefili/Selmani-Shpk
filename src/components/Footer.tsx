@@ -40,7 +40,7 @@ export default async function Footer() {
 
   return (
     <footer id="contacts" className="bg-black text-white">
-      <div className="flex flex-col gap-6 border-t border-[#9ba0a0] px-5 py-8 sm:px-10 sm:py-12 lg:flex-row">
+      <div className="flex flex-col gap-6 border-t border-[#9ba0a0] px-5 py-8 sm:px-[45px] sm:py-12 lg:flex-row">
         <div className="flex flex-col gap-8 sm:gap-16 lg:w-[46%] lg:gap-40">
           <div className="flex flex-col gap-8">
             <p className="text-[10px] font-medium uppercase tracking-[0.4px] text-[#9ba0a0]">
@@ -119,7 +119,7 @@ export default async function Footer() {
         </div>
       </div>
 
-      <div className="flex flex-col gap-3 bg-[#353737] px-5 py-4 sm:flex-row sm:items-start sm:justify-between sm:px-10">
+      <div className="flex flex-col gap-3 bg-[#353737] px-5 py-4 sm:flex-row sm:items-start sm:justify-between sm:px-[45px]">
         <p className="text-xs text-[#9ba0a0] opacity-60">
           {settings.copyrightText}
         </p>

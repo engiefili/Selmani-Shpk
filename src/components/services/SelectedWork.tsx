@@ -20,7 +20,7 @@ export default function SelectedWork({
   const { openIndex, setOpenIndex, close, showPrev, showNext } = useLightbox(images.length);
 
   return (
-    <section className="bg-neutral-950 px-5 pb-16 pt-10 text-white sm:px-10">
+    <section className="bg-neutral-950 px-5 pb-16 pt-10 text-white sm:px-[45px]">
       <div className="mx-auto w-full max-w-[1800px]">
         <div className="border-t border-[#e6e6e6]/35 pt-6">
           <h3

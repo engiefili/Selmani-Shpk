@@ -13,7 +13,7 @@ export default function AboutUs({ data }: { data: AboutUsData }) {
   return (
     <section
       id="about"
-      className="bg-neutral-950 px-5 py-10 text-white sm:px-10 sm:py-16"
+      className="bg-neutral-950 px-5 py-10 text-white sm:px-[45px] sm:py-16"
     >
       <div className="mx-auto grid w-full max-w-[1800px] gap-6 sm:gap-8 lg:grid-cols-[5fr_2fr] lg:items-center">
         <Reveal className="flex flex-col gap-6">

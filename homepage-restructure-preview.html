@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Selmani — Homepage Restructure Preview</title>
+<style>
+  :root {
+    --bg: #171919;
+    --fg: #eaefef;
+    --accent: #018794;
+    --accent-hover: #00616a;
+    --muted: #c1c7c7;
+    --muted-2: #9ba0a0;
+    --neutral-950: #0a0a0a;
+    --neutral-900: #171717;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { background: var(--bg); color: var(--fg); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+  img { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1800px; margin: 0 auto; }
+  @media (max-width: 640px) { .px { padding-left: 20px; padding-right: 20px; } }
+
+  .banner {
+    background: var(--accent); color: #fff; text-align: center;
+    font-size: 13px; padding: 8px 16px; font-weight: 600; letter-spacing: 0.02em;
+  }
+  .order-tag {
+    background: #000; color: var(--accent); text-align: center;
+    font-size: 12px; padding: 6px 16px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; border-bottom: 1px dashed rgba(1,135,148,0.4);
+  }
+  .draft-flag {
+    background: rgba(255,180,0,0.08); border: 1px dashed rgba(255,180,0,0.5);
+    color: #ffcf66; font-size: 12px; padding: 8px 14px; border-radius: 6px;
+    margin-bottom: 20px; max-width: fit-content;
+  }
+
+  header.site {
+    background: var(--neutral-950); display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 40px; border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .logo { font-weight: 800; font-size: 20px; letter-spacing: -0.02em; color: var(--fg); }
+  nav.main-nav { display: flex; align-items: center; gap: 32px; font-size: 15px; color: var(--muted); }
+  .contact-btn { border: 1px solid var(--muted); border-radius: 6px; padding: 9px 20px; font-size: 14px; color: var(--muted); }
+  @media (max-width: 900px) { nav.main-nav { display: none; } }
+
+  /* Hero — kept as-is (unchanged), the brief starts ordering below it */
+  .hero { position: relative; background: var(--neutral-950); overflow: hidden; padding: 100px 40px 60px; }
+  .hero-bg { position: absolute; inset: 0; }
+  .hero-bg img { width: 100%; height: 100%; object-fit: cover; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(0deg, rgba(10,10,10,0.9), rgba(10,10,10,0.35) 55%, rgba(10,10,10,0.15)); }
+  .hero-content { position: relative; z-index: 10; max-width: 720px; }
+  .hero-content h1 { font-weight: 700; line-height: 1.05; letter-spacing: -0.02em; color: var(--fg); font-size: clamp(2.25rem, 5vw, 4rem); }
+  .hero-content p { margin-top: 16px; max-width: 560px; font-size: clamp(1.05rem, 1.4vw, 1.25rem); font-weight: 300; color: var(--muted); }
+
+  .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+  .cta-pill {
+    display: inline-block; border: 1px solid var(--muted); border-radius: 6px;
+    padding: 13px 32px; font-size: 15px; color: var(--muted); white-space: nowrap;
+  }
+  .cta-pill.solid { background: var(--accent); border-color: var(--accent); color: #fff; text-align: center; }
+
+  /* 1. Stats band — NEW */
+  .stats-section { background: var(--neutral-950); padding: 56px 40px; border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
+  .stat-item { text-align: center; padding: 0 16px; border-left: 1px solid rgba(255,255,255,0.1); }
+  .stat-item:first-child { border-left: none; }
+  .stat-num { font-size: clamp(1.75rem, 3vw, 2.75rem); font-weight: 700; color: var(--fg); letter-spacing: -0.02em; }
+  .stat-label { margin-top: 8px; font-size: 14px; color: var(--muted-2); font-weight: 300; }
+  @media (max-width: 900px) { .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 32px 16px; } .stat-item { border-left: none; } }
+
+  /* 2. Selected Projects — NEW */
+  .projects-section { background: var(--neutral-950); padding: 64px 40px; }
+  .projects-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 32px; flex-wrap: wrap; }
+  .projects-head h2 { margin-top: 12px; font-weight: 300; letter-spacing: -0.02em; font-size: clamp(2rem, 4vw, 56px); }
+  .projects-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
+  .projects-grid a { position: relative; aspect-ratio: 3/4; border-radius: 10px; overflow: hidden; display: block; }
+  .projects-grid img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+  .projects-grid a:hover img { transform: scale(1.05); }
+  .projects-grid .tag { position: absolute; bottom: 8px; left: 8px; font-size: 10px; background: rgba(0,0,0,0.65); color: #fff; padding: 3px 8px; border-radius: 4px; }
+  @media (max-width: 900px) { .projects-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  /* Hot Dip Galvanizing — reused verbatim from the live homepage */
+  .hdg-section { background: var(--neutral-950); padding: 8px 40px; }
+  .hdg-card { background: #d7dcdc; color: #171717; border-radius: 16px; overflow: hidden; display: grid; grid-template-columns: 1fr 1fr; }
+  .hdg-image { position: relative; min-height: 480px; }
+  .hdg-image-row { display: flex; height: 100%; }
+  .hdg-image-row div { flex: 1; position: relative; overflow: hidden; }
+  .hdg-image-row img { width: 100%; height: 100%; object-fit: cover; }
+  .hdg-label { position: absolute; bottom: 12px; left: 12px; font-size: 11px; background: rgba(0,0,0,0.6); color: #fff; padding: 4px 10px; border-radius: 4px; }
+  .hdg-overlay { position: absolute; inset: 0; top: 0; height: 40%; background: linear-gradient(to bottom, rgba(0,0,0,0.7), transparent); padding: 24px; z-index: 5; }
+  .hdg-overlay h2 { margin-top: 12px; color: #fff; font-weight: 700; font-size: clamp(2rem, 4vw, 56px); letter-spacing: -0.02em; }
+  .hdg-body { padding: 48px; display: flex; flex-direction: column; }
+  .hdg-body ul { list-style: none; }
+  .hdg-body li { display: flex; gap: 18px; padding: 18px 0; border-top: 1px solid #9ba0a0; }
+  .hdg-body li:first-child { border-top: none; }
+  .num-circle { flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%; border: 1px solid #9ba0a0; display: flex; align-items: center; justify-content: center; font-weight: 600; color: #555; }
+  .hdg-body h3 { font-size: 18px; font-weight: 600; }
+  .hdg-body li p { margin-top: 4px; font-weight: 300; color: #555; font-size: 15px; }
+  @media (max-width: 900px) { .hdg-card, .hdg-image-row { grid-template-columns: 1fr; display: block; } .hdg-image { min-height: 260px; } }
+
+  /* 4. From Fabrication to Galvanizing — NEW 5-step process */
+  .process-section { background: var(--neutral-950); padding: 64px 40px; }
+  .process-section h2 { margin-top: 12px; font-weight: 300; letter-spacing: -0.02em; font-size: clamp(2rem, 4vw, 56px); max-width: 720px; }
+  .process-steps { margin-top: 40px; display: grid; grid-template-columns: repeat(5, 1fr); gap: 20px; }
+  .process-step { background: var(--neutral-900); border-radius: 12px; padding: 24px 20px; }
+  .process-step .step-num { font-size: 13px; font-weight: 700; color: var(--accent); }
+  .process-step h3 { margin-top: 10px; font-size: 16px; font-weight: 600; }
+  .process-step p { margin-top: 8px; font-size: 13px; font-weight: 300; color: var(--muted-2); line-height: 1.4; }
+  .process-arrow { display: none; }
+  @media (max-width: 1100px) { .process-steps { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px) { .process-steps { grid-template-columns: 1fr; } }
+
+  /* Tanks — reused, relabeled "Tanks & Special Products" */
+  .tanks-section { background: var(--neutral-950); padding: 8px 40px; }
+  .tanks-card { background: var(--neutral-900); border-radius: 16px; padding: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+  .tanks-image { aspect-ratio: 1; border-radius: 16px; border: 2px solid rgba(1,135,148,0.7); background: linear-gradient(to bottom right, #2a2c2c, #000); box-shadow: 0 0 22px 2px rgba(1,135,148,0.3); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .tanks-image img { width: 70%; object-fit: contain; }
+  .tanks-card h2 { margin-top: 12px; font-weight: 300; letter-spacing: -0.02em; font-size: clamp(2rem, 4vw, 56px); }
+  .tanks-card ul { margin-top: 24px; list-style: none; }
+  .tanks-card li { display: flex; gap: 18px; padding: 16px 0; border-top: 1px solid rgba(255,255,255,0.1); }
+  .tanks-card li:first-child { border-top: none; }
+  .tank-num { flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 600; }
+  .tank-num.active { background: var(--accent); color: #fff; }
+  .tank-num.inactive { border: 1px solid var(--muted-2); color: var(--muted-2); }
+  .tanks-card li h3 { font-weight: 600; font-size: 18px; }
+  .tanks-card li p { margin-top: 4px; font-weight: 300; color: var(--muted-2); font-size: 15px; }
+  @media (max-width: 900px) { .tanks-card { grid-template-columns: 1fr; } }
+
+  /* 6. Industries Served — NEW */
+  .industries-section { background: var(--neutral-950); padding: 64px 40px; }
+  .industries-section h2 { margin-top: 12px; font-weight: 300; letter-spacing: -0.02em; font-size: clamp(2rem, 4vw, 56px); }
+  .industries-grid { margin-top: 32px; display: grid; grid-template-columns: repeat(3, 1fr) 1.1fr; gap: 16px; align-items: stretch; }
+  .industries-photo { position: relative; aspect-ratio: 4/5; border-radius: 12px; overflow: hidden; }
+  .industries-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .industries-photo span { position: absolute; bottom: 10px; left: 10px; right: 10px; font-size: 13px; font-weight: 600; color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,0.8); }
+  .industries-list { background: var(--neutral-900); border-radius: 12px; padding: 24px; display: flex; flex-direction: column; justify-content: center; gap: 12px; }
+  .industries-list li { font-size: 15px; color: var(--muted); list-style: none; padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .industries-list li:last-child { border-bottom: none; padding-bottom: 0; }
+  .industries-cta { margin-top: 12px; }
+  @media (max-width: 1100px) { .industries-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px) { .industries-grid { grid-template-columns: 1fr; } }
+
+  /* CTA band — reused, heading updated per brief */
+  .cta-band { background: var(--neutral-950); padding: 8px 40px 40px; }
+  .cta-band-inner { position: relative; border-radius: 16px; overflow: hidden; background: var(--neutral-900); padding: 56px 48px; }
+  .cta-band-inner img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
+  .cta-band-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.8)); }
+  .cta-band-content { position: relative; z-index: 5; max-width: 720px; }
+  .cta-band-content h2 { font-weight: 300; line-height: 1.2; color: var(--muted); font-size: clamp(2rem, 4vw, 56px); }
+  .cta-band-content p { margin-top: 12px; font-weight: 300; color: var(--fg); font-size: 20px; }
+  .cta-band-content .cta-pill.solid { margin-top: 32px; max-width: 300px; }
+
+  .note { text-align: center; font-size: 13px; color: rgba(255,255,255,0.4); padding: 20px; background: #000; }
+  .note strong { color: var(--accent); }
+</style>
+</head>
+<body>
+
+  <div class="banner">PREVIEW — new homepage section order, not live on the site</div>
+
+  <header class="site">
+    <div class="logo">SELMANI</div>
+    <nav class="main-nav"><a href="#">Home</a><a href="#">About</a><a href="#">Services</a><a href="#">Projects</a><a href="#">Industries</a></nav>
+    <span class="contact-btn">Contact Us</span>
+  </header>
+
+  <!-- HERO — kept exactly as it is live today. The brief's numbering starts
+       right below it, so nothing about the hero has changed here. -->
+  <section class="hero">
+    <div class="hero-bg">
+      <img src="https://cdn.sanity.io/images/gp1cx0a9/production/848e72263c5d9d70a6c9c099071e9e5a155e00d5-2600x1338.jpg?w=1600&q=80" alt="Stacked galvanized steel pipes" />
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-content">
+      <h1>Building Stronger,<br>Protecting Longer.</h1>
+      <p>If you can dream it, we can build it, galvanize it, and make it last.</p>
+    </div>
+  </section>
+
+  <!-- 1. STATS BAND — NEW. Two of these four numbers are placeholders,
+       flagged below, since I don't have confirmed figures yet. -->
+  <section class="stats-section">
+    <div class="wrap px" style="padding-left:40px; padding-right:40px;">
+      <div class="draft-flag">⚠ Draft figures — "30+ years" and kettle size need your confirmation. The site currently says "25+ years" elsewhere; certifications are real.</div>
+      <div class="stats-grid">
+        <div class="stat-item"><div class="stat-num">30+</div><div class="stat-label">Years in Business</div></div>
+        <div class="stat-item"><div class="stat-num">[L × W × D]</div><div class="stat-label">Galvanizing Kettle Size</div></div>
+        <div class="stat-item"><div class="stat-num">3</div><div class="stat-label">Certifications — EQA, ISO 9001, OHSAS540</div></div>
+        <div class="stat-item"><div class="stat-num">100%</div><div class="stat-label">Integrated Production — Fabrication &amp; Galvanizing In-House</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. SELECTED PROJECTS — NEW. Real photos pulled from the Projects
+       gallery, two from each category, linking through to /projects. -->
+  <section class="projects-section">
+    <div class="wrap">
+      <div class="projects-head">
+        <div>
+          <span class="eyebrow">Projects</span>
+          <h2>Selected Projects</h2>
+        </div>
+        <span class="cta-pill">View All Projects</span>
+      </div>
+      <div class="projects-grid">
+        <a href="#"><img src="https://cdn.sanity.io/images/gp1cx0a9/production/b9fdf9541c797783106fab4089e13e26788599e6-712x884.png?w=500&q=80" alt="Galvanized steel emergency staircase attached to the exterior of an office building" /><span class="tag">Steel Constructions</span></a>
+        <a href="#"><img src="https://cdn.sanity.io/images/gp1cx0a9/production/d967596bc24cfa55098a0b5130dcd1aa0d3ff124-712x884.png?w=500&q=80" alt="Steel sliding gate with vertical bar fencing at an industrial site entrance" /><span class="tag">Steel Constructions</span></a>
+        <a href="#"><img src="https://cdn.sanity.io/images/gp1cx0a9/production/c3f382ad588dfbad49eb934ed9ad386e156657ef-706x878.jpg?w=500&q=80" alt="Workers installing a galvanized steel staircase and railing on a modular container building" /><span class="tag">Hot Dip Galvanizing</span></a>
+        <a href="#"><img src="https://cdn.sanity.io/images/gp1cx0a9/production/3f36e097c4f27d32c18e2bd2a4ec08b8690e4331-706x878.jpg?w=500&q=80" alt="Rows of freshly hot-dip galvanized steel rods hanging to dry" /><span class="tag">Hot Dip Galvanizing</span></a>
+        <a href="#"><img src="https://cdn.sanity.io/images/gp1cx0a9/production/a72715396501dd6c948c6f8dcffc9e75ec785d72-706x878.jpg?w=500&q=80" alt="Vertical galvanized steel storage vessel with a flanged side connection" /><span class="tag">Tanks &amp; Containers</span></a>
+        <a href="#"><img src="https://cdn.sanity.io/images/gp1cx0a9/production/c7d25d499b5d90483f87e118e13215bb818ba65f-706x878.jpg?w=500&q=80" alt="Angular galvanized steel tank with a hinged lid, staged in the fabrication yard" /><span class="tag">Tanks &amp; Containers</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. HOT DIP GALVANIZING — reused exactly as it is live today, including
+       the before/after comparison, per your note that "that part works well." -->
+  <section class="hdg-section">
+    <div class="wrap hdg-card">
+      <div class="hdg-image">
+        <div class="hdg-image-row">
+          <div><img src="https://cdn.sanity.io/images/gp1cx0a9/production/98e1dae3d009cd563351dae7723b5e6017cb8649-1254x1254.jpg?w=700&q=80" alt="Hot-dip galvanized steel surface" /><span class="hdg-label">Hot-dip galvanized</span></div>
+          <div><img src="https://cdn.sanity.io/images/gp1cx0a9/production/5aaaf7d2fe800ba867a086fcfc550937b61e7453-1254x1254.jpg?w=700&q=80" alt="Non-galvanized, rusted steel surface" /><span class="hdg-label">Non-galvanized</span></div>
+        </div>
+        <div class="hdg-overlay"><span class="eyebrow">Services</span><h2>Hot Dip Galvanizing</h2></div>
+      </div>
+      <div class="hdg-body">
+        <ul>
+          <li><div class="num-circle">1</div><div><h3>Saves Time</h3><p>Hot-Dip Galvanizing (HDG) technology provides the most efficient protection against corrosion, surpassing any other treatment or coating method.</p></div></li>
+          <li><div class="num-circle">2</div><div><h3>Protects the Environment</h3><p>Hot-Dip Galvanizing (HDG) technology provides the most efficient protection against corrosion, surpassing any other treatment or coating method.</p></div></li>
+          <li><div class="num-circle">3</div><div><h3>Economic Advantages</h3><p>Hot-Dip Galvanizing (HDG) technology provides the most efficient protection against corrosion, surpassing any other treatment or coating method.</p></div></li>
+          <li><div class="num-circle">4</div><div><h3>Structural Durability</h3><p>Hot-Dip Galvanizing (HDG) technology provides the most efficient protection against corrosion, surpassing any other treatment or coating method.</p></div></li>
+        </ul>
+        <span class="cta-pill solid" style="margin-top:32px;">Learn More</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. FROM FABRICATION TO GALVANIZING — NEW 5-step process.
+       Draft copy — needs your review, these are placeholder steps. -->
+  <section class="process-section">
+    <div class="wrap">
+      <div class="draft-flag">⚠ Draft copy — this process doesn't exist in the CMS yet. These 5 steps are a reasonable placeholder sequence; please confirm or correct them.</div>
+      <span class="eyebrow">Process</span>
+      <h2>From Fabrication to Galvanizing</h2>
+      <div class="process-steps">
+        <div class="process-step"><div class="step-num">01</div><h3>Design &amp; Engineering</h3><p>Specs reviewed and structural drawings prepared to your exact requirements.</p></div>
+        <div class="process-step"><div class="step-num">02</div><h3>Steel Fabrication</h3><p>Cutting, welding, and assembly carried out in our own workshop.</p></div>
+        <div class="process-step"><div class="step-num">03</div><h3>Surface Preparation</h3><p>Degreasing, pickling, and rinsing ahead of galvanizing.</p></div>
+        <div class="process-step"><div class="step-num">04</div><h3>Hot-Dip Galvanizing</h3><p>Full immersion in molten zinc for complete corrosion protection.</p></div>
+        <div class="process-step"><div class="step-num">05</div><h3>Inspection &amp; Delivery</h3><p>Quality checks against ISO 9001 before dispatch to site.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. TANKS & SPECIAL PRODUCTS — reused from the live Tanks & Containers
+       section, heading relabeled per the brief. -->
+  <section class="tanks-section">
+    <div class="wrap tanks-card">
+      <div class="tanks-image"><img src="https://cdn.sanity.io/images/gp1cx0a9/production/b84bbe7e8abe116b429b1d75abf8ce209f685dd7-1254x1254.png?w=700&q=80" alt="Galvanized steel sanitary water tank" /></div>
+      <div>
+        <span class="eyebrow">Services</span>
+        <h2>Tanks &amp; Special Products</h2>
+        <ul>
+          <li><div class="tank-num active">1</div><div><h3>Hot Dip Galvanized Sanitary Water Tanks</h3><p>We also manufacture custom water tanks according to client requirements, with various geometries depending on the installation site.</p></div></li>
+          <li><div class="tank-num inactive">2</div><div><h3>Fuel Tanks</h3><p>Fuel tanks up to 20,000 L, with static configuration, which can be installed above or below ground. Tanker trucks up to 10,000 L.</p></div></li>
+          <li><div class="tank-num inactive">3</div><div><h3>Stainless Steel Containers</h3><p>Stainless steel vessels and tanks for the food industry, in various shapes and volumes (containers, mixers, etc.)</p></div></li>
+          <li><div class="tank-num inactive">4</div><div><h3>HVAC Storage Tanks &amp; Boilers</h3><p>Accumulators for HVAC systems (central heating and cooling). Heat exchangers (boilers) with 1, 2, or 3 heat exchange coils.</p></div></li>
+        </ul>
+        <span class="cta-pill solid" style="margin-top:24px; max-width:300px; display:block; text-align:center;">Learn More</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. INDUSTRIES SERVED — NEW. Built from the real Industries page's 5
+       sections; 3 have real photos already, 2 don't yet. -->
+  <section class="industries-section">
+    <div class="wrap">
+      <span class="eyebrow">Industries</span>
+      <h2>Industries We Serve</h2>
+      <div class="industries-grid">
+        <div class="industries-photo"><img src="https://cdn.sanity.io/images/gp1cx0a9/production/acd3d403a7d848b11efd7fede5b4335b93fa4d43-1890x1230.jpg?w=500&q=80" alt="Technician climbing a telecommunications transmission tower" /><span>Telecommunications &amp; Transmission</span></div>
+        <div class="industries-photo"><img src="https://cdn.sanity.io/images/gp1cx0a9/production/4fa140e06fc767d1bb284e53d9cf3afce2f89cb4-1370x1500.jpg?w=500&q=80" alt="Steel structural frame of a building under construction" /><span>Civil Metal Construction</span></div>
+        <div class="industries-photo"><img src="https://cdn.sanity.io/images/gp1cx0a9/production/5d2b1f21963fd4ed4006e73bf61a1769283e54a8-1890x1600.jpg?w=500&q=80" alt="Interior of a large steel-framed industrial warehouse" /><span>Infrastructure &amp; Public Works</span></div>
+        <div class="industries-list">
+          <ul>
+            <li>Telecommunications &amp; Transmission</li>
+            <li>Civil Metal Construction</li>
+            <li>Industrial Metal Construction &amp; Fabrication</li>
+            <li>Infrastructure &amp; Public Works</li>
+            <li>Custom &amp; Private Projects</li>
+          </ul>
+          <span class="cta-pill industries-cta">Explore Industries</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. CTA — reused, heading updated to match the brief's wording. -->
+  <section class="cta-band">
+    <div class="wrap cta-band-inner">
+      <img src="https://cdn.sanity.io/images/gp1cx0a9/production/848e72263c5d9d70a6c9c099071e9e5a155e00d5-2600x1338.jpg?w=1400&q=80" alt="" />
+      <div class="cta-band-overlay"></div>
+      <div class="cta-band-content">
+        <h2>Let&rsquo;s shape your project together.</h2>
+        <p>We want to know more about your project</p>
+        <span class="cta-pill solid" style="display:inline-block;">Get in Touch</span>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site" style="background:#000;">
+    <div style="padding:32px 40px; text-align:center; font-size:13px; color:var(--muted-2);">Footer unchanged — omitted here for brevity.</div>
+  </footer>
+
+  <div class="note">This reorders and, in two places, invents placeholder content to show the shape of the new hierarchy. <strong>Nothing here is live on the site.</strong> About Us and the Steel Constructions section are dropped from this flow per the brief — flag if you want either kept somewhere.</div>
+
+</body>
+</html>

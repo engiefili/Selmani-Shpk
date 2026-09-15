@@ -8,7 +8,7 @@ export default async function ContactMapBand() {
   const { settings } = await getSiteSettings(locale);
 
   return (
-    <section className="bg-neutral-950 px-5 pb-16 text-white sm:px-10">
+    <section className="bg-neutral-950 px-5 pb-16 text-white sm:px-[45px]">
       <div className="mx-auto grid w-full max-w-[1800px] grid-cols-1 overflow-hidden rounded-2xl lg:grid-cols-2">
         <div className="flex flex-col gap-16 bg-[#171919] p-8 sm:p-12">
           <div className="flex flex-col gap-2">

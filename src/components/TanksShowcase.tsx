@@ -29,7 +29,7 @@ export default function TanksShowcase({
   const displayAlt = active?.image ? active.imageAlt ?? active.title : data.imageAlt ?? "";
 
   return (
-    <section id="industries" className="hidden bg-neutral-950 px-5 py-4 sm:block sm:px-10">
+    <section id="industries" className="hidden bg-neutral-950 px-5 py-4 sm:block sm:px-[45px]">
       <div className="mx-auto w-full max-w-[1800px] overflow-hidden rounded-2xl bg-neutral-900 p-6 text-white sm:p-12">
         <div className="grid gap-8 sm:gap-12 xl:grid-cols-2 xl:items-center">
           <Reveal
