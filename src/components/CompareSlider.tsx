@@ -51,6 +51,7 @@ export default function CompareSlider({
         alt={beforeAlt}
         draggable={false}
         fill
+        quality={70}
         sizes="100vw"
         className="object-cover"
       />
@@ -63,6 +64,7 @@ export default function CompareSlider({
           alt={afterAlt}
           draggable={false}
           fill
+          quality={70}
           sizes="100vw"
           className="object-cover"
         />
