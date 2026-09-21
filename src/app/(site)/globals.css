@@ -97,11 +97,28 @@ body {
   transform-origin: top left;
 }
 
+/* Key figures strip below the hero: a continuously scrolling ticker.
+   The track's content is duplicated once in the component, so a
+   translate of exactly -50% loops seamlessly. */
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  animation: marquee-scroll 32s linear infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .tab-swipe-in,
   .hero-fade-up,
   .hero-parallax-bg,
-  .dropdown-in {
+  .dropdown-in,
+  .marquee-track {
     animation: none;
   }
 }

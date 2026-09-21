@@ -3,10 +3,16 @@ import CtaButton from "./CtaButton";
 import Eyebrow from "./Eyebrow";
 import Reveal from "./Reveal";
 
+export type MetallicShowcaseItem = {
+  title: string;
+  image?: string;
+};
+
 export type MetallicConstructionsData = {
   eyebrow?: string;
   title: string;
-  services: { title: string; industries: string; icon?: string }[];
+  subtitle: string;
+  showcase: MetallicShowcaseItem[];
   description: string;
   ctaLabel?: string;
 };
@@ -23,64 +29,59 @@ export default function MetallicConstructions({
       id="services"
       className="hidden bg-neutral-950 px-5 py-8 text-white sm:block sm:px-[45px] sm:py-10"
     >
-      <div className="mx-auto w-full">
-        <Reveal>
-          <Eyebrow>{data.eyebrow ?? "Services"}</Eyebrow>
-          <h2
-            className="mt-3 font-light tracking-tight"
-            style={{ fontSize: "clamp(2rem, 4vw, 56px)" }}
-          >
-            {data.title}
-          </h2>
-        </Reveal>
-
-        <ul className="mt-6 grid gap-x-16 sm:mt-10 sm:grid-cols-2">
-          {data.services.map((service, i) => (
-            <Reveal
-              key={service.title}
-              as="li"
-              delay={Math.min(i * 60, 240)}
-              className="flex items-center gap-4 py-5 sm:gap-6 sm:py-7"
-            >
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center">
-                {service.icon && (
-                  <Image
-                    src={service.icon}
-                    alt=""
-                    width={44}
-                    height={44}
-                    className="h-11 w-11 object-contain"
-                  />
-                )}
-              </div>
-              <div className="flex-1">
-                <h3 className="text-lg font-semibold text-white sm:text-xl">
-                  {service.title}
-                </h3>
-                <p className="mt-3 flex items-baseline gap-3 border-t border-white/10 pt-3 text-sm text-[#777b7b]">
-                  <span>Industries</span>
-                  <span className="text-[#c1c7c7]">
-                    {service.industries}
-                  </span>
-                </p>
-              </div>
-            </Reveal>
-          ))}
-
-          <li className="flex items-center gap-4 py-5 sm:gap-6 sm:py-7">
-            <div className="h-14 w-14 shrink-0" aria-hidden="true" />
-            <div className="flex flex-1 flex-col justify-center gap-4">
-              <p className="max-w-md text-base text-white/50">
-                {data.description}
+      <div className="mx-auto flex w-full flex-col gap-[100px]">
+        <div className="flex flex-col gap-14">
+          <Reveal className="flex flex-col gap-2">
+            <Eyebrow>{data.eyebrow ?? "Services"}</Eyebrow>
+            <div className="flex flex-col gap-5">
+              <h2
+                className="font-light leading-none tracking-tight text-[#eaefef]"
+                style={{ fontSize: "clamp(2.5rem, 5vw, 72px)" }}
+              >
+                {data.title}
+              </h2>
+              <p className="text-2xl leading-[0.9] text-[#9ba0a0]">
+                {data.subtitle}
               </p>
-              <CtaButton
-                label={data.ctaLabel ?? "Learn More"}
-                href={href}
-                className="w-full max-w-md"
-              />
             </div>
-          </li>
-        </ul>
+          </Reveal>
+
+          <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-3">
+            {data.showcase.map((item, i) => (
+              <Reveal
+                key={item.title}
+                delay={Math.min(i * 100, 200)}
+                className="flex flex-col gap-5"
+              >
+                <div className="relative aspect-[603/600] w-full overflow-hidden rounded-xl bg-neutral-900">
+                  {item.image && (
+                    <Image
+                      src={item.image}
+                      alt={item.title}
+                      fill
+                      sizes="(min-width: 1024px) 33vw, 100vw"
+                      className="object-cover"
+                    />
+                  )}
+                </div>
+                <p className="text-[32px] leading-none text-[#eaefef]">
+                  {item.title}
+                </p>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+
+        <Reveal className="flex flex-col gap-5">
+          <p className="max-w-[760px] text-2xl leading-[0.9] text-[#9ba0a0]">
+            {data.description}
+          </p>
+          <CtaButton
+            label={data.ctaLabel ?? "Learn More"}
+            href={href}
+            className="w-full max-w-md"
+          />
+        </Reveal>
       </div>
     </section>
   );

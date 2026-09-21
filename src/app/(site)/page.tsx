@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
+import KeyFiguresMarquee from "@/components/KeyFiguresMarquee";
 import AboutUs from "@/components/AboutUs";
 import MetallicConstructions from "@/components/MetallicConstructions";
 import HotDipGalvanizing from "@/components/HotDipGalvanizing";
 import TanksShowcase from "@/components/TanksShowcase";
+import ProcessSection from "@/components/ProcessSection";
 import MobileServiceCarousel from "@/components/MobileServiceCarousel";
 import CtaBand from "@/components/CtaBand";
 import Footer from "@/components/Footer";
@@ -85,6 +87,9 @@ export default async function Home() {
           }}
           href={localizePath("/projects", locale)}
         />
+        {home.keyFigures && home.keyFigures.items.length > 0 && (
+          <KeyFiguresMarquee data={{ items: home.keyFigures.items }} />
+        )}
         <AboutUs
           data={{
             eyebrow: home.aboutUs.eyebrow,
@@ -132,10 +137,10 @@ export default async function Home() {
           data={{
             eyebrow: home.metallicConstructions.eyebrow,
             title: home.metallicConstructions.title,
-            services: home.metallicConstructions.services.map((s) => ({
-              title: s.title,
-              industries: s.industries,
-              icon: s.icon ? urlForImage(s.icon).width(128).height(128).url() : undefined,
+            subtitle: home.metallicConstructions.subtitle,
+            showcase: home.metallicConstructions.showcase.map((item) => ({
+              title: item.title,
+              image: item.image ? urlForImage(item.image).width(1200).url() : undefined,
             })),
             description: home.metallicConstructions.description,
             ctaLabel: home.metallicConstructions.ctaLabel,
@@ -171,6 +176,16 @@ export default async function Home() {
           }}
           href={localizePath("/services#tanks-containers", locale)}
         />
+        {home.process && (
+          <ProcessSection
+            data={{
+              eyebrow: home.process.eyebrow,
+              title: home.process.title,
+              description: home.process.description,
+              steps: home.process.steps,
+            }}
+          />
+        )}
         <CtaBand locale={locale} />
       </main>
       <Footer />

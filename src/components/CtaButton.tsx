@@ -1,3 +1,5 @@
+import ArrowUpRight from "./icons/ArrowUpRight";
+
 export default function CtaButton({
   label,
   type = "button",
@@ -22,7 +24,7 @@ export default function CtaButton({
         {label}
       </a>
       <a href={href} aria-hidden="true" tabIndex={-1} className={squareClass}>
-        ↗
+        <ArrowUpRight className="h-6 w-6" />
       </a>
     </>
   ) : (
@@ -37,7 +39,7 @@ export default function CtaButton({
         tabIndex={-1}
         className={squareClass}
       >
-        ↗
+        <ArrowUpRight className="h-6 w-6" />
       </button>
     </>
   );

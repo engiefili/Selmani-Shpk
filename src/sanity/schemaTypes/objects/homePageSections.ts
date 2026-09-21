@@ -91,16 +91,20 @@ export const hotDipHomeSection = defineType({
   ],
 });
 
-export const metallicServiceItem = defineType({
-  name: "metallicServiceItem",
-  title: "Service",
+export const metallicShowcaseItem = defineType({
+  name: "metallicShowcaseItem",
+  title: "Showcase item",
   type: "object",
   fields: [
     defineField({ name: "title", title: "Title", type: "string", validation: (Rule) => Rule.required() }),
-    defineField({ name: "industries", title: "Industries", type: "string", validation: (Rule) => Rule.required() }),
-    defineField({ name: "icon", title: "Icon", type: "image" }),
+    defineField({
+      name: "image",
+      title: "Image",
+      type: "image",
+      description: "Optional for now — renders as a plain placeholder panel until an image is set.",
+    }),
   ],
-  preview: { select: { title: "title", subtitle: "industries", media: "icon" } },
+  preview: { select: { title: "title", media: "image" } },
 });
 
 export const metallicConstructionsSection = defineType({
@@ -110,9 +114,60 @@ export const metallicConstructionsSection = defineType({
   fields: [
     defineField({ name: "eyebrow", title: "Eyebrow", type: "string", initialValue: "Services" }),
     defineField({ name: "title", title: "Title", type: "string", validation: (Rule) => Rule.required() }),
-    defineField({ name: "services", title: "Services", type: "array", of: [{ type: "metallicServiceItem" }], validation: (Rule) => Rule.required().min(1) }),
+    defineField({ name: "subtitle", title: "Subtitle", type: "text", rows: 2, validation: (Rule) => Rule.required() }),
+    defineField({ name: "showcase", title: "Showcase", type: "array", of: [{ type: "metallicShowcaseItem" }], validation: (Rule) => Rule.required().min(1) }),
     defineField({ name: "description", title: "Closing description", type: "text", rows: 2, validation: (Rule) => Rule.required() }),
     defineField({ name: "ctaLabel", title: "Button label", type: "string", initialValue: "Learn More" }),
+  ],
+});
+
+export const keyFiguresSection = defineType({
+  name: "keyFiguresSection",
+  title: "Key Figures Strip (homepage)",
+  type: "object",
+  fields: [
+    defineField({
+      name: "items",
+      title: "Items",
+      description: "Short brand facts/figures shown in the scrolling strip below the hero.",
+      type: "array",
+      of: [{ type: "string" }],
+      validation: (Rule) => Rule.required().min(2),
+    }),
+  ],
+  preview: {
+    select: { items: "items" },
+    prepare({ items }) {
+      return { title: "Key Figures Strip", subtitle: `${items?.length ?? 0} item(s)` };
+    },
+  },
+});
+
+export const homeProcessStep = defineType({
+  name: "homeProcessStep",
+  title: "Process step",
+  type: "object",
+  fields: [
+    defineField({ name: "title", title: "Title", type: "string", validation: (Rule) => Rule.required() }),
+  ],
+  preview: { select: { title: "title" } },
+});
+
+export const homeProcessSection = defineType({
+  name: "homeProcessSection",
+  title: "Process (homepage)",
+  type: "object",
+  fields: [
+    defineField({ name: "eyebrow", title: "Eyebrow", type: "string", initialValue: "Integrated Production" }),
+    defineField({ name: "title", title: "Title", type: "string", validation: (Rule) => Rule.required() }),
+    defineField({ name: "description", title: "Description", type: "text", rows: 2, validation: (Rule) => Rule.required() }),
+    defineField({
+      name: "steps",
+      title: "Steps",
+      type: "array",
+      of: [{ type: "homeProcessStep" }],
+      validation: (Rule) => Rule.required().min(2),
+    }),
   ],
 });
 

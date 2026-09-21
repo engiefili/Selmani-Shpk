@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import ArrowUpRight from "./icons/ArrowUpRight";
 
 export type HeroSlideData = {
   image: string;
@@ -96,8 +97,11 @@ export default function Hero({
         ))}
       </div>
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-neutral-950/85 via-neutral-950/35 to-transparent" />
+      {/* Extra darkening under the certifications/nav row, so it stays
+          legible over a busy part of the photo regardless of slide. */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-b from-transparent to-black mix-blend-multiply" />
 
-      <div className="relative z-10 flex max-w-full flex-1 flex-col justify-center sm:max-w-[85%]">
+      <div className="relative z-10 flex max-w-full flex-1 flex-col justify-center gap-5 sm:max-w-[85%]">
         <h1
           className="hero-fade-up font-heading font-black leading-[0.95] tracking-tight text-[#eaefef]"
           style={{ fontSize: "clamp(2.5rem, 6.5vw, 7rem)" }}
@@ -110,52 +114,23 @@ export default function Hero({
           ))}
         </h1>
         <p
-          className="hero-fade-up mt-4 max-w-2xl text-lg font-light text-[#c1c7c7] sm:mt-6 sm:text-2xl"
+          className="hero-fade-up max-w-2xl text-lg font-light text-[#c1c7c7] sm:text-2xl"
           style={{ animationDelay: "0.15s" }}
         >
           {current.subheading}
         </p>
+        <a
+          href={href}
+          className="hero-fade-up inline-flex w-fit items-center justify-center rounded-md bg-accent-hover px-6 py-[19px] text-center text-xl font-medium tracking-[0.5px] text-white transition hover:bg-accent"
+          style={{ animationDelay: "0.25s" }}
+        >
+          {data.ctaLabel ?? "Explore our work"}
+        </a>
       </div>
 
-      {/* Slide navigation — desktop only, right-aligned, sits above the
-          footer divider line. Mobile relies on autoplay + swipe. */}
-      {slides.length > 1 && (
-        <div className="hero-fade-up relative z-10 mt-6 hidden justify-end gap-2.5 sm:flex">
-          <button
-            type="button"
-            aria-label="Previous slide"
-            onClick={() => goTo(active - 1)}
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-white/25 text-lg text-[#c1c7c7] transition hover:border-accent hover:text-accent"
-          >
-            ‹
-          </button>
-          <div className="flex items-center gap-2 px-1">
-            {slides.map((_, i) => (
-              <button
-                key={i}
-                type="button"
-                aria-label={`Slide ${i + 1}`}
-                onClick={() => goTo(i)}
-                className={`h-2 w-2 rounded-full transition ${
-                  i === active ? "bg-accent" : "bg-white/30 hover:bg-white/50"
-                }`}
-              />
-            ))}
-          </div>
-          <button
-            type="button"
-            aria-label="Next slide"
-            onClick={() => goTo(active + 1)}
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-white/25 text-lg text-[#c1c7c7] transition hover:border-accent hover:text-accent"
-          >
-            ›
-          </button>
-        </div>
-      )}
-
       <div
-        className="hero-fade-up relative z-10 mt-4 flex flex-col items-stretch gap-8 border-t border-white/10 pt-5 sm:mt-4 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between sm:gap-6 sm:pt-6"
-        style={{ animationDelay: "0.3s" }}
+        className="hero-fade-up relative z-10 mt-4 flex flex-col items-stretch gap-8 pt-6 sm:mt-4 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between sm:gap-6"
+        style={{ animationDelay: "0.4s" }}
       >
         {/* Mobile: equal-width badge chips, so certifications with
             different text lengths still line up cleanly in a row. */}
@@ -175,16 +150,17 @@ export default function Hero({
           ))}
         </div>
 
-        {/* Desktop / tablet: original wide layout with connecting arrow badges. */}
-        <div className="hidden sm:flex sm:flex-wrap sm:items-center sm:gap-8">
+        {/* Desktop / tablet: icon-over-text badges, connected by thin
+            vertical dividers. */}
+        <div className="hidden sm:flex sm:items-center sm:gap-[30px]">
           {certifications.map((cert, i) => (
-            <div key={cert.line2} className="flex items-center gap-8">
-              {i > 0 && <span className="h-12 w-px shrink-0 bg-accent/40" />}
-              <div className="flex items-center">
-                <span className="z-10 -mr-3 flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-accent bg-neutral-950 text-accent text-sm">
-                  ↘
+            <div key={cert.line2} className="flex items-center gap-[30px]">
+              {i > 0 && <span className="h-24 w-px shrink-0 bg-white/15" />}
+              <div className="flex w-[150px] flex-col items-start gap-[7px]">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 border-accent">
+                  <ArrowUpRight className="h-4 w-4 text-accent" />
                 </span>
-                <span className="pl-5 text-lg leading-tight text-[#c1c7c7]">
+                <span className="text-2xl leading-[0.9] text-[#c1c7c7]">
                   {cert.line1}
                   <br />
                   {cert.line2}
@@ -194,12 +170,41 @@ export default function Hero({
           ))}
         </div>
 
-        <a
-          href={href}
-          className="w-full rounded-md border border-[#c1c7c7] px-8 py-3.5 text-center text-base font-medium text-[#c1c7c7] transition hover:border-accent hover:text-accent sm:w-auto"
-        >
-          {data.ctaLabel ?? "Explore our work"}
-        </a>
+        {/* Slide navigation — desktop only, bottom-right of the row.
+            Mobile relies on autoplay + swipe. */}
+        {slides.length > 1 && (
+          <div className="hidden items-center gap-[50px] sm:flex">
+            <button
+              type="button"
+              aria-label="Previous slide"
+              onClick={() => goTo(active - 1)}
+              className="flex h-6 w-6 items-center justify-center text-[#c1c7c7] transition hover:text-accent"
+            >
+              <ArrowUpRight className="h-4 w-4 rotate-[-135deg]" />
+            </button>
+            <div className="flex items-center gap-2.5">
+              {slides.map((_, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  aria-label={`Slide ${i + 1}`}
+                  onClick={() => goTo(i)}
+                  className={`h-2.5 w-2.5 rounded-full transition ${
+                    i === active ? "bg-accent" : "bg-[#777b7b] hover:bg-white/50"
+                  }`}
+                />
+              ))}
+            </div>
+            <button
+              type="button"
+              aria-label="Next slide"
+              onClick={() => goTo(active + 1)}
+              className="flex h-6 w-6 items-center justify-center text-[#c1c7c7] transition hover:text-accent"
+            >
+              <ArrowUpRight className="h-4 w-4 -scale-y-100 rotate-[-45deg]" />
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );

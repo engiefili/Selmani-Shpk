@@ -86,6 +86,9 @@ export type HomePageDoc = {
     certifications?: { line1: string; line2: string }[];
     ctaLabel?: string;
   };
+  keyFigures?: {
+    items: string[];
+  };
   aboutUs: {
     eyebrow?: string;
     text: string;
@@ -105,7 +108,8 @@ export type HomePageDoc = {
   metallicConstructions: {
     eyebrow?: string;
     title: string;
-    services: { title: string; industries: string; icon?: Image }[];
+    subtitle: string;
+    showcase: { title: string; image?: Image }[];
     description: string;
     ctaLabel?: string;
   };
@@ -116,6 +120,12 @@ export type HomePageDoc = {
     imageAlt?: string;
     tanks: { title: string; description: string; image?: Image; imageAlt?: string }[];
     ctaLabel?: string;
+  };
+  process?: {
+    eyebrow?: string;
+    title: string;
+    description: string;
+    steps: { title: string }[];
   };
 };
 
