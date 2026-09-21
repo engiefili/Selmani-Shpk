@@ -148,7 +148,14 @@ export const homeProcessStep = defineType({
   title: "Process step",
   type: "object",
   fields: [
-    defineField({ name: "title", title: "Title", type: "string", validation: (Rule) => Rule.required() }),
+    defineField({
+      name: "title",
+      title: "Title",
+      type: "text",
+      rows: 2,
+      description: "Rendered on two lines — put a line break where the title should wrap, so every step lines up evenly.",
+      validation: (Rule) => Rule.required(),
+    }),
   ],
   preview: { select: { title: "title" } },
 });
@@ -160,7 +167,14 @@ export const homeProcessSection = defineType({
   fields: [
     defineField({ name: "eyebrow", title: "Eyebrow", type: "string", initialValue: "Integrated Production" }),
     defineField({ name: "title", title: "Title", type: "string", validation: (Rule) => Rule.required() }),
-    defineField({ name: "description", title: "Description", type: "text", rows: 2, validation: (Rule) => Rule.required() }),
+    defineField({
+      name: "description",
+      title: "Description",
+      type: "text",
+      rows: 2,
+      description: "Put a line break where the text should wrap to a second line.",
+      validation: (Rule) => Rule.required(),
+    }),
     defineField({
       name: "steps",
       title: "Steps",

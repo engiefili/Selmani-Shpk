@@ -12,9 +12,22 @@ export type ProcessSectionData = {
   steps: ProcessStepData[];
 };
 
+// Renders a string as its own lines wherever it contains "\n", so content
+// authors control exactly where text wraps (matching the design's fixed
+// two-line treatment) instead of leaving it to the browser.
+function renderLines(text: string) {
+  const lines = text.split("\n");
+  return lines.map((line, i) => (
+    <span key={i}>
+      {line}
+      {i < lines.length - 1 && <br />}
+    </span>
+  ));
+}
+
 export default function ProcessSection({ data }: { data: ProcessSectionData }) {
   return (
-    <section className="bg-neutral-950 px-5 py-8 text-white sm:px-[45px] sm:py-10">
+    <section className="bg-neutral-950 px-5 py-16 text-white sm:px-[45px] sm:py-24">
       <div className="mx-auto flex w-full flex-col gap-10 sm:gap-[53px]">
         <Reveal className="flex flex-col gap-2">
           <Eyebrow>{data.eyebrow ?? "Integrated Production"}</Eyebrow>
@@ -26,7 +39,7 @@ export default function ProcessSection({ data }: { data: ProcessSectionData }) {
               {data.title}
             </h2>
             <p className="max-w-[1360px] text-2xl leading-[0.9] text-[#9ba0a0]">
-              {data.description}
+              {renderLines(data.description)}
             </p>
           </div>
         </Reveal>
@@ -47,7 +60,9 @@ export default function ProcessSection({ data }: { data: ProcessSectionData }) {
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <span className="h-2.5 w-2.5 rounded-full bg-white" />
-                <p className="text-2xl leading-[0.9] text-white">{step.title}</p>
+                <p className="text-2xl leading-[0.9] text-white">
+                  {renderLines(step.title)}
+                </p>
               </Reveal>
             ))}
           </div>
