@@ -137,8 +137,12 @@ export default async function Home() {
           data={{
             eyebrow: home.metallicConstructions.eyebrow,
             title: home.metallicConstructions.title,
-            subtitle: home.metallicConstructions.subtitle,
-            showcase: home.metallicConstructions.showcase.map((item) => ({
+            // Guard against a locale document that hasn't been migrated to
+            // this shape yet (e.g. a translation still on the old
+            // services-list schema) — render with what's there instead of
+            // throwing and taking down the whole page.
+            subtitle: home.metallicConstructions.subtitle ?? "",
+            showcase: (home.metallicConstructions.showcase ?? []).map((item) => ({
               title: item.title,
               image: item.image ? urlForImage(item.image).width(1200).url() : undefined,
             })),
