@@ -49,18 +49,28 @@ export default function ProcessSection({ data }: { data: ProcessSectionData }) {
             aria-hidden="true"
             className="pointer-events-none absolute inset-x-0 top-[49px] hidden h-px bg-white/15 lg:block"
           />
-          <div className="relative grid grid-cols-2 gap-x-10 gap-y-10 sm:grid-cols-3 lg:grid-cols-6 lg:gap-x-[90px] lg:gap-y-0">
+          {/* Below lg: a 2-column card grid — each step is a numbered
+              circle + title (the same "numbered list item" language as the
+              Hot Dip benefits / Tanks list above), with a divider between
+              the 3 rows so it still reads as one sequence, not a scattered
+              grid of facts. lg+: the original connected timeline. */}
+          <div className="relative grid grid-cols-2 gap-x-8 gap-y-0 lg:grid-cols-6 lg:gap-x-[90px]">
             {data.steps.map((step, i) => (
               <Reveal
                 key={step.title}
                 delay={Math.min(i * 60, 240)}
-                className="flex flex-col gap-[22px]"
+                className={`flex items-center gap-4 pb-6 lg:flex-col lg:items-start lg:gap-[22px] lg:pb-0 ${
+                  i >= 2 ? "border-t border-white/10 pt-6 lg:border-t-0 lg:pt-0" : ""
+                }`}
               >
-                <span className="text-2xl leading-[0.9] text-white/50">
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-white/30 text-base font-semibold text-white lg:hidden">
+                  {i + 1}
+                </span>
+                <span className="hidden text-2xl leading-[0.9] text-white/50 lg:block">
                   {String(i + 1).padStart(2, "0")}
                 </span>
-                <span className="h-2.5 w-2.5 rounded-full bg-white" />
-                <p className="text-2xl leading-[0.9] text-white">
+                <span className="hidden h-2.5 w-2.5 rounded-full bg-white lg:block" />
+                <p className="text-lg leading-tight text-white lg:text-2xl lg:leading-[0.9]">
                   {renderLines(step.title)}
                 </p>
               </Reveal>
