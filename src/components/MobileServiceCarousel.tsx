@@ -62,8 +62,14 @@ export default function MobileServiceCarousel({
 
       <div
         ref={trackRef}
-        className="flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className="flex snap-x snap-mandatory overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
+        {/* With snap-mandatory, the browser rests scroll position at the
+            nearest snap point on load — a plain leading spacer isn't one,
+            so it immediately snapped past it to the first card, hiding it.
+            Marking the spacer itself snap-start makes position 0 (spacer +
+            full first card) a valid resting point. */}
+        <div className="w-5 shrink-0 snap-start" aria-hidden="true" />
         {cards.map((card, i) => (
           <a
             key={card.key}
@@ -71,7 +77,9 @@ export default function MobileServiceCarousel({
               cardRefs.current[i] = el;
             }}
             href={card.href}
-            className="flex w-[80vw] shrink-0 snap-start flex-col overflow-hidden rounded-2xl bg-neutral-900 text-white"
+            className={`flex w-[80vw] shrink-0 snap-start flex-col overflow-hidden rounded-2xl bg-neutral-900 text-white ${
+              i < cards.length - 1 ? "mr-4" : ""
+            }`}
           >
             <div className="relative aspect-[3/4] w-full shrink-0 overflow-hidden bg-neutral-900">
               <Image
@@ -97,6 +105,7 @@ export default function MobileServiceCarousel({
             </div>
           </a>
         ))}
+        <div className="w-5 shrink-0" aria-hidden="true" />
       </div>
 
       <div className="mt-4 flex justify-center gap-1.5">

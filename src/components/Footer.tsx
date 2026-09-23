@@ -21,7 +21,7 @@ function CatalogRow({
         <span key={link.label} className="flex items-center gap-3">
           <Link
             href={link.href ? localizePath(link.href, locale) : "#"}
-            className="text-xl leading-tight tracking-tight text-[#eaefef] hover:text-accent sm:text-[28px]"
+            className="text-sm leading-tight tracking-tight text-[#eaefef] hover:text-accent sm:text-[28px]"
           >
             {link.label}
           </Link>

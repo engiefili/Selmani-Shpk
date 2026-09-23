@@ -20,7 +20,7 @@ export default function AboutUs({ data }: { data: AboutUsData }) {
           <Eyebrow>{data.eyebrow ?? "About Us"}</Eyebrow>
           <p
             className="max-w-none font-medium leading-snug text-[#c1c7c7]"
-            style={{ fontSize: "clamp(2rem, 4vw, 56px)" }}
+            style={{ fontSize: "clamp(1.25rem, 5vw, 56px)" }}
           >
             {data.text}
           </p>
