@@ -57,11 +57,19 @@ export const structure: StructureResolver = (S) =>
             .apiVersion("2024-01-01")
             .params({})
         ),
+      S.listItem()
+        .title("Insights (articles)")
+        .child(
+          S.documentTypeList("insight")
+            .title("Insights")
+            .defaultOrdering([{ field: "publishedAt", direction: "desc" }])
+        ),
       S.divider(),
       ...S.documentTypeListItems().filter(
         (item) =>
           ![
             "service",
+            "insight",
             "homePage",
             "aboutPage",
             "industriesPage",

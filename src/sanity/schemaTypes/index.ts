@@ -4,6 +4,7 @@ import aboutPage from "./documents/aboutPage";
 import contactPage from "./documents/contactPage";
 import homePage from "./documents/homePage";
 import industriesPage from "./documents/industriesPage";
+import insight from "./documents/insight";
 import projectsPage from "./documents/projectsPage";
 import service from "./documents/service";
 import siteSettings from "./documents/siteSettings";
@@ -59,6 +60,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     service,
     siteSettings,
     contactPage,
+    insight,
     // Service section objects
     serviceTab,
     processSteps,

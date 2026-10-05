@@ -23,3 +23,18 @@ export const projectsPageQuery = `*[_type == "projectsPage" && _id == $id][0]`;
 export const contactPageQuery = `*[_type == "contactPage" && _id == $id][0]`;
 
 export const siteSettingsQuery = `*[_type == "siteSettings" && _id == $id][0]`;
+
+// Insights (technical/editorial articles). The list query projects only
+// what a card needs; the article query pulls the full body plus the
+// related articles' card fields.
+const insightCardFields = `_id, title, "slug": slug.current, category, excerpt, featured, coverImage, coverImageAlt, publishedAt, updatedAt`;
+
+export const insightsListQuery = `*[_type == "insight" && defined(slug.current)] | order(featured desc, publishedAt desc, title asc) { ${insightCardFields} }`;
+
+export const insightBySlugQuery = `*[_type == "insight" && slug.current == $slug][0] {
+  ${insightCardFields},
+  diagram, diagramAlt, body, seoTitle, metaDescription, keywords,
+  "related": relatedInsights[]->{ ${insightCardFields} }
+}`;
+
+export const insightSlugsQuery = `*[_type == "insight" && defined(slug.current)].slug.current`;

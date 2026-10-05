@@ -33,6 +33,13 @@ export async function generateMetadata(): Promise<Metadata> {
   });
 }
 
+// The first hero photo as stored in Sanity shows small tears in the
+// worker's shirt. A retouched copy lives in /public/hero; it replaces that
+// one asset here until the corrected image is uploaded to Sanity itself
+// (after which this override can simply be deleted).
+const HERO_ORIGINAL_BUILD_REF = "image-fe602b9ea008666374882c57178b5cd9ca50b74c-1536x1024-png";
+const HERO_RETOUCHED_BUILD = "/hero/hero-build-retouched.jpg";
+
 export default async function Home() {
   const locale = await getLocale();
   const home = await fetchLocalizedSingleton<HomePageDoc>(
@@ -67,7 +74,10 @@ export default async function Home() {
             slides:
               home.hero.slides && home.hero.slides.length > 0
                 ? home.hero.slides.map((slide) => ({
-                    image: urlForImage(slide.image).width(2400).url(),
+                    image:
+                      slide.image.asset?._ref === HERO_ORIGINAL_BUILD_REF
+                        ? HERO_RETOUCHED_BUILD
+                        : urlForImage(slide.image).width(2400).url(),
                     imageAlt: slide.imageAlt,
                     heading: slide.heading,
                     subheading: slide.subheading,

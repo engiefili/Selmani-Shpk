@@ -1,4 +1,4 @@
-import type { Image } from "sanity";
+import type { Image, PortableTextBlock } from "sanity";
 
 // An image array item with the "alt" field added by the array's `of`
 // definition in the schema (e.g. service.gallery, projectImageGroup.images)
@@ -272,4 +272,28 @@ export type ContactPageDoc = {
   _id: string;
   heroHeading: string;
   heroSubtext: string;
+};
+
+export type InsightCardDoc = {
+  _id: string;
+  title: string;
+  slug: string;
+  category: string;
+  excerpt: string;
+  featured?: boolean;
+  coverImage: Image;
+  coverImageAlt?: string;
+  publishedAt: string;
+  updatedAt?: string;
+};
+
+export type InsightDoc = InsightCardDoc & {
+  diagram?: Image;
+  diagramAlt?: string;
+  // Portable Text — rendered by the article page; typed loosely here.
+  body: PortableTextBlock[];
+  seoTitle?: string;
+  metaDescription?: string;
+  keywords?: string[];
+  related?: InsightCardDoc[] | null;
 };

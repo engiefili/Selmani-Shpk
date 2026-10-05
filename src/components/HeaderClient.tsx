@@ -19,9 +19,15 @@ export type HeaderData = {
   navLinks: HeaderNavLink[];
   contactHref: string;
   contactCtaLabel: string;
+  /** Which language the page is currently in — that side of "EN / AL" is
+   * shown as the active (non-link) label. */
+  locale: "en" | "sq";
+  /** Same page in the *other* language. */
   switchHref: string;
-  switchLabel: string;
 };
+
+// Scroll distance (px) after which the header turns solid black.
+const SOLID_AFTER = 24;
 
 export default function HeaderClient({ data }: { data: HeaderData }) {
   const pathname = usePathname();
@@ -29,6 +35,7 @@ export default function HeaderClient({ data }: { data: HeaderData }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileDropdownLabel, setMobileDropdownLabel] = useState<string | null>(null);
+  const [scrolled, setScrolled] = useState(false);
 
   // Close the mobile panel whenever the route actually changes (a link
   // inside it was followed). Adjusted during render rather than in an
@@ -38,6 +45,13 @@ export default function HeaderClient({ data }: { data: HeaderData }) {
     setLastPathname(pathname);
     setMobileOpen(false);
   }
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > SOLID_AFTER);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   useEffect(() => {
     if (!dropdownOpen) return;
@@ -60,125 +74,157 @@ export default function HeaderClient({ data }: { data: HeaderData }) {
     };
   }, [mobileOpen]);
 
+  // Over the hero photo the header is transparent (white text, with a soft
+  // dark scrim for legibility); once scrolled — or while the mobile menu
+  // is open — it becomes solid black.
+  const solid = scrolled || mobileOpen;
+
+  const isActive = (href: string) =>
+    pathname === href || pathname.startsWith(`${href}/`);
+
+  const navLinkClass = (active: boolean) =>
+    `relative inline-flex items-center gap-1.5 whitespace-nowrap py-2 text-[15px] font-medium tracking-[0.04em] transition-colors after:absolute after:inset-x-0 after:-bottom-0.5 after:h-px after:origin-left after:bg-accent after:transition-transform after:duration-300 ${
+      active
+        ? "text-white after:scale-x-100"
+        : "text-white/90 after:scale-x-0 hover:text-white hover:after:scale-x-100"
+    }`;
+
   return (
-    <header className="absolute top-0 left-0 right-0 z-20 border-b border-[#9ba0a0]/40 bg-black">
-      <div className="mx-auto flex w-full items-center justify-between px-5 py-4 sm:px-[45px] sm:py-[25px]">
-      <Link href={data.homeHref} className="flex items-center">
-        <div className="relative h-9 w-28">
-          <Image
-            src={data.logoUrl}
-            alt="Selmani"
-            fill
-            sizes="112px"
-            className="object-contain object-left"
-            priority
-          />
-        </div>
-      </Link>
+    <header
+      className={`fixed inset-x-0 top-0 z-40 transition-[background-color,box-shadow] duration-300 ${
+        solid ? "bg-black shadow-[0_1px_0_rgba(255,255,255,0.08)]" : "bg-transparent"
+      }`}
+    >
+      <div
+        aria-hidden="true"
+        className={`pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-black/75 via-black/35 to-transparent transition-opacity duration-300 ${
+          solid ? "opacity-0" : "opacity-100"
+        }`}
+      />
 
-      <nav className="hidden items-center gap-2.5 xl:flex">
-        {data.navLinks.map((link) => {
-          const active = pathname === link.href;
-
-          if (link.dropdown && link.dropdown.length > 0) {
-            return (
-              <div
-                key={link.label}
-                ref={containerRef}
-                className="relative"
-                onMouseEnter={() => setDropdownOpen(true)}
-                onMouseLeave={() => setDropdownOpen(false)}
-              >
-                <Link
-                  href={link.href}
-                  onClick={() => setDropdownOpen(false)}
-                  aria-expanded={dropdownOpen}
-                  className={`flex h-10 items-center gap-1 whitespace-nowrap rounded-md px-4 text-[16px] font-medium tracking-[0.5px] transition ${
-                    active || dropdownOpen
-                      ? "bg-[#c1c7c7] text-[#171919]"
-                      : "border border-[#c1c7c7]/60 text-[#c1c7c7] hover:border-accent hover:text-accent"
-                  }`}
-                >
-                  {link.label}
-                  <span
-                    className={`text-xs transition-transform ${dropdownOpen ? "rotate-180" : ""}`}
-                  >
-                    ⌄
-                  </span>
-                </Link>
-
-                {dropdownOpen && (
-                  <div className="dropdown-in absolute left-0 top-full z-30 mt-1 w-64 overflow-hidden rounded-md bg-[#c1c7c7] shadow-lg">
-                    {link.dropdown.map((item) => (
-                      <Link
-                        key={item.href}
-                        href={item.href}
-                        onClick={() => setDropdownOpen(false)}
-                        className="block border-t border-[#171919]/15 px-4 py-3 text-[15px] font-medium text-[#171919] transition first:border-t-0 hover:bg-[#9ba0a0]/40"
-                      >
-                        {item.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            );
-          }
-
-          return (
-            <Link
-              key={link.label}
-              href={link.href}
-              className={`flex h-10 items-center gap-1 whitespace-nowrap rounded-md px-4 text-[16px] font-medium tracking-[0.5px] transition ${
-                active
-                  ? "bg-[#c1c7c7] text-[#171919]"
-                  : "border border-[#c1c7c7]/60 text-[#c1c7c7] hover:border-accent hover:text-accent"
-              }`}
-            >
-              {link.label}
-            </Link>
-          );
-        })}
-      </nav>
-
-      <div className="flex items-center gap-3">
-        <Link
-          href={data.contactHref}
-          className={`hidden h-10 items-center whitespace-nowrap rounded-md border px-4 text-[16px] font-medium tracking-[0.5px] transition sm:flex ${
-            pathname === data.contactHref
-              ? "border-[#c1c7c7] bg-[#c1c7c7] text-[#171919]"
-              : "border-[#c1c7c7]/60 text-[#c1c7c7] hover:border-accent hover:text-accent"
-          }`}
-        >
-          {data.contactCtaLabel}
+      <div
+        className={`relative mx-auto flex w-full items-center justify-between gap-6 px-5 transition-[padding] duration-300 sm:px-[45px] ${
+          scrolled ? "py-3 sm:py-4" : "py-4 sm:py-7"
+        }`}
+      >
+        <Link href={data.homeHref} className="flex shrink-0 items-center" aria-label="Selmani — home">
+          <div className="relative h-10 w-[150px] sm:h-14 sm:w-[228px]">
+            <Image
+              src={data.logoUrl}
+              alt="Selmani"
+              fill
+              sizes="228px"
+              className="object-contain object-left"
+              priority
+            />
+          </div>
         </Link>
-        {/* A plain <a>, not next/link's <Link>: the "/al" ↔ "/" switch is a
-            middleware rewrite to the *same* route, so Next's client-side
-            router cache treats them as one page and can serve a stale,
-            wrong-locale render on the first click — a real navigation
-            (full page load) always renders the correct locale on the
-            first click, which is what a language switch should do. */}
-        <a
-          href={data.switchHref}
-          className="flex h-10 items-center whitespace-nowrap rounded-md border border-[#c1c7c7]/60 px-3 text-sm font-medium tracking-[0.5px] text-[#c1c7c7] transition hover:border-accent hover:text-accent sm:px-4 sm:text-[16px]"
-        >
-          {data.switchLabel}
-        </a>
 
-        <button
-          type="button"
-          aria-label={mobileOpen ? "Close menu" : "Open menu"}
-          aria-expanded={mobileOpen}
-          onClick={() => setMobileOpen((v) => !v)}
-          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-[#c1c7c7]/60 text-[#c1c7c7] transition hover:border-accent hover:text-accent xl:hidden"
-        >
-          {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-        </button>
-      </div>
+        <nav className="hidden items-center gap-9 xl:flex 2xl:gap-12">
+          {data.navLinks.map((link) => {
+            const active = isActive(link.href);
+
+            if (link.dropdown && link.dropdown.length > 0) {
+              return (
+                <div
+                  key={link.label}
+                  ref={containerRef}
+                  className="relative"
+                  onMouseEnter={() => setDropdownOpen(true)}
+                  onMouseLeave={() => setDropdownOpen(false)}
+                >
+                  <Link
+                    href={link.href}
+                    onClick={() => setDropdownOpen(false)}
+                    aria-expanded={dropdownOpen}
+                    className={navLinkClass(active || dropdownOpen)}
+                  >
+                    {link.label}
+                    <ChevronDown
+                      className={`h-3.5 w-3.5 transition-transform ${dropdownOpen ? "rotate-180" : ""}`}
+                    />
+                  </Link>
+
+                  {dropdownOpen && (
+                    // pt-4 wrapper bridges the gap between link and panel so
+                    // the hover isn't lost while moving the pointer down.
+                    <div className="dropdown-in absolute left-1/2 top-full z-30 w-64 -translate-x-1/2 pt-4">
+                      <div className="overflow-hidden rounded-lg border border-white/10 bg-black/95 py-2 shadow-2xl backdrop-blur">
+                        {link.dropdown.map((item) => (
+                          <Link
+                            key={item.href}
+                            href={item.href}
+                            onClick={() => setDropdownOpen(false)}
+                            className="block px-5 py-3 text-[15px] text-white/75 transition-colors hover:bg-white/5 hover:text-white"
+                          >
+                            {item.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              );
+            }
+
+            return (
+              <Link key={link.label} href={link.href} className={navLinkClass(active)}>
+                {link.label}
+              </Link>
+            );
+          })}
+        </nav>
+
+        <div className="flex items-center gap-5 sm:gap-8">
+          {/* Language: both options always visible, "EN / AL". The current
+              language is plain white text; the other is the link. A plain
+              <a>, not next/link's <Link>: the "/al" ↔ "/" switch is a
+              middleware rewrite to the *same* route, so Next's client-side
+              router cache treats them as one page and can serve a stale,
+              wrong-locale render on the first click — a real navigation
+              (full page load) always renders the correct locale. */}
+          <div
+            className="flex items-center gap-2 text-[14px] font-medium tracking-[0.14em]"
+            aria-label="Language"
+          >
+            {data.locale === "en" ? (
+              <span aria-current="true" className="text-white">EN</span>
+            ) : (
+              <a href={data.switchHref} lang="en" hrefLang="en" className="text-white/55 transition-colors hover:text-white">
+                EN
+              </a>
+            )}
+            <span aria-hidden="true" className="text-white/30">/</span>
+            {data.locale === "sq" ? (
+              <span aria-current="true" className="text-white">AL</span>
+            ) : (
+              <a href={data.switchHref} lang="sq" hrefLang="sq" className="text-white/55 transition-colors hover:text-white">
+                AL
+              </a>
+            )}
+          </div>
+
+          <Link
+            href={data.contactHref}
+            className="hidden h-11 items-center whitespace-nowrap rounded-md bg-accent px-6 text-[15px] font-medium tracking-[0.04em] text-white transition-colors hover:bg-accent-hover sm:inline-flex"
+          >
+            {data.contactCtaLabel}
+          </Link>
+
+          <button
+            type="button"
+            aria-label={mobileOpen ? "Close menu" : "Open menu"}
+            aria-expanded={mobileOpen}
+            onClick={() => setMobileOpen((v) => !v)}
+            className="-mr-2 flex h-11 w-11 shrink-0 items-center justify-center text-white transition-colors hover:text-accent xl:hidden"
+          >
+            {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile menu panel — links, contact CTA, and nested dropdowns
-          collapse into a single stacked list below "lg". Always mounted
+          collapse into a single stacked list below "xl". Always mounted
           (rather than conditionally rendered) so the open/close is an
           actual height + fade transition instead of an instant swap;
           `inert` keeps its links out of tab order and screen readers
@@ -193,80 +239,72 @@ export default function HeaderClient({ data }: { data: HeaderData }) {
             mobileOpen ? "opacity-100" : "opacity-0"
           }`}
         >
-          <div className="mx-auto max-h-[calc(100vh-76px)] w-full overflow-y-auto border-t border-[#9ba0a0]/40 bg-black px-5 py-6 sm:px-[45px]">
-          <nav className="flex flex-col gap-1">
-            {data.navLinks.map((link) => {
-              const active = pathname === link.href;
-              const hasDropdown = link.dropdown && link.dropdown.length > 0;
-              const expanded = mobileDropdownLabel === link.label;
+          <div className="mx-auto max-h-[calc(100dvh-72px)] w-full overflow-y-auto border-t border-white/10 bg-black px-5 pb-8 pt-4 sm:px-[45px]">
+            <nav className="flex flex-col">
+              {data.navLinks.map((link) => {
+                const active = isActive(link.href);
+                const hasDropdown = link.dropdown && link.dropdown.length > 0;
+                const expanded = mobileDropdownLabel === link.label;
+                const rowClass = `flex min-h-14 flex-1 items-center text-[22px] font-light tracking-tight transition-colors ${
+                  active ? "text-white" : "text-white/75 hover:text-white"
+                }`;
 
-              if (hasDropdown) {
-                return (
-                  <div key={link.label} className="flex flex-col">
-                    <div className="flex items-center gap-2">
-                      <Link
-                        href={link.href}
-                        className={`flex h-12 flex-1 items-center rounded-md px-4 text-[17px] font-medium tracking-[0.5px] transition ${
-                          active
-                            ? "bg-[#c1c7c7] text-[#171919]"
-                            : "text-[#c1c7c7] hover:text-accent"
-                        }`}
-                      >
-                        {link.label}
-                      </Link>
-                      <button
-                        type="button"
-                        aria-label={`${expanded ? "Collapse" : "Expand"} ${link.label}`}
-                        aria-expanded={expanded}
-                        onClick={() =>
-                          setMobileDropdownLabel(expanded ? null : link.label)
-                        }
-                        className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md text-[#c1c7c7] transition hover:text-accent"
-                      >
-                        <ChevronDown
-                          className={`h-5 w-5 transition-transform ${expanded ? "rotate-180" : ""}`}
-                        />
-                      </button>
-                    </div>
-                    {expanded && (
-                      <div className="ml-4 flex flex-col border-l border-[#9ba0a0]/40 pl-4">
-                        {link.dropdown!.map((item) => (
-                          <Link
-                            key={item.href}
-                            href={item.href}
-                            className="flex h-11 items-center text-[15px] text-[#9ba0a0] transition hover:text-accent"
-                          >
-                            {item.label}
-                          </Link>
-                        ))}
+                if (hasDropdown) {
+                  return (
+                    <div key={link.label} className="flex flex-col border-b border-white/10">
+                      <div className="flex items-center gap-2">
+                        <Link href={link.href} className={rowClass}>
+                          {link.label}
+                        </Link>
+                        <button
+                          type="button"
+                          aria-label={`${expanded ? "Collapse" : "Expand"} ${link.label}`}
+                          aria-expanded={expanded}
+                          onClick={() =>
+                            setMobileDropdownLabel(expanded ? null : link.label)
+                          }
+                          className="flex h-14 w-12 shrink-0 items-center justify-end text-white/75 transition-colors hover:text-accent"
+                        >
+                          <ChevronDown
+                            className={`h-5 w-5 transition-transform ${expanded ? "rotate-180" : ""}`}
+                          />
+                        </button>
                       </div>
-                    )}
-                  </div>
+                      {expanded && (
+                        <div className="mb-3 ml-1 flex flex-col border-l border-white/15 pl-5">
+                          {link.dropdown!.map((item) => (
+                            <Link
+                              key={item.href}
+                              href={item.href}
+                              className="flex h-12 items-center text-[16px] text-[#9ba0a0] transition-colors hover:text-white"
+                            >
+                              {item.label}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  );
+                }
+
+                return (
+                  <Link
+                    key={link.label}
+                    href={link.href}
+                    className={`${rowClass} border-b border-white/10`}
+                  >
+                    {link.label}
+                  </Link>
                 );
-              }
+              })}
+            </nav>
 
-              return (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  className={`flex h-12 items-center rounded-md px-4 text-[17px] font-medium tracking-[0.5px] transition ${
-                    active
-                      ? "bg-[#c1c7c7] text-[#171919]"
-                      : "text-[#c1c7c7] hover:text-accent"
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              );
-            })}
-          </nav>
-
-          <Link
-            href={data.contactHref}
-            className="mt-6 flex h-12 items-center justify-center rounded-md border border-accent bg-accent text-[16px] font-medium tracking-[0.5px] text-white transition hover:bg-accent-hover"
-          >
-            {data.contactCtaLabel}
-          </Link>
+            <Link
+              href={data.contactHref}
+              className="mt-8 flex h-14 items-center justify-center rounded-md bg-accent text-[16px] font-medium tracking-[0.04em] text-white transition-colors hover:bg-accent-hover"
+            >
+              {data.contactCtaLabel}
+            </Link>
           </div>
         </div>
       </div>

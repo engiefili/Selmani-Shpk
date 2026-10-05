@@ -36,7 +36,10 @@ export default async function Footer() {
   const locale = await getLocale();
   const { settings } = await getSiteSettings(locale);
   const row1 = settings.footerCatalogRow1 || [];
-  const row2 = settings.footerCatalogRow2 || [];
+  const row2 = [...(settings.footerCatalogRow2 || [])];
+  if (![...row1, ...row2].some((l) => l.href === "/insights")) {
+    row2.push({ _key: "insights-f", label: "Insights", href: "/insights" });
+  }
 
   return (
     <footer id="contacts" className="bg-black text-white">
